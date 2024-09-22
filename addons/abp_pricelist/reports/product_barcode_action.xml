@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="action_report_pricelist_item_product_barcode" model="ir.actions.report">
+            <field name="name">Print Pricelist Item Product Barcode</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">abp_product_barcode.report_product_barcode</field>
+            <field name="report_file">abp_product_barcode.report_product_barcode</field>
+            <field name="print_report_name">'Products barcode - %s' % (object.product_tmpl_id.name)</field>
+            <!-- <field name="binding_model_id" ref="model_product_pricelist_item"/> -->
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="abp_product_barcode.abp_product_barcode_format"/>
+        </record>
+
+        <record id="action_report_sales_product_barcode" model="ir.actions.report">
+            <field name="name">Print Sales Product Barcode</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">abp_product_barcode.report_product_barcode</field>
+            <field name="report_file">abp_product_barcode.report_product_barcode</field>
+            <field name="print_report_name">'Products barcode'</field>
+            <!-- <field name="binding_model_id" ref="model_sale_order"/> -->
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="abp_product_barcode.abp_product_barcode_format"/>
+        </record>
+
+    </data>
+</odoo>
