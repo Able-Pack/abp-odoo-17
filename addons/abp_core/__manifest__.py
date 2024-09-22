@@ -27,6 +27,7 @@
         'abp_pricelist',
         'bi_invoice_backdate',
         'muk_web_colors',
+        'sttl_prevent_auto_save',
     ],
     'data': [
     ],
