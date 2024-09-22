@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="product_pricelist_view" model="ir.ui.view">
+            <field name="name">product.pricelist.view.form.abp</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='item_ids']/tree/field[@name='min_quantity']" position="before">
+                    <field name="barcode"/>
+                    <field name="label_qty"/>
+                </xpath>
+                <xpath expr="//field[@name='item_ids']/tree/field[@name='date_end']" position="after">
+                    <button name="button_print_barcode" string="Print Barcode" type="object" class="btn btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

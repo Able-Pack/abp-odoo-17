@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form.abp</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']/.." position="after">
+                    <field name="role_type" widget="radio" options="{'horizontal': true}"/>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="customer_catalogue" string="Customer Catalogue">
+                        <field name="customer_catalogue_ids" widget="one2many">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id"/>
+                                <field name="customer_product_code"/>
+                                <field name="customer_product_ref"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
