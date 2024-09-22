@@ -1,5 +1,4 @@
 from odoo import models, _
-from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
@@ -28,4 +27,35 @@ class SaleOrder(models.Model):
                         'barcode': barcode,
                     })
         return data
+    
+    # Had to overwrite to trigger depends (write) upon sale.order.line creation
+    def _update_order_line_info(self, product_id, quantity, **kwargs):
+        sol = self.order_line.filtered(lambda line: line.product_id.id == product_id)
+        if sol:
+            if quantity != 0:
+                sol.product_uom_qty = quantity
+            elif self.state in ['draft', 'sent']:
+                price_unit = self.pricelist_id._get_product_price(
+                    product=sol.product_id,
+                    quantity=1.0,
+                    currency=self.currency_id,
+                    date=self.date_order,
+                    **kwargs,
+                )
+                sol.unlink()
+                return price_unit
+            else:
+                sol.product_uom_qty = 0
+        elif quantity > 0:
+            sol = self.env['sale.order.line'].create({
+                'order_id': self.id,
+                'product_id': product_id,
+                'product_uom_qty': quantity,
+                'sequence': ((self.order_line and self.order_line[-1].sequence + 1) or 10),  # put it at the end of the order
+            })
+            # Modification start
+            # To trigger depends (write)
+            sol.product_uom_qty = quantity
+            # Modification end
+        return sol.price_unit
     
