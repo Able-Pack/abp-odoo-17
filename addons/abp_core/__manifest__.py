@@ -25,6 +25,7 @@
         'abp_product_barcode',
         'abp_customer_catalogue',
         'abp_pricelist',
+        'abp_contact',
         'bi_invoice_backdate',
         'muk_web_colors',
         'sttl_prevent_auto_save',
