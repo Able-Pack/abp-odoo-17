@@ -20,6 +20,8 @@
         'hr',
         'web_studio',
         
+        'partner_commission',
+        
         'web',
         'contacts',
         'abp_product_barcode',
