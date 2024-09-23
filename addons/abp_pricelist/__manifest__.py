@@ -9,7 +9,7 @@
     'depends': [
         'sale_management',
         'product',
-        'abp_product_barcode',
+        'abp_report',
     ],
     'data': [
         'views/pricelist_views.xml',
