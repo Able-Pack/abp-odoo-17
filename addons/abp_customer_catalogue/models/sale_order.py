@@ -10,7 +10,8 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         partner_id = self.partner_id
         new_customer_catalogues = self._create_customer_catalogue()
-        self._send_email(new_customer_catalogues, partner_id)
+        if new_customer_catalogues:
+            self._send_email(new_customer_catalogues, partner_id)
         return super().action_confirm()
     
     def _create_customer_catalogue(self):
