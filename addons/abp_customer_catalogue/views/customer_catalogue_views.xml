@@ -8,7 +8,6 @@
             <field name="arch" type="xml">
                 <tree editable="bottom">
                     <field name="sequence" widget="handle"/>
-                    <field name="name" optional="hide"/>
                     <field name="partner_id"/>
                     <field name="product_id"/>
                     <field name="customer_product_code"/>
@@ -23,11 +22,17 @@
             <field name="model">customer.catalogue</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="name"/>
+                    <field name="name" string="Name" filter_domain="[
+                        '|', '|', '|',
+                        ('product_id.default_code', 'ilike', self),
+                        ('product_id.name', 'ilike', self),
+                        ('customer_product_code', 'ilike', self),
+                        ('customer_product_ref', 'ilike', self)
+                    ]"/>
                     <field name="partner_id"/>
-                    <field name="product_id"/>
+                    <!-- <field name="product_id"/>
                     <field name="customer_product_code"/>
-                    <field name="customer_product_ref"/>
+                    <field name="customer_product_ref"/> -->
                     <separator/>
                     <group expand="1" string="Group By">
                         <filter string="Customer" name='group_by_customer' context="{'group_by': 'partner_id'}"/>
