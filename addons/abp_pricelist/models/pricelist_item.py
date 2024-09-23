@@ -21,6 +21,5 @@ class PricelistItem(models.Model):
                 'barcode': doc.barcode,
                 'price': doc.price or 0.0,
             })
-            print('\n\n', doc.price)
         return data
     
