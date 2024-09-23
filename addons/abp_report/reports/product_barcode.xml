@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="report_product_barcode_template">
+            <t t-call="web.html_container">
+                <div class="text-center" style="margin: 20px">
+                    <h1>
+                        <t t-if="o.get('product_code')" t-esc="o.get('product_code')"/>
+                        <t t-else="">Null Product Code</t>
+                    </h1>
+                    <h1>
+                        <t t-if="o.get('product_name')" t-esc="o.get('product_name')"/>
+                        <t t-else="">Null Product Name</t>
+                    </h1>
+                    <div style="margin: 20px 0;">
+                        <style>
+                            .clean_barcode {
+                                image-rendering: nearest-neighbor;
+                                image-rendering: pixelated;
+                            }
+                        </style>
+                        <img t-if="o.get('barcode')" class="clean_barcode" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', o.get('barcode'), 600, 200)" style="width:100%; height::4rem;"/>
+                        <h3 t-else="">Null Barcode</h3>
+                    </div>
+                    <h2>
+                        <t t-if="o.get('barcode')" t-esc="o['barcode']"/>
+                        <t t-else="">Null Barcode</t>
+                    </h2>
+                    <h1 class="text-start" style="margin-left: 20px;">
+                        <t t-if="o.get('price')" t-esc="o['price']"/>
+                        <t t-else="">Null Price</t>
+                    </h1>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_product_barcode_abp">
+            <t t-call="web.basic_layout">
+                <t t-foreach="data" t-as="item">
+                    <div class="page" style="page-break-after:always;">
+                        <t t-call="abp_report.report_product_barcode_template">
+                            <t t-set="o" t-value="item"/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="abp_product_barcode_format" model="report.paperformat">
+            <field name="name">ABP paper format for barcode</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">33</field>
+            <field name="page_width">33</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">4</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">300</field>
+        </record>
+
+    </data>
+</odoo>
