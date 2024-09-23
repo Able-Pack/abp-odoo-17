@@ -16,8 +16,10 @@ class PricelistItem(models.Model):
         data = []
         for doc in docs:
             data.append({
+                'product_code': doc.product_tmpl_id.default_code,
                 'product_name': doc.product_tmpl_id.name,
                 'barcode': doc.barcode,
+                'price': doc.price or 0.0,
             })
         return data
     
