@@ -13,7 +13,8 @@ class ProductTemplate(models.Model):
         
         if self._context.get('partner_id') and not self._context.get('show_all_product'):
             customer_catalogue_ids = self.env['customer.catalogue'].search([
-                '|', '|',
+                '|', '|', '|',
+                ('product_tmpl_id.default_code', operator, name),
                 ('product_tmpl_id.name', operator, name),
                 ('customer_product_code', operator, name),
                 ('customer_product_ref', operator, name),
