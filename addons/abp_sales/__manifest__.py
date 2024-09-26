@@ -8,6 +8,7 @@
     """,
     'depends': [
         'sale',
+        'sales_team',
     ],
     'data': [
         'views/sale_order_views.xml',
