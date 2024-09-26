@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="hr_employee_custom_form_view" model="ir.ui.view">
+            <field name="name">hr.employee.custom.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/div[@name='button_box']" position="inside">
+                    <button name="commission_sale_info"  type="object" class="oe_stat_button" icon="fa-bullseye" disabled="1">
+                        <field name="commission_count" string="Overall Commission" widget="statinfo"  />
+                    </button>
+
+                    <button name="total_sale_info" type="object" class="oe_stat_button" icon="fa-suitcase">
+                        <field name="sale_count" widget="statinfo"  string="Total Sale"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>    
+        
