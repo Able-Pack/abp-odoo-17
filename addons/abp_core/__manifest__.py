@@ -28,6 +28,7 @@
         'abp_customer_catalogue',
         'abp_pricelist',
         'abp_contact',
+        'abp_sale',
         'bi_invoice_backdate',
         'muk_web_colors',
         'sttl_prevent_auto_save',
