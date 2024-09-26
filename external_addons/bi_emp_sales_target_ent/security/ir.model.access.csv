@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_target_group,access_target_group,model_target_group,base.group_user,1,1,1,1
+access_target_lines,access_target_lines,model_target_lines,base.group_user,1,1,1,1
+access_target_commission_lines,access_target_commission_lines,model_target_commission_lines,base.group_user,1,1,1,1
