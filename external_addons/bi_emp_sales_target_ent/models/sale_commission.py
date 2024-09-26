@@ -10,10 +10,10 @@ class SaleOrder(models.Model):
 
     target_group_id = fields.Many2one(
         'target.group', string='Commission Group')
-    price_commission = fields.Float(compute="_compute_commission", string='Commission')
+    price_commission = fields.Float(compute="_compute_commission_price", string='Commission')
 
     @api.depends('amount_untaxed', 'target_group_id', 'user_id')
-    def _compute_commission(self):
+    def _compute_commission_price(self):
         for rec in self:
             price_subtotal = 0.0
             if rec.target_group_id:
