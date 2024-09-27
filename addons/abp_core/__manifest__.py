@@ -19,7 +19,7 @@
         'purchase',
         'hr',
         'web_studio',
-        # 'bi_emp_sales_target_ent',
+        'bi_emp_sales_target_ent',
         'partner_commission',
         
         'web',
