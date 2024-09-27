@@ -13,6 +13,7 @@
         'sales_team',
     ],
     'data': [
+        'views/res_partner_views.xml',
         'views/menu_items.xml',
     ],
     'assets': {
