@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="salesperson_dashboard_menu_root" name="Salesperson Dashboard" web_icon="abp_salesperson_dashboard,static/description/icon.png" sequence="30">
+            <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="abp_contact.action_contacts_sales" sequence="10"/>
+            <menuitem id="salesperson_dashboard_order_menu" name="Sales" sequence="20">
+                <menuitem id="salesperson_dashboard_quotation_menu_sub" action="sale.action_quotations_with_onboarding" sequence="10"/>
+                <menuitem id="salesperson_dashboard_order_menu_sub" name="Orders" action="sale.action_orders" sequence="20"/>
+            </menuitem>
+        </menuitem>
+
+    </data>
+</odoo>
