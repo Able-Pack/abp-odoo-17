@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="product_view_search_catalog" model="ir.ui.view">
+            <field name="name">product.view.search.catalog.abp</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_view_search_catalog"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="filter_domain">[
+                        '|', '|', '|',  '|', 
+                        ('default_code', 'ilike', self),
+                        ('name', 'ilike', self),
+                        ('barcode', 'ilike', self),
+                        ('customer_catalogue_ids.customer_product_code', 'ilike', self),
+                        ('customer_catalogue_ids.customer_product_ref', 'ilike', self)
+                    ]
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
