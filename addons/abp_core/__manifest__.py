@@ -29,6 +29,7 @@
         'abp_pricelist',
         'abp_contact',
         'abp_sale',
+        'abp_salesperson_dashboard',
         'bi_invoice_backdate',
         'muk_web_colors',
         'sttl_prevent_auto_save',
