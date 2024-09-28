@@ -7,6 +7,12 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="has_new_customer_catalogue" invisible="1"/>
+                    <button name="button_send_email_of_new_customer_catalogue" icon="fa-paper-plane" string="Send Email of New Customer Catalogue" 
+                    type="object" class="btn btn-primary" invisible="has_new_customer_catalogue == False"
+                    confirm="Send email of newly created customer catalogue?"/>
+                </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
                     <field name="customer_catalogue_id" column_invisible="1"/>
                     <field name="customer_product_code"/>

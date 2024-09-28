@@ -6,12 +6,15 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     show_all_product = fields.Boolean(string='Show all products?')
+    has_new_customer_catalogue = fields.Boolean(default=False)
+    new_customer_catalogue_json = fields.Json()
     
     def action_confirm(self):
-        partner_id = self.partner_id
+        # Needed data that will be use to send email of the newly created customer catalogue
         new_customer_catalogues = self._create_customer_catalogue()
         if new_customer_catalogues:
-            self._send_email(new_customer_catalogues, partner_id)
+            self.has_new_customer_catalogue = True
+            self.new_customer_catalogue_json = new_customer_catalogues
         return super().action_confirm()
     
     def _create_customer_catalogue(self):
@@ -22,6 +25,7 @@ class SaleOrder(models.Model):
             ('product_tmpl_id', 'in', line_product_template_ids),
             ('partner_id', '=', self.partner_id.id),
         ])
+        
         customer_catalogue_product_tmpl_ids = customer_catalogue_ids.mapped('product_tmpl_id').mapped('id')
         for line in self.order_line:
             if line.product_template_id.id not in customer_catalogue_product_tmpl_ids:
@@ -42,8 +46,11 @@ class SaleOrder(models.Model):
                 
         return result
     
+    def button_send_email_of_new_customer_catalogue(self):
+        self._send_email_of_new_customer_catalogue(self.new_customer_catalogue_json, self.partner_id)
+    
     @api.model
-    def _send_email(self, new_customer_catalogues, partner_id):
+    def _send_email_of_new_customer_catalogue(self, new_customer_catalogues, partner_id):
         subject = 'Customer Catalogue: New Records'
         
         body_html = f"""
@@ -83,17 +90,25 @@ class SaleOrder(models.Model):
             <br/>Able Pack Ltd</p>
         """
         
+        email_to = self.env["ir.config_parameter"].sudo().get_param("abp_customer_catalogue.newly_created_customer_catalogue_target_email")
+        outgoing_mail_server = self.env['ir.mail_server'].sudo().search([], order='sequence', limit=1)
         # Create the mail.message record
         mail_values = {
             'subject': subject,
             'body_html': body_html,
-            'email_to': 'victorimannuel21@gmail.com', # TODO: SET EMAIL TO AND FROM
-            'email_from': self.env.user.email_formatted,
+            'email_to': email_to,
+            'email_from': outgoing_mail_server.smtp_user or '',
         }
         mail_id = self.env['mail.mail'].sudo().create(mail_values)
         
-        # Send the email
-        mail_id.send()
+        try:
+            # Send the email
+            mail_id.send()
+
+            # After sending, set the boolean field back to False
+            self.has_new_customer_catalogue = False
+        except Exception as e:
+            raise UserError(_(str(e)))
         
         
     def _get_product_catalog_additional_domain(self):

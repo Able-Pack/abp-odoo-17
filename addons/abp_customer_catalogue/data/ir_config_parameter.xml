@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record id="newly_created_customer_catalogue_target_email" model="ir.config_parameter" forcecreate="1">
+        <field name="key">abp_customer_catalogue.newly_created_customer_catalogue_target_email</field>
+        <field name="value">kitchenware@ablepack.com.sg</field>
+    </record>
+
+</odoo>

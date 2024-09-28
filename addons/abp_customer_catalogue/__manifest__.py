@@ -14,6 +14,9 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        
+        'data/ir_config_parameter.xml',
+        
         'views/customer_catalogue_views.xml',
         'views/sale_order_views.xml',
         'views/product_product_views.xml',
