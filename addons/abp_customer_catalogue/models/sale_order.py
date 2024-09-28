@@ -39,18 +39,19 @@ class SaleOrder(models.Model):
                 customer_catalogue_model.create(values)
                 # include product template name and price unit in the email but not for the customer catalogue values
                 values.update({
-                    'product_tmpl_name': line.product_template_id.name,
+                    'barcode': line.barcode,
+                    'product_tmpl_name': line.product_template_id.display_name,
                     'price_unit': line.price_unit
                 })
                 result.append(values)
                 
         return result
     
-    def button_send_email_of_new_customer_catalogue(self):
-        self._send_email_of_new_customer_catalogue(self.new_customer_catalogue_json, self.partner_id)
+    def button_notify_catalogue_creation(self):
+        self._notify_catalogue_creation(self.new_customer_catalogue_json, self.partner_id)
     
     @api.model
-    def _send_email_of_new_customer_catalogue(self, new_customer_catalogues, partner_id):
+    def _notify_catalogue_creation(self, new_customer_catalogues, partner_id):
         subject = 'Customer Catalogue: New Records'
         
         body_html = f"""
@@ -62,6 +63,7 @@ class SaleOrder(models.Model):
                     <tr>
                         <th>No.</th>
                         <th>Product</th>
+                        <th>EAN13</th>
                         <th>Customer Product Code</th>
                         <th>Customer Product Ref</th>
                         <th>Price</th>
@@ -76,6 +78,7 @@ class SaleOrder(models.Model):
                 <tr>
                     <td style="text-align: center;">{idx+1}</td>
                     <td>{item.get('product_tmpl_name', '-')}</td>
+                    <td>{item.get('barcode', '-')}</td>
                     <td>{item.get('customer_product_code', '-')}</td>
                     <td>{item.get('customer_product_ref', '-')}</td>
                     <td>{item.get('price_unit', '-')}</td>
