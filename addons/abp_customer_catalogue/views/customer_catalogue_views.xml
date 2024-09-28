@@ -12,7 +12,7 @@
                     <field name="product_id"/>
                     <field name="customer_product_code"/>
                     <field name="customer_product_ref"/>
-                    <button type="object" icon="fa-trash" confirm="Are you sure you want to delete this record? This action cannot be undone." name="unlink"/>
+                    <button type="object" icon="fa-trash" string="Delete" confirm="Are you sure you want to delete this record? This action cannot be undone." name="unlink"/>
                 </tree>
             </field>
         </record>
