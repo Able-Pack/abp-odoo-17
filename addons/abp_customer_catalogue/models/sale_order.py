@@ -90,7 +90,7 @@ class SaleOrder(models.Model):
             'email_to': 'victorimannuel21@gmail.com', # TODO: SET EMAIL TO AND FROM
             'email_from': self.env.user.email_formatted,
         }
-        mail_id = self.env['mail.mail'].create(mail_values)
+        mail_id = self.env['mail.mail'].sudo().create(mail_values)
         
         # Send the email
         mail_id.send()
