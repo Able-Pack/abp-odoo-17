@@ -11,6 +11,9 @@
                     <button name="action_cancel" type="object" string="Cancel" invisible="state not in ['draft', 'sent', 'sale'] or not id or locked" 
                     data-hotkey="x" confirm="Are you sure you want to cancel?" context="{'disable_cancel_warning': True}"/>
                 </xpath>
+                <xpath expr="//button[@name='action_unlock']" position="attributes">
+                    <attribute name="groups"></attribute>
+                </xpath>
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="domain">[('team_id.member_ids.id', '=', uid)]</attribute>
                     <attribute name="groups">!sales_team.group_sale_manager</attribute>
