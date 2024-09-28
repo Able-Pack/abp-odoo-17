@@ -17,9 +17,15 @@
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="domain">[('team_id.member_ids.id', '=', uid)]</attribute>
                     <attribute name="groups">!sales_team.group_sale_manager</attribute>
+                    <attribute name="options">{
+                        'no_create': True, 
+                        'no_create_edit': True,
+                        'no_open': True,
+                        'no_quick_create': True,
+                    }</attribute>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="before">
-                    <field name="partner_id" groups="sales_team.group_sale_manager"/>
+                    <field name="partner_id" groups="sales_team.group_sale_manager" options="{'no_create': True, 'no_create_edit': True, 'no_open': True, 'no_quick_create': True,}"/>
                 </xpath>
                 <field name="pricelist_id" position="attributes">
                     <attribute name="readonly">1</attribute>
