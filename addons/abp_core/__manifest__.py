@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Core Module',
+    'name': 'Able Pack Core Module',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Core Module',
+    'summary': 'Able Pack Core Module',
     'version': '1.0',
     'description': """
         To install all ablepack's dependencies

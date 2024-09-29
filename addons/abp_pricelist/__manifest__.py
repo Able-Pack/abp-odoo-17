@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Pricelist',
+    'name': 'Able Pack Pricelist',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Pricelist',
+    'summary': 'Able Pack Pricelist',
     'version': '17.0',
     'description': """
     """,

@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Customer Catalogue',
+    'name': 'Able Pack Customer Catalogue',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Customer Catalogue',
+    'summary': 'Able Pack Customer Catalogue',
     'version': '1.0',
     'description': """
     """,

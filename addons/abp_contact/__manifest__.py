@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Contact',
+    'name': 'Able Pack Contact',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Contact',
+    'summary': 'Able Pack Contact',
     'version': '1.0',
     'description': """
     """,
