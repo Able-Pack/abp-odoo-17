@@ -33,6 +33,8 @@
         'bi_invoice_backdate',
         'muk_web_colors',
         'sttl_prevent_auto_save',
+        
+        'abp_security', # should be installed last to implement able pack's security (reset app menu groups)
     ],
     'data': [
     ],
