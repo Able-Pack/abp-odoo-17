@@ -10,7 +10,6 @@
         'contacts',
         'sale',
         'point_of_sale',
-        'abp_product_barcode',
     ],
     'data': [
         'security/ir.model.access.csv',

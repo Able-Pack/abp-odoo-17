@@ -24,7 +24,6 @@
         
         'web',
         'contacts',
-        'abp_product_barcode',
         'abp_customer_catalogue',
         'abp_pricelist',
         'abp_contact',
