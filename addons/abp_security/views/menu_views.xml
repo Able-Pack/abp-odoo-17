@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Discuss -->
+        <record id="mail.menu_root_discuss" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_discuss_app')])]"/>
+        </record>
+
+        <!-- Calendar -->
+        <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_calendar_app')])]"/>
+        </record>
+        
+        <!-- Contacts -->
+        <record id="contacts.menu_contacts" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_contacts_app')])]"/>
+        </record>
+        
+        <!-- CRM -->
+        <record id="crm.crm_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_crm_app')])]"/>
+        </record>
+        
+        <!-- Sales -->
+        <record id="sale.sale_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_sales_app')])]"/>
+        </record>
+        
+        <!-- Salesperson Dashboard -->
+        <record id="abp_salesperson_dashboard.salesperson_dashboard_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_salesperson_dashboard_app')])]"/>
+        </record>
+        
+        <!-- Dashboard -->
+        <record id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_dashboard_app')])]"/>
+        </record>
+        
+        <!-- Subscriptions -->
+        <record id="sale_subscription.menu_sale_subscription_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_subscriptions_app')])]"/>
+        </record>
+        
+        <!-- Point of Sale -->
+        <record id="point_of_sale.menu_point_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_point_of_sale_app')])]"/>
+        </record>
+        
+        <!-- Invoicing -->
+        <!-- <record id="account.menu_finance" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_invoicing_app')])]"/>
+        </record> -->
+        
+        <!-- Accounting -->
+        <record id="account_accountant.menu_accounting" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_accounting_app')])]"/>
+        </record>
+        
+        <!-- Documents -->
+        <record id="documents.menu_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_documents_app')])]"/>
+        </record>
+        
+        <!-- Website -->
+        <record id="website.menu_website_configuration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_website_app')])]"/>
+        </record>
+
+        <!-- Purchase -->
+        <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_purchase_app')])]"/>
+        </record>
+        
+        <!-- Inventory -->
+        <record id="stock.menu_stock_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_inventory_app')])]"/>
+        </record>
+        
+        <!-- Manufacturing -->
+        <record id="mrp.menu_mrp_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_manufacturing_app')])]"/>
+        </record>
+        
+        <!-- Shop Floor -->
+        <record id="mrp_workorder.menu_mrp_workorder_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_shop_floor_app')])]"/>
+        </record>
+        
+        <!-- Sign -->
+        <record id="sign.menu_document" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_sign_app')])]"/>
+        </record>
+        
+        <!-- Employees -->
+        <record id="hr.menu_hr_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_employees_app')])]"/>
+        </record>
+        
+        <!-- Payroll -->
+        <record id="hr_work_entry_contract_enterprise.menu_hr_payroll_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_payroll_app')])]"/>
+        </record>
+        
+        <!-- Expenses -->
+        <record id="hr_expense.menu_hr_expense_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_expenses_app')])]"/>
+        </record>
+        
+        <!-- Link Tracker -->
+        <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_link_tracker_app')])]"/>
+        </record>
+        
+        <!-- Apps -->
+        <record id="base.menu_management" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_apps_app')])]"/>
+        </record>
+
+        <!-- Settings -->
+        <record id="base.menu_administration" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_settings_app')])]"/>
+        </record>
+
+        <!-- Tests -->
+        <!-- <record id="base.menu_tests" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_tests_app')])]"/>
+        </record> -->
+    </data>
+</odoo>
