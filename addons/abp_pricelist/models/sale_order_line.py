@@ -6,7 +6,6 @@ class SaleOrderLine(models.Model):
     
     barcode = fields.Char(string='EAN13')
     retail_price = fields.Monetary()
-    distributor_price = fields.Monetary()
     
     # Override parent method
     @api.depends('product_id', 'product_uom', 'product_uom_qty')
