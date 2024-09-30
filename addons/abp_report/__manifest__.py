@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Report',
+    'name': 'Able Pack Report',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Report',
+    'summary': 'Able Pack Report',
     'version': '1.0',
     'description': """
     """,

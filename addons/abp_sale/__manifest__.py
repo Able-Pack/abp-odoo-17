@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Sales',
+    'name': 'Able Pack Sales',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Sales',
+    'summary': 'Able Pack Sales',
     'version': '17.0',
     'description': """
     """,

@@ -1,8 +1,8 @@
 {
-    'name': 'Ablepack Core Module',
+    'name': 'Able Pack Core Module',
     'category': '',
     'sequence': 23,
-    'summary': 'Ablepack Core Module',
+    'summary': 'Able Pack Core Module',
     'version': '1.0',
     'description': """
         To install all ablepack's dependencies
@@ -24,7 +24,6 @@
         
         'web',
         'contacts',
-        'abp_product_barcode',
         'abp_customer_catalogue',
         'abp_pricelist',
         'abp_contact',
@@ -33,6 +32,8 @@
         'bi_invoice_backdate',
         'muk_web_colors',
         'sttl_prevent_auto_save',
+        
+        'abp_security', # should be installed last to implement able pack's security (reset app menu groups)
     ],
     'data': [
     ],
