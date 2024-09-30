@@ -1,5 +1,9 @@
 from odoo import models, _
 
+def format_currency_amount(amount, currency_id):
+        pre = currency_id.position == 'before'
+        symbol = u'{symbol}'.format(symbol=currency_id.symbol or '')
+        return u'{pre}{0}{post}'.format(amount, pre=symbol if pre else '', post=symbol if not pre else '')
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -12,7 +16,6 @@ class SaleOrder(models.Model):
         data = []
         for doc in docs:
             for line in doc.order_line:
-                barcode = line.barcode
                 label_qty = line.pricelist_item_id.label_qty
                 
                 qty = 0
@@ -23,8 +26,10 @@ class SaleOrder(models.Model):
                     
                 for _ in range(qty):
                     data.append({
+                        'product_code': line.customer_product_code or line.product_template_id.default_code,
                         'product_name': line.product_id.name,
-                        'barcode': barcode,
+                        'barcode': line.barcode,
+                        'price': format_currency_amount(line.retail_price or 0.0, doc.env.company.currency_id),
                     })
         return data
     
