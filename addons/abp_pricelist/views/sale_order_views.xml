@@ -13,6 +13,9 @@
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
                     <field name="barcode"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="before">
+                    <field name="retail_price"/>
+                </xpath>
             </field>
         </record>
 

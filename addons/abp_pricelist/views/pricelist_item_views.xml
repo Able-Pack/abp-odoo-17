@@ -7,6 +7,12 @@
             <field name="model">product.pricelist.item</field>
             <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
             <field name="arch" type="xml">
+                <field name="base" position="after">
+                    <field name="retail_price" invisible="base != 'retail_price'"/>
+                </field>
+                <xpath expr="//field[@name='price_min_margin']/.." position="after">
+                    <field name="distributor_price" invisible="base != 'retail_price'"/>
+                </xpath>
                 <xpath expr="//form/sheet/group[last()]" position="after">
                     <group string="General Information">
                         <group>
