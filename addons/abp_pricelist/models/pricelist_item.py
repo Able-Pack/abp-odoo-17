@@ -29,12 +29,25 @@ class PricelistItem(models.Model):
     @api.depends('retail_price', 'price_discount', 'price_surcharge', 'price_round')
     def _compute_distributor_price(self):
         for rec in self:
-            discounted_price = rec.retail_price * (100-rec.price_discount) / 100
-            extra_price = rec.price_surcharge
-            computed_price = discounted_price + extra_price
-            if rec.price_round:
-                computed_price = tools.float_round(computed_price, precision_rounding=rec.price_round)
-            rec.distributor_price = computed_price
+            price = 0.0
+            if rec.base == 'retail_price':
+                # complete formula
+                base_price = rec.retail_price
+                price_limit = base_price
+                price = (base_price - (base_price * (rec.price_discount / 100))) or 0.0
+                if rec.price_round:
+                    price = tools.float_round(price, precision_rounding=rec.price_round)
+                    
+                if rec.price_surcharge:
+                    price += rec.price_surcharge
+                    
+                if rec.price_min_margin:
+                    price = max(price, price_limit + rec.price_min_margin)
+                    
+                if rec.price_max_margin:
+                    price = min(price, price_limit + rec.price_max_margin)
+                    
+            rec.distributor_price = price
     
     def _compute_base_price(self, product, quantity, uom, date, currency):
         for rec in self:
