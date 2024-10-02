@@ -16,6 +16,6 @@ class CustomerCatalogue(models.Model):
     @api.depends('product_tmpl_id', 'customer_product_code', 'customer_product_ref')
     def _compute_display_name(self):
         for rec in self:
-            name = f'{rec.product_tmpl_id.display_name} - {rec.customer_product_code} - {rec.customer_product_ref}'
+            name = f'{rec.product_tmpl_id.display_name} [{rec.customer_product_code}]'
             rec.display_name = name
             

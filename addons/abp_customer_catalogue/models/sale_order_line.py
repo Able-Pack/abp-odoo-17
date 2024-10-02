@@ -6,7 +6,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     
     # customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue', compute='_compute_customer_catalogue')
-    customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue')
+    customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue', required=True)
     customer_catalogue_domain = fields.Json(compute='_compute_customer_catalogue_domain')
     customer_product_code = fields.Char(string='Customer Product Code')
     customer_product_ref = fields.Char(string='Customer Product Ref')
@@ -21,6 +21,8 @@ class SaleOrderLine(models.Model):
             rec.customer_catalogue_domain = json.dumps([('id', 'in', customer_catalogue.ids)])
             if len(customer_catalogue.ids) == 1:
                 rec.customer_catalogue_id = customer_catalogue
+                rec.customer_product_code = customer_catalogue.customer_product_code
+                rec.customer_product_ref = customer_catalogue.customer_product_ref
             
     @api.onchange('product_id')
     def _onchange_product_id(self):
