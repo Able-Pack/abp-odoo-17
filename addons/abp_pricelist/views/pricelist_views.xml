@@ -16,8 +16,8 @@
                     <button name="button_print_barcode" string="Print Barcode" type="object" class="btn btn-primary"/>
                 </xpath>
                 <xpath expr="//field[@name='item_ids']/tree[2]/field[@name='date_start']" position="before">
-                    <field name="distributor_price" widget="monetary"/>
-                    <field name="retail_price" widget="monetary"/>
+                    <field name="distributor_price"/>
+                    <field name="retail_price"/>
                 </xpath>
                 <xpath expr="//field[@name='item_ids']/tree[2]/field[@name='date_start']" position="attributes">
                     <attribute name="optional">hide</attribute>

@@ -6,8 +6,8 @@ class PricelistItem(models.Model):
     
     barcode = fields.Char(string='EAN13')
     label_qty = fields.Integer(string='Label Qty')
-    retail_price = fields.Monetary()
-    distributor_price = fields.Monetary(compute='_compute_distributor_price')
+    retail_price = fields.Float()
+    distributor_price = fields.Float(compute='_compute_distributor_price')
     base = fields.Selection(selection_add=[('retail_price', 'Retail Price')], ondelete={'retail_price': 'cascade'})
     customer_product_ref = fields.Char()
     
