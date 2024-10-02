@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[last()]" position="after">
                     <page name="customer_catalogue" string="Customer Catalogue">
-                        <field name="customer_catalogue_ids" widget="one2many"/>
+                        <field name="customer_catalogue_ids" widget="one2many_search"/>
                     </page>
                 </xpath>
             </field>
