@@ -23,6 +23,8 @@ class SaleOrderLine(models.Model):
                 rec.customer_catalogue_id = customer_catalogue
                 rec.customer_product_code = customer_catalogue.customer_product_code
                 rec.customer_product_ref = customer_catalogue.customer_product_ref
+                rec.barcode = rec.pricelist_item_id.barcode
+                rec.retail_price = rec.pricelist_item_id.retail_price
             
     @api.onchange('product_id')
     def _onchange_product_id(self):
