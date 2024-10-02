@@ -35,7 +35,8 @@
                         'company_id': 1,
                         'default_list_price': 0,
                         'default_description_sale': False,
-                        'show_all_product': parent.show_all_product
+                        'show_all_product': parent.show_all_product,
+                        'model': 'sale.order'
                     }</attribute>
                     <attribute name="options">{
                         'no_create': True, 

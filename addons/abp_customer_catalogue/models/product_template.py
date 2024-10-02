@@ -11,7 +11,10 @@ class ProductTemplate(models.Model):
     def _name_search(self, name, domain=None, operator='ilike', limit=None, order=None):
         query = super()._name_search(name, domain, operator, 100, order)
         
-        if self._context.get('partner_id') and not self._context.get('show_all_product'):
+        model = self._context.get('model')
+        partner_id = self._context.get('partner_id')
+        show_all_product = self._context.get('show_all_product')
+        if model == 'sale.order' and partner_id and not show_all_product:
             customer_catalogue_ids = self.env['customer.catalogue'].search([
                 '|', '|', '|',
                 ('product_tmpl_id.default_code', operator, name),
