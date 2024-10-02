@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='internal_notes']" position="after">
                     <page name="customer_catalogue" string="Customer Catalogue">
-                        <field name="customer_catalogue_ids" widget="one2many">
+                        <field name="customer_catalogue_ids" widget="one2many_search">
                             <tree editable="bottom">
                                 <field name="sequence" widget="handle"/>
                                 <field name="product_id"/>
