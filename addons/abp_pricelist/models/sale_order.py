@@ -1,9 +1,6 @@
 from odoo import models, _
+from odoo.addons.abp_utils.utils import format_currency_amount
 
-def format_currency_amount(amount, currency_id):
-        pre = currency_id.position == 'before'
-        symbol = u'{symbol}'.format(symbol=currency_id.symbol or '')
-        return u'{pre}{0}{post}'.format(amount, pre=symbol if pre else '', post=symbol if not pre else '')
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'

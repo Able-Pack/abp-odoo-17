@@ -21,6 +21,8 @@
         'views/product_product_views.xml',
         'views/product_template_views.xml',
         'views/res_partner_views.xml',
+        
+        'reports/product_barcode_action.xml',
     ],
     'assets': {
         # 'point_of_sale._assets_pos': [
