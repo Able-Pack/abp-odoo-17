@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="action_report_customer_catalogue_product_barcode" model="ir.actions.report">
+            <field name="name">Print Customer Catalogue Product Barcode</field>
+            <field name="model">customer.catalogue</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">abp_report.report_product_barcode_abp</field>
+            <field name="report_file">abp_report.report_product_barcode_abp</field>
+            <field name="print_report_name">'Products barcode - %s' % (object.product_tmpl_id.name)</field>
+            <field name="binding_model_id" ref="model_customer_catalogue"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="abp_report.abp_product_barcode_format"/>
+        </record>
+
+    </data>
+</odoo>
