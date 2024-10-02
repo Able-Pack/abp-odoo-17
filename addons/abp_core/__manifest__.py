@@ -24,7 +24,7 @@
         
         'web',
         'contacts',
-        'abp_utils'
+        'abp_utils',
         'abp_customer_catalogue',
         'abp_pricelist',
         'abp_contact',
