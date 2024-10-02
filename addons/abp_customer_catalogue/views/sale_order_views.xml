@@ -15,7 +15,7 @@
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
                     <field name="customer_catalogue_domain" column_invisible="1"/>
-                    <field name="customer_catalogue_id" domain="customer_catalogue_domain"/>
+                    <field name="customer_catalogue_id" domain="customer_catalogue_domain" required="customer_catalogue_domain != False"/>
                     <field name="customer_product_code"/>
                     <field name="customer_product_ref"/>
                 </xpath>
