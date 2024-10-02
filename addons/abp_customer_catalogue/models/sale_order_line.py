@@ -6,7 +6,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     
     # customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue', compute='_compute_customer_catalogue')
-    customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue', required=True)
+    customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue')
     customer_catalogue_domain = fields.Json(compute='_compute_customer_catalogue_domain')
     customer_product_code = fields.Char(string='Customer Product Code')
     customer_product_ref = fields.Char(string='Customer Product Ref')
@@ -18,7 +18,10 @@ class SaleOrderLine(models.Model):
                 ('partner_id', '=', rec.order_id.partner_id.id),
                 ('product_tmpl_id', '=', rec.product_template_id.id),
             ])
-            rec.customer_catalogue_domain = json.dumps([('id', 'in', customer_catalogue.ids)])
+            if customer_catalogue:
+                rec.customer_catalogue_domain = json.dumps([('id', 'in', customer_catalogue.ids)])
+            else:
+                rec.customer_catalogue_domain = False
             if len(customer_catalogue.ids) == 1:
                 rec.customer_catalogue_id = customer_catalogue
                 rec.customer_product_code = customer_catalogue.customer_product_code
