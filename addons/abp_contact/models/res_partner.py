@@ -4,6 +4,10 @@ from odoo import api, fields, models, _
 class Partner(models.Model):
     _inherit = "res.partner"
     
+    # Redefine fields because somehow these fields cannot be used for api.depends
+    supplier_rank = fields.Integer(default=0, copy=False)
+    customer_rank = fields.Integer(default=0, copy=False)
+    
     is_customer = fields.Boolean(string='Is customer?', default=0, compute='_compute_rank', inverse='_set_is_customer')
     is_vendor = fields.Boolean(string='Is vendor?', default=0, compute='_compute_rank', inverse='_set_is_vendor')
     
