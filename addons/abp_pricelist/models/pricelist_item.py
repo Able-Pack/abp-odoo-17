@@ -51,11 +51,10 @@ class PricelistItem(models.Model):
             rec.distributor_price = price
     
     def _compute_base_price(self, product, quantity, uom, date, currency):
-        for rec in self:
-            # Directly use retail price if the type is pricelist item is based on Retail Price
-            if rec.base == 'retail_price':
-                # Return this so that it will automatically computed in sale order
-                price = rec.retail_price
-                return price
-            else:
-                return super()._compute_base_price(product, quantity, uom, date, currency)
+        # Directly use retail price if the type is pricelist item is based on Retail Price
+        if self.base == 'retail_price':
+            # Return this so that it will automatically computed in sale order
+            price = self.retail_price or 0.0
+            return float(price)
+        else:
+            return super()._compute_base_price(product, quantity, uom, date, currency)
