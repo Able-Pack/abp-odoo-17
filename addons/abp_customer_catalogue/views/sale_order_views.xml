@@ -24,6 +24,9 @@
                         <field name="show_all_product" widget="boolean_toggle"/>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='product_template_id']" position="before">
+                    <field name="product_template_domain" invisible="1"/>
+                </xpath>
                 <!-- Manually add existing context because haven't found way to extend context instead of overwrite it -->
                 <!-- Only add context 'show_all_product' -->
                 <xpath expr="//field[@name='product_template_id']" position="attributes">
@@ -44,6 +47,7 @@
                         'no_open': True,
                         'no_quick_create': True,
                     }</attribute>
+                    <attribute name="domain">product_template_domain</attribute>
                 </xpath>
             </field>
         </record>
