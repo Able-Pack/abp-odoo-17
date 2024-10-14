@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="customer_catalogue_tree_view" model="ir.ui.view">
+            <field name="name">customer.catalogue.tree.view</field>
+            <field name="model">customer.catalogue</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="customer_product_code"/>
+                    <field name="customer_product_ref"/>
+                    <field name="barcode"/>
+                    <button name="button_print_barcode" string="Print Barcode" type="object" class="btn btn-primary"/>
+                    <button type="object" icon="fa-trash" string="Delete" confirm="Are you sure you want to delete this record? This action cannot be undone." name="unlink"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="customer_catalogue_search_view" model="ir.ui.view">
+            <field name="name">customer.catalogue.search.view</field>
+            <field name="model">customer.catalogue</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Partner/Product/Code/Ref" filter_domain="[
+                        '|', '|', '|', '|',
+                        ('partner_id.name', 'ilike', self),
+                        ('product_id.default_code', 'ilike', self),
+                        ('product_id.name', 'ilike', self),
+                        ('customer_product_code', 'ilike', self),
+                        ('customer_product_ref', 'ilike', self)
+                    ]"/>
+                    <separator/>
+                    <group expand="1" string="Group By">
+                        <filter string="Customer" name='group_by_customer' context="{'group_by': 'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="customer_catalogue_action" model="ir.actions.act_window">
+            <field name="name">Customer Catalogue</field>
+            <field name="res_model">customer.catalogue</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="customer_catalogue_search_view"/>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="customer_catalogue_menu_action" name="Customer Catalogue" action="customer_catalogue_action" parent="contacts.menu_contacts" sequence="3"/>
+        <record id="contacts.res_partner_menu_config" model="ir.ui.menu">
+            <field name="sequence">10</field>
+        </record>
+
+    </data>
+</odoo>

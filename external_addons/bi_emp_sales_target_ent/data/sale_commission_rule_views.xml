@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Salary Structure -->
+        <record id="structure_commission" model="hr.payroll.structure">
+            <field name="name">Sales Commission</field>
+            <field name="type_id" ref="hr_contract.structure_type_employee"/>
+            <field name="rule_ids" eval="[]"/>
+        </record>
+
+        <!-- Salary Rule -->
+        <record id="hr_rule_sale" model="hr.salary.rule">
+            <field name="amount_select">code</field>
+            <field name="code">SC</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="name">Sale Commission</field>
+            <field name="sequence" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_python_compute">result = employee._find_commission_count(payslip)</field>
+            <field name="struct_id" ref="bi_emp_sales_target_ent.structure_commission"/>
+        </record>
+
+    </data>
+</odoo>
