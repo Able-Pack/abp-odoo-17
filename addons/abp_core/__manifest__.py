@@ -26,6 +26,7 @@
         'contacts',
         'abp_utils',
         'abp_customer_catalogue',
+        'abp_payroll',
         'abp_pricelist',
         'abp_contact',
         'abp_sale',
@@ -33,6 +34,8 @@
         'bi_invoice_backdate',
         'muk_web_colors',
         'sttl_prevent_auto_save',
+        'one2many_search_widget',
+        'reset_journal_entries',
         
         'abp_security', # should be installed last to implement able pack's security (reset app menu groups)
     ],
