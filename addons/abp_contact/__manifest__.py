@@ -3,6 +3,7 @@
     'category': '',
     'sequence': 23,
     'summary': 'Able Pack Contact',
+    'author': 'Victor Imannuel (Child of God)',
     'version': '1.0',
     'description': """
     """,
@@ -10,6 +11,8 @@
         'contacts',
     ],
     'data': [
+        'security/contact_security.xml',
+        
         'views/res_partner_views.xml',
     ],
     'assets': {
