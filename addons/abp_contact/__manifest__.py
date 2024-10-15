@@ -8,6 +8,7 @@
     'description': """
     """,
     'depends': [
+        'base',
         'contacts',
     ],
     'data': [
