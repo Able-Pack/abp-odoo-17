@@ -11,6 +11,7 @@
     'depends': [
         'sale',
         'sales_team',
+        'account_reports',
     ],
     'data': [
         'views/res_partner_views.xml',
