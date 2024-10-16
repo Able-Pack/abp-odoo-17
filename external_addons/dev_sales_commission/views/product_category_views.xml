@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+    For Module Support : devintelle@gmail.com  or Skype : devintelle
+-->
+<odoo>
+    <record id="view_dev_product_cat_commission_inherit_form" model="ir.ui.view">
+        <field name="name">view.dev.pro.categ.commission.inherit.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="after">
+                <separator string="Sales Commission" colspan="4"/>
+                <group col="2">
+                    <field name="commission_type"/>
+                </group>
+                <field name="commission_config_lines" nolabel="1">
+                    <tree  editable="bottom">
+                        <field name="from_amount"/>
+                        <field name="to_amount"/>
+                        <field name="salesperson_per"/>
+                        <field name="manager_per"/>
+                        <field name="salesperson_amount"/>
+                        <field name="manager_amount"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>  

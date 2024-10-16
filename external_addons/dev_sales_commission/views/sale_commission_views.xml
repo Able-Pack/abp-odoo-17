@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <!-- Expense Form View -->
+    <record id="view_dev_sale_commission_form" model="ir.ui.view">
+        <field name="name">view.dev.sale.commission.form</field>
+        <field name="model">sale.commission</field>
+        <field name="arch" type="xml">
+            <form string="Sales Commission">
+                <header>
+                    <button name="action_load_lines"  invisible="state!='draft'" string="Load Lines"
+                        class="btn-primary" type="object"/>
+                        
+                    <button name="action_confirm"  invisible="state!='draft'" string="Confirm"
+                        class="btn-primary" type="object"/>
+                    
+                    <button name="action_create_invoice"  string="Create Invoice" 
+                        class="btn-primary" type="object"  invisible = "state != 'confirm' or invisible_create_invoice != False"/>
+                        
+                    <button name="action_commission_paid"  string="Paid" 
+                        class="btn-primary" type="object" invisible = "state != 'confirm' or invisible_create_invoice == False"/>
+                        
+                    <field name="invisible_create_invoice" invisible="1"/>
+                    
+                    <button name="action_cancel" invisible="state!='confirm'"  string="Cancel"
+                        type="object"/>
+                    
+                    <button name="set_to_draft" invisible="state!='cancel'"  string="Set To Draft"
+                        type="object"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_invoice" class="oe_stat_button" icon="fa-pencil-square-o"  invisible = "invoice_count == 0">
+                            <field name="invoice_count" widget="statinfo" string="View Invoice"/>
+                            <field name="invoice_id" invisible="1"/>
+                        </button>
+                    </div>
+                    <label for="name" string="Name" class="oe_edit_only"/>
+                    <h3><field name="name" readonly="1"/></h3>
+                    <group>
+                        <group>
+                            <field name="user_id" 
+                                   readonly = "state != 'draft'"/>
+                                   
+                            <field name="end_date" 
+                                   readonly = "state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date" 
+                                   readonly = "state != 'draft'"/>
+                            <field name="amount" readonly = "state != 'draft'"/>
+                            <field name="currency_id" readonly = "state != 'draft'"/>
+                            <field name="company_id" readonly = "state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string='Commission Lines'>
+                            <field name="commission_lines" readonly = "state != 'draft'">
+                                <tree editable="bottom" delete="false">
+                                    <field name="date"/>
+                                    <field name="user_type"/>
+                                    <field name="origin"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+			        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+			        <field name="message_ids" widget="mail_thread"/>
+			    </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Expense Tree View -->
+    <record id="view_sale_commission_tree" model="ir.ui.view">
+        <field name="name">view.dev.sale.commission.tree</field>
+        <field name="model">sale.commission</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Commission">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="end_date"/>
+                <field name="amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_sale_commission_filter" model="ir.ui.view">
+            <field name="name">view.sale.commission.filter</field>
+            <field name="model">sale.commission</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Commission">
+                    <field name="name" string="Sales Commission" filter_domain="[('name','ilike',self)]"/>
+                    <field name="user_id" string='Sales Person' filter_domain="[('user_id','ilike',self)]"/>
+                    <filter string="Draft" name="state" domain="[('state','=','draft')]"/>
+                    <filter string="Confirm" name="state" domain="[('state','=','confirm')]"/>
+                    <filter string="Paid" name="state" domain="[('state','=','paid')]"/>
+                    <separator/>
+                    <filter string="Date" name="filter_date" date="date"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Sales Person" name="user_id" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Date" name="order_month" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+
+    <!-- Expense Action -->
+    <record id="action_sale_commission" model="ir.actions.act_window">
+        <field name="name">Sales Commission</field>
+        <field name="res_model">sale.commission</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!--  Menu Items-->
+    <menuitem name="Commission" id="menu_dev_sale_commission_main" parent="sale.sale_menu_root" sequence="30"
+        groups="sales_team.group_sale_manager"/>
+    <menuitem name="Sales Commission" id="menu_dev_sale_commission" parent="menu_dev_sale_commission_main" action="action_sale_commission" sequence="1"/>
+
+</odoo>
