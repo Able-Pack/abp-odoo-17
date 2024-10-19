@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="customer_statement_wizard_form_view" model="ir.ui.view">
+            <field name="name">customer.statement.wizard.wizard</field>
+            <field name="model">customer.statement.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="partner_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="invoice_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="months" required="1"/>
+                            <field name="previous_year"/>
+                        </group>
+                        <group>
+                            <field name="aging_by" required="1"/>
+                        </group>
+                    </group>
+                    <newline/>
+                    <separator colspan="6"/>
+                    <footer>
+                        <button name="action_print_report" string="Print" type="object" class="oe_highlight"/>
+                        <button name="action_send" string="Send Mail" type="object" class="oe_highlight"/>
+                        <button special="cancel" class="oe_highlight" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
