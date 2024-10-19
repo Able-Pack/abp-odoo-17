@@ -9,6 +9,7 @@
         A module that accomodate all the needs of Able Pack's salesperson
     """,
     'depends': [
+        'contacts',
         'sale',
         'sales_team',
         'account_reports',

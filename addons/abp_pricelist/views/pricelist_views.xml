@@ -7,6 +7,9 @@
             <field name="model">product.pricelist</field>
             <field name="inherit_id" ref="product.product_pricelist_view"/>
             <field name="arch" type="xml">
+                <xpath expr="//field[@name='item_ids']/tree[2]/field[@name='name']" position="before">
+                    <field name="sequence" widget="handle"/>
+                </xpath>
                 <xpath expr="//field[@name='item_ids']" position="attributes">
                     <attribute name="widget">one2many_search</attribute>
                 </xpath>
