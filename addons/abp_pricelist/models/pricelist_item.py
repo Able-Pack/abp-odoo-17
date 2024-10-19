@@ -4,6 +4,7 @@ from odoo import api, fields, models, tools
 class PricelistItem(models.Model):
     _inherit = 'product.pricelist.item'
     
+    sequence = fields.Integer(string='Sequence')
     barcode = fields.Char(string='EAN13')
     label_qty = fields.Integer(string='Label Qty')
     retail_price = fields.Float()
