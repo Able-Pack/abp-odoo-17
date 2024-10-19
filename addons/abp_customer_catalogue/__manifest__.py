@@ -7,6 +7,7 @@
     'description': """
     """,
     'depends': [
+        'base',
         'contacts',
         'sale',
         'point_of_sale',
