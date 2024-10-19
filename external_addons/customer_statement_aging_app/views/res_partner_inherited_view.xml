@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record id="action_stock_mass_assign_backdate" model="ir.actions.server">
+        <field name="name">Customer Statement</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            action=record.action_open_wizard()
+        </field>
+    </record>
+
+    
+
+</odoo>
