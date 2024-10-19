@@ -1,21 +1,17 @@
 import json
 
 
-def set_readonly(doc, paths=[]):
+def set_readonly(doc, value, paths=[],):
     for path in paths:
         for node in doc.xpath(path):
-            modifiers = json.loads(node.attrib.pop('modifiers', '{}'))
-            modifiers['readonly'] = True
-            node.set("modifiers", json.dumps(modifiers))
+            node.set('readonly', str(value))
             
             
-def set_invisible(doc, paths=[]):
+def set_invisible(doc, value, paths=[]):
     for path in paths:
         for node in doc.xpath(path):
-            modifiers = json.loads(node.attrib.pop('modifiers', '{}'))
-            modifiers['invisible'] = True
-            modifiers['column_invisible'] = True
-            node.set("modifiers", json.dumps(modifiers))
+            node.set('invisible', str(value))
+            node.set('column_invisible', str(value))
             
             
 def set_no_create_edit_delete(doc, paths=[], no_create=False, no_edit=False, no_delete=True):
