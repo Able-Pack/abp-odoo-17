@@ -9,10 +9,11 @@
         A module that accomodate all the needs of Able Pack's salesperson
     """,
     'depends': [
+        'account_reports',
         'contacts',
         'sale',
         'sales_team',
-        'account_reports',
+        'stock',
     ],
     'data': [
         'views/res_partner_views.xml',
