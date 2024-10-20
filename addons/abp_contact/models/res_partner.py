@@ -11,15 +11,19 @@ class Partner(models.Model):
     is_customer = fields.Boolean(string='Is customer?', default=0, compute='_compute_rank', inverse='_set_is_customer')
     is_vendor = fields.Boolean(string='Is vendor?', default=0, compute='_compute_rank', inverse='_set_is_vendor')
     
-    # Override write instead of onchange because somehow onchange doesn't work
-    # def write(self, vals):
-    #     if 'is_customer' in vals:
-    #         vals['customer_rank'] = vals.get('is_customer')
-                
-    #     if 'is_vendor' in vals:
-    #         vals['supplier_rank'] = vals.get('is_vendor')
-                
-    #     return super().write(vals)
+    # Override name search method to let user search contacts by street, street2, and zip
+    @api.model
+    def _name_search(self, name, domain=None, operator='ilike', limit=None, order=None):
+        if not (name == '' and operator in ('like', 'ilike')):
+            if domain is None:
+                domain = []
+            domain += [
+                '|', '|', '|',
+                ('street', operator, name),
+                ('street2', operator, name),
+                ('zip', operator, name)
+            ]
+        return super()._name_search(name, domain, operator, 100, order)
     
     def _set_is_customer(self):
         self.customer_rank = self.is_customer
