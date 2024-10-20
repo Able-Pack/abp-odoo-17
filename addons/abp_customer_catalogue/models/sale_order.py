@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
                     'partner_id': self.partner_id.id,
                     'product_id': line.product_id.id,
                     'customer_product_code': line.customer_product_code,
-                    'customer_product_ref': line.customer_product_ref,
+                    # 'customer_product_ref': line.customer_product_ref,
                 }
                 # create new customer catalogue record
                 customer_catalogue_model.create(values)
@@ -65,7 +65,6 @@ class SaleOrder(models.Model):
                         <th>Product</th>
                         <th>EAN13</th>
                         <th>Customer Product Code</th>
-                        <th>Customer Product Ref</th>
                         <th>Price</th>
                     </tr>
                 </thead>
@@ -80,7 +79,6 @@ class SaleOrder(models.Model):
                     <td>{item.get('product_tmpl_name', '-')}</td>
                     <td>{item.get('barcode', '-')}</td>
                     <td>{item.get('customer_product_code', '-')}</td>
-                    <td>{item.get('customer_product_ref', '-')}</td>
                     <td>{item.get('price_unit', '-')}</td>
                 </tr>
             """

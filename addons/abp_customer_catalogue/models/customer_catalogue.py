@@ -16,7 +16,8 @@ class CustomerCatalogue(models.Model):
     barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item')
     retail_price = fields.Char(compute='_compute_pricelist_item')
     
-    @api.depends('product_tmpl_id', 'customer_product_code', 'customer_product_ref')
+    # @api.depends('product_tmpl_id', 'customer_product_code', 'customer_product_ref')
+    @api.depends('product_tmpl_id', 'customer_product_code')
     def _compute_display_name(self):
         for rec in self:
             name = rec.display_name
@@ -27,16 +28,28 @@ class CustomerCatalogue(models.Model):
                 
             rec.display_name = name
             
-    @api.depends('customer_product_ref')
+    # @api.depends('customer_product_ref')
+    @api.depends('product_id')
     def _compute_pricelist_item(self):
         for rec in self:
             pricelist_item = self.env['product.pricelist.item'].search([
                 ('pricelist_id', '=', rec.partner_id.property_product_pricelist.id),
                 ('product_tmpl_id', '=', rec.product_tmpl_id.id),
-                ('customer_product_ref', '=', rec.customer_product_ref),
+                
+                # If use customer product ref
+                # ('customer_product_ref', '=', rec.customer_product_ref),
             ])
-            rec.barcode = pricelist_item.barcode
-            rec.retail_price = pricelist_item.retail_price
+            
+            if len(pricelist_item) == 1:
+                rec.barcode = pricelist_item.barcode
+                rec.retail_price = pricelist_item.retail_price or pricelist_item.fixed_price
+            else:
+                rec.barcode = rec.retail_price = "Multiple pricelist item found"
+                
+            # If use customer product ref
+            # rec.barcode = pricelist_item.barcode
+            # rec.retail_price = pricelist_item.retail_price
+            
             
     # Will be called from tree views
     def button_print_barcode(self):

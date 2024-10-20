@@ -17,7 +17,6 @@
                     <group string="General Information">
                         <group>
                             <field name="barcode"/>
-                            <field name="customer_product_ref"/>
                         </group>
                         <!-- <group>
                             <group>
