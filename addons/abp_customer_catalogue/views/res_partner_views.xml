@@ -14,7 +14,7 @@
                                 <field name="sequence" widget="handle"/>
                                 <field name="product_id"/>
                                 <field name="customer_product_code"/>
-                                <field name="customer_product_ref"/>
+                                <!-- <field name="customer_product_ref"/> -->
                                 <field name="barcode"/>
                                 <button name="button_print_barcode" string="Print Barcode" type="object" class="btn btn-primary"/>
                             </tree>

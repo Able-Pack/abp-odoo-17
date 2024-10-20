@@ -8,13 +8,21 @@
             <field name="inherit_id" ref="product.product_view_search_catalog"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="attributes">
-                    <attribute name="filter_domain">[
+                    <!-- <attribute name="filter_domain">[
                         '|', '|', '|',  '|', 
                         ('default_code', 'ilike', self),
                         ('name', 'ilike', self),
                         ('barcode', 'ilike', self),
                         ('customer_catalogue_ids.customer_product_code', 'ilike', self),
                         ('customer_catalogue_ids.customer_product_ref', 'ilike', self)
+                    ]
+                    </attribute> -->
+                    <attribute name="filter_domain">[
+                        '|', '|', '|',  '|', 
+                        ('default_code', 'ilike', self),
+                        ('name', 'ilike', self),
+                        ('barcode', 'ilike', self),
+                        ('customer_catalogue_ids.customer_product_code', 'ilike', self),
                     ]
                     </attribute>
                 </xpath>
