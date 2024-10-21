@@ -15,7 +15,7 @@
         <record id="sales_team_related_contact" model="ir.rule">
             <field name="name">Sales Team Related Contact</field>
             <field name="model_id" ref="base.model_res_partner"/>
-            <field name="domain_force">
+            <!-- <field name="domain_force">
                 [
                     '|', '|', '|',
                     ('id', '=', user.id), 
@@ -23,9 +23,9 @@
                     ('user_id', '=', user.id), 
                     ('team_id.member_ids', '=', user.id)
                 ]
-            </field>
+            </field> -->
             <!-- Include false user_id -->
-            <!-- <field name="domain_force">
+            <field name="domain_force">
                 [
                     '|', '|', '|', '|',
                     ('id', '=', user.id), 
@@ -34,7 +34,7 @@
                     ('user_id', '=', False), 
                     ('team_id.member_ids', '=', user.id)
                 ]
-            </field> -->
+            </field>
             <field name="groups" eval="[(4, ref('group_abp_sales_team_partner'))]"/>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
