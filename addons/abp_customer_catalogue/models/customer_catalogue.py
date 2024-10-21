@@ -12,7 +12,7 @@ class CustomerCatalogue(models.Model):
     product_tmpl_id = fields.Many2one(comodel_name='product.template', related='product_id.product_tmpl_id')
     product_id = fields.Many2one(comodel_name='product.product', required=True)
     customer_product_code = fields.Char(string='Customer Product Code')
-    customer_product_ref = fields.Char(string='Customer Product Ref')
+    customer_product_ref = fields.Char(string='Customer Product Ref', compute='_compute_pricelist_item')
     barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item')
     retail_price = fields.Char(compute='_compute_pricelist_item')
     
@@ -41,12 +41,13 @@ class CustomerCatalogue(models.Model):
             ])
             
             if len(pricelist_item) == 1:
+                rec.customer_product_ref = pricelist_item.customer_product_ref
                 rec.barcode = pricelist_item.barcode
                 rec.retail_price = pricelist_item.retail_price or pricelist_item.fixed_price
             elif len(pricelist_item) > 1:
-                rec.barcode = rec.retail_price = "Multiple pricelist item found"
+                rec.customer_product_ref = rec.barcode = rec.retail_price = "Multiple pricelist item found"
             else:
-                rec.barcode = rec.retail_price = "No pricelist item found"
+                rec.customer_product_ref = rec.barcode = rec.retail_price = "No pricelist item found"
                 
             # If use customer product ref
             # rec.barcode = pricelist_item.barcode

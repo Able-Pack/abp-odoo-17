@@ -11,6 +11,7 @@
         'contacts',
         'sale',
         'stock',
+        'product',
         'point_of_sale',
     ],
     'data': [
@@ -24,6 +25,8 @@
         'views/product_product_views.xml',
         'views/product_template_views.xml',
         'views/res_partner_views.xml',
+        'views/pricelist_views.xml',
+        'views/pricelist_item_views.xml',
         
         'reports/product_barcode_action.xml',
     ],

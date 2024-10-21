@@ -17,6 +17,16 @@
             <field name="model_id" ref="base.model_res_partner"/>
             <field name="domain_force">
                 [
+                    '|', '|', '|',
+                    ('id', '=', user.id), 
+                    ('id', '=', user.partner_id.id), 
+                    ('user_id', '=', user.id), 
+                    ('team_id.member_ids', '=', user.id)
+                ]
+            </field>
+            <!-- Include false user_id -->
+            <!-- <field name="domain_force">
+                [
                     '|', '|', '|', '|',
                     ('id', '=', user.id), 
                     ('id', '=', user.partner_id.id), 
@@ -24,11 +34,11 @@
                     ('user_id', '=', False), 
                     ('team_id.member_ids', '=', user.id)
                 ]
-            </field>
+            </field> -->
             <field name="groups" eval="[(4, ref('group_abp_sales_team_partner'))]"/>
             <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
             <field name="perm_unlink" eval="False"/>
         </record>
 

@@ -25,12 +25,12 @@
         
         # ablepack addons
         'abp_utils',
-        'abp_customer_catalogue',
         'abp_payroll',
         'abp_pricelist',
         'abp_contact',
         'abp_sale',
         'abp_salesperson_dashboard',
+        'abp_customer_catalogue',
         
         # external addons
         'bi_invoice_backdate',

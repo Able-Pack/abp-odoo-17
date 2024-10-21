@@ -10,7 +10,6 @@ class PricelistItem(models.Model):
     retail_price = fields.Float()
     distributor_price = fields.Float(compute='_compute_distributor_price')
     base = fields.Selection(selection_add=[('retail_price', 'Retail Price')], ondelete={'retail_price': 'cascade'})
-    customer_product_ref = fields.Char()
     
     # Will be called from tree views
     def button_print_barcode(self):
