@@ -4,8 +4,8 @@
         <!-- Salesperson Dashboard -->
         <menuitem id="salesperson_dashboard_menu_root" name="Salesperson Dashboard" web_icon="abp_salesperson_dashboard,static/description/icon.png" sequence="30">
             <!-- Salesperson Dashboard/Contacts -->
-            <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="contacts.action_contacts" sequence="10"/>
-            <!-- <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="abp_salesperson_dashboard.action_contacts_sales" sequence="10"/> -->
+            <!-- <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="contacts.action_contacts" sequence="10"/> -->
+            <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="abp_salesperson_dashboard.action_contacts_sales" sequence="10"/>
 
             <!-- Salesperson Dashboard/Sales -->
             <menuitem id="salesperson_dashboard_order_menu" name="Sales" sequence="20">
