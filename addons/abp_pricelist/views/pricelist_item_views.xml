@@ -7,6 +7,9 @@
             <field name="model">product.pricelist.item</field>
             <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
             <field name="arch" type="xml">
+                <field name="price_round" position="after">
+                    <field name="rounding_option" invisible="compute_price != 'formula'"/>
+                </field>
                 <field name="base" position="after">
                     <field name="retail_price" widget="monetary" invisible="base != 'retail_price'"/>
                 </field>
