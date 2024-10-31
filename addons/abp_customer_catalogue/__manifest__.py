@@ -7,8 +7,11 @@
     'description': """
     """,
     'depends': [
+        'base',
         'contacts',
         'sale',
+        'stock',
+        'product',
         'point_of_sale',
     ],
     'data': [
@@ -18,9 +21,12 @@
         
         'views/customer_catalogue_views.xml',
         'views/sale_order_views.xml',
+        'views/stock_picking_views.xml',
         'views/product_product_views.xml',
         'views/product_template_views.xml',
         'views/res_partner_views.xml',
+        'views/pricelist_views.xml',
+        'views/pricelist_item_views.xml',
         
         'reports/product_barcode_action.xml',
     ],

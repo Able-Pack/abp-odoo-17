@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+	<record id="view_sale_order_commission_config_form" model="ir.ui.view">
+        <field name="name">view.sale.order.commission.config.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+	        <xpath expr="//app[@name='sale_management']" position="inside">
+	            <h2 class="mt32">Sales Commission</h2>
+                <div class="row mt16 o_settings_container" id="connectors_setting_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="amazon_connector">
+                        <div class="o_setting_left_pane" style="width:35%">
+                            <label for="commission_pay"/>
+                        </div>
+                        <div class="o_setting_right_pane" style="margin-left:35%;width:100%">
+                            <field name="commission_pay" readonly="0" widget="radio"/>
+                        </div>
+                        <div class="o_setting_left_pane" style="width:35%">
+                            <label for="calculation_base_on"/>
+                        </div>
+                        <div class="o_setting_right_pane" style="margin-left:35%;width:100%">
+                            <field name="calculation_base_on" readonly="0" widget="radio"/>
+                        </div>
+                        
+                        <div class="o_setting_left_pane" style="width:35%">
+                            <label for="product_id"/>
+                        </div>
+                        <div class="o_setting_right_pane" style="margin-left:35%;width:100%">
+                            <field name="product_id" readonly="0"/>
+                        </div>
+                        
+                    </div>
+                </div>
+	        </xpath>
+		</field>
+	</record>
+
+
+</odoo>

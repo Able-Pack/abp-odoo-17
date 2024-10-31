@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+
+    <record id="view_sale_commission_pivot" model="ir.ui.view">
+         <field name="name">sale.commission.report.pivot</field>
+         <field name="model">sale.commission.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Sales Commission Analysis" disable_linking="True">
+                 <field name="user_id" type="col"/>
+                 <field name="date" interval="month" type="row"/>
+                 <field name="amount" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_sale_commission_report_graph" model="ir.ui.view">
+         <field name="name">sale.commission.report.graph</field>
+         <field name="model">sale.commission.report</field>
+         <field name="arch" type="xml">
+             <graph string="Sales Commission Analysis" type="line">
+                 <field name="date" type="row" interval="day"/>
+                 <field name="amount" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="view_sale_commission_report_search" model="ir.ui.view">
+        <field name="name">sale.commission.report.search</field>
+        <field name="model">sale.commission.report</field>
+        <field name="arch" type="xml">
+            <search string="Sales Commission Analysis">
+                <field name="date"/>
+                <filter string="Date" name="year" invisible="1" date="date" default_period="this_year"/>
+                <filter name="draft_commission" string="Draft Commission" domain="[('state','=', 'draft')]"/>
+                <filter name="confirm_commission" string="Paid Commission" domain="[('state','=', 'confirm')]"/>
+                <filter name="paid_commission" string="Paid Commission" domain="[('state','=', 'paid')]"/>
+                <separator/>
+                <field name="user_type"/>
+                <group expand="0" string="Extended Filters">
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </group>
+                <group expand="1" string="Group By">
+                    <filter string="Salesperson" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="User Type" name="user_type" context="{'group_by':'user_type'}"/>
+                    <filter name="status" string="Status" context="{'group_by':'state'}"/>
+                    <filter string="Company" name="company" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>
+                    <separator/>
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                    <filter string="Commision Date" name="commission_month" context="{'group_by':'commission_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sales_commission_report_all" model="ir.actions.act_window">
+        <field name="name">Sales Commission Analysis</field>
+        <field name="res_model">sale.commission.report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="view_id"></field>  <!-- force empty -->
+        <field name="search_view_id" ref="view_sale_commission_report_search"/>
+        <field name="context">{'search_default_confirm_commission':1,'search_default_paid_commission':1,'group_by_no_leaf':1,'group_by':[]}</field>
+        <field name="help">This report performs Sales Commission Analysis.</field>
+    </record>
+    
+    
+    <menuitem id="menu_report_sale_commission_all"
+            name="Sales Commission Analysis"
+            action="action_sales_commission_report_all"
+            parent="menu_dev_sale_commission_main"
+            sequence="10"/>
+</odoo>

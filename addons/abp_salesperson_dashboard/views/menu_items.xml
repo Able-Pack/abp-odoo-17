@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
+        <!-- Salesperson Dashboard -->
         <menuitem id="salesperson_dashboard_menu_root" name="Salesperson Dashboard" web_icon="abp_salesperson_dashboard,static/description/icon.png" sequence="30">
+            <!-- Salesperson Dashboard/Contacts -->
+            <!-- <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="contacts.action_contacts" sequence="10"/> -->
             <menuitem id="salesperson_dashboard_contact_menu" name="Contacts" action="abp_salesperson_dashboard.action_contacts_sales" sequence="10"/>
+
+            <!-- Salesperson Dashboard/Sales -->
             <menuitem id="salesperson_dashboard_order_menu" name="Sales" sequence="20">
+                <!-- Salesperson Dashboard/Sales/Quotations -->
                 <menuitem id="salesperson_dashboard_quotation_menu_sub" action="sale.action_quotations_with_onboarding" sequence="10"/>
+                <!-- Salesperson Dashboard/Sales/Orders -->
                 <menuitem id="salesperson_dashboard_order_menu_sub" name="Orders" action="sale.action_orders" sequence="20"/>
             </menuitem>
+
+            <!-- Salesperson Dashboard/Inventory -->
+            <menuitem id="salesperson_dashboard_inventory_menu" name="Inventory" sequence="30">
+            <!-- Salesperson Dashboard/Inventory/Internal Transfer -->
+                <menuitem id="salesperson_dashboard_internal_transfer_menu" name="Internal Transfer" action="stock.action_picking_tree_internal" sequence="10"/>
+            <!-- Salesperson Dashboard/Inventory/Delivery Order -->
+                <menuitem id="salesperson_dashboard_delivery_order_menu" name="Delivery Order" action="stock.action_picking_tree_outgoing" sequence="20"/>
+            </menuitem>
+            
+            <!-- Salesperson Dashboard/Reporting -->
+            <menuitem id="salesperson_dashboard_reporting_menu" name="Reporting" sequence="40">
+                <!-- <menuitem id="salesperson_dashboard_report_partner_ledger_menu_sub" name="Partner Ledger" action="account_reports.action_account_report_partner_ledger" sequence="10"/> -->
+                <!-- <menuitem id="salesperson_dashboard_report_aged_payable_menu_sub" name="Aged Payable" action="account_reports.action_account_report_ap" sequence="20"/> -->
+                <!-- Salesperson Dashboard/Reporting/Aged Receivable -->
+                <menuitem id="salesperson_dashboard_report_aged_receivable_menu_sub" name="Aged Receivable" action="account_reports.action_account_report_ar" sequence="30"/>
+            </menuitem>
+
         </menuitem>
 
     </data>

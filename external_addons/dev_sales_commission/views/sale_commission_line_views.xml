@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+    <!-- Expense Form View -->
+    <record id="view_dev_sale_commission_line_form" model="ir.ui.view">
+        <field name="name">view.dev.sale.commission.line.form</field>
+        <field name="model">sale.commission.line</field>
+        <field name="arch" type="xml">
+            <form string="Sales Commission Line" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="user_type"/>
+                            <field name="origin"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="amount"/>
+                            <field name="currency_id"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Expense Tree View -->
+    <record id="view_sale_commission_line_tree" model="ir.ui.view">
+        <field name="name">view.dev.sale.commission.line.tree</field>
+        <field name="model">sale.commission.line</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Commission Lines" create="false" edit="false" delete="false">
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="origin"/>
+                <field name="user_type"/>
+                <field name="amount"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_sale_commission_line_filter" model="ir.ui.view">
+            <field name="name">view.sale.commission.line.filter</field>
+            <field name="model">sale.commission.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Commission">
+                    <field name="user_id" string="Sales Person" filter_domain="[('user_id','ilike',self)]"/>
+                    <filter string="Draft" name="state" domain="[('state','=','draft')]"/>
+                    <filter string="Paid" name="state" domain="[('state','=','paid')]"/>
+                    <separator/>
+                    <filter string="Date" name="filter_date" date="date"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Sales Person" name="user_id" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Date" name="order_month" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+
+    <!-- Expense Action -->
+    <record id="action_sale_commission_line" model="ir.actions.act_window">
+        <field name="name">Sales Commission Lines</field>
+        <field name="res_model">sale.commission.line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!--  Menu Items-->
+    <menuitem name="Sale Commission Lines" id="menu_dev_sale_commission_line" parent="menu_dev_sale_commission_main" action="action_sale_commission_line" sequence="2"/>
+
+</odoo>

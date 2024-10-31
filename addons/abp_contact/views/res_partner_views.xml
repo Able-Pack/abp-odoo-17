@@ -16,5 +16,25 @@
             </field>
         </record>
 
+        <record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">view.res.partner.filter.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <!-- Search contacts by name, street, street2, and zip -->
+                    <attribute name="filter_domain">
+                    [
+                        '|', '|', '|',
+                        ('name', 'ilike', self),
+                        ('street', 'ilike', self),
+                        ('street2', 'ilike', self),
+                        ('zip', 'ilike', self)
+                    ]
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>
