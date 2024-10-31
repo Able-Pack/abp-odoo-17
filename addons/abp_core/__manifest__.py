@@ -1,5 +1,5 @@
 {
-    'name': 'Able Pack Core Module',
+    'name': '(Deprecated) Able Pack Core Module',
     'category': '',
     'sequence': 23,
     'summary': 'Able Pack Core Module',
@@ -49,7 +49,7 @@
     ],
     'assets': {
     },
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': True,
     'license': 'LGPL-3',
