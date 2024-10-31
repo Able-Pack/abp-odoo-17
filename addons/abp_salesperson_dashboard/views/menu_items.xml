@@ -15,9 +15,12 @@
                 <menuitem id="salesperson_dashboard_order_menu_sub" name="Orders" action="sale.action_orders" sequence="20"/>
             </menuitem>
 
-            <!-- Salesperson Dashboard/Inventory/Internal Transfer -->
+            <!-- Salesperson Dashboard/Inventory -->
             <menuitem id="salesperson_dashboard_inventory_menu" name="Inventory" sequence="30">
-                <menuitem id="salesperson_dashboard_internal_transfer_menu_sub" name="Internal Transfer" action="stock.action_picking_tree_internal" sequence="10"/>
+            <!-- Salesperson Dashboard/Inventory/Internal Transfer -->
+                <menuitem id="salesperson_dashboard_internal_transfer_menu" name="Internal Transfer" action="stock.action_picking_tree_internal" sequence="10"/>
+            <!-- Salesperson Dashboard/Inventory/Delivery Order -->
+                <menuitem id="salesperson_dashboard_delivery_order_menu" name="Delivery Order" action="stock.action_picking_tree_outgoing" sequence="20"/>
             </menuitem>
             
             <!-- Salesperson Dashboard/Reporting -->

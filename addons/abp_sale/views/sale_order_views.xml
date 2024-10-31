@@ -7,6 +7,9 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="sale.action_report_saleorder" type="action" string="Print Quotation/Order" class="btn-info"/>
+                </xpath>
                 <xpath expr="//button[@name='action_cancel']" position="replace">
                     <button name="action_cancel" type="object" string="Cancel" invisible="state not in ['draft', 'sent', 'sale'] or not id or locked" 
                     data-hotkey="x" confirm="Are you sure you want to cancel?" context="{'disable_cancel_warning': True}"/>
