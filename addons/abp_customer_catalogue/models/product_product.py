@@ -16,10 +16,12 @@ class ProductProduct(models.Model):
         
         if model in ('stock.move', 'account.move') and partner_id and not show_all_product:
             customer_catalogue_ids = self.env['customer.catalogue'].search([
-                '|', '|',
+                '|', '|', '|', '|',
                 ('product_tmpl_id.default_code', operator, name),
                 ('product_tmpl_id.name', operator, name),
                 ('customer_product_code', operator, name),
+                ('customer_product_ref', operator, name),
+                ('barcode', operator, name),
                 ('partner_id', '=', partner_id)
             ])
             additional_product_ids = customer_catalogue_ids.mapped('product_id').ids
