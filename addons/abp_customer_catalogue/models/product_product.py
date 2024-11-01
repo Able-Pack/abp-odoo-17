@@ -14,7 +14,7 @@ class ProductProduct(models.Model):
         partner_id = self._context.get('partner_id')
         show_all_product = self._context.get('show_all_product')
         
-        if model == 'stock.move' and partner_id and not show_all_product:
+        if model in ('stock.move', 'account.move') and partner_id and not show_all_product:
             customer_catalogue_ids = self.env['customer.catalogue'].search([
                 '|', '|',
                 ('product_tmpl_id.default_code', operator, name),
