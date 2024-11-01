@@ -12,7 +12,7 @@
     """,
     'author': 'BrowseInfo',
     'website': 'https://www.browseinfo.com',
-    # 'depends': ['base','sale_management','purchase','account','stock','mrp','purchase_requisition'],
+    # 'depends': ['base','sale_management','purchase','account','stock','mrp','purchase_requisition'], # NOT USED
     'depends': ['base','sale_management','purchase','account','stock','mrp'],
     'data': [
         'security/access_display_order_line.xml',
