@@ -26,7 +26,7 @@
         'views/product_template_views.xml',
         'views/res_partner_views.xml',
         'views/pricelist_views.xml',
-        'views/pricelist_item_views.xml',
+        'views/account_views.xml',
         
         'reports/product_barcode_action.xml',
     ],
