@@ -14,7 +14,7 @@ class CustomerCatalogue(models.Model):
     customer_product_code = fields.Char(string='Customer Product Code')
     customer_product_ref = fields.Char(string='Customer Product Ref', compute='_compute_pricelist_item')
     barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item')
-    retail_price = fields.Char(compute='_compute_pricelist_item')
+    retail_price = fields.Float(compute='_compute_pricelist_item')
     
     # @api.depends('product_tmpl_id', 'customer_product_code', 'customer_product_ref')
     @api.depends('product_tmpl_id', 'customer_product_code')
