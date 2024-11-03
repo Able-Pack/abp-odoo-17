@@ -45,7 +45,8 @@
         </field>
     </record>
 
-    <record id="purchase_requistion_inherit_view" model="ir.ui.view">
+    <!-- # NOT USED -->
+    <!-- <record id="purchase_requistion_inherit_view" model="ir.ui.view">
         <field name="name">purchase.requisition.form.inherit</field>
         <field name="model">purchase.requisition</field>
         <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
@@ -54,7 +55,7 @@
                 <field name="purchase_requistion_sequence" groups="bi_order_line_with_sequence_number.access_display_order_line_number"/>
             </xpath>
         </field>
-    </record>
+    </record> -->
 
     <record id="stock_picking_inherit_view" model="ir.ui.view">
         <field name="name">stock.picking.form.inherit</field>
