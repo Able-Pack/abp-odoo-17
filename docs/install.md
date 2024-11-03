@@ -6,6 +6,8 @@ install abp_contact
 install abp_sale
 install abp_salesperson_dashboard
 install abp_customer_catalogue
+install abp_inventory
+install abp_mrp
 
 # external modules
 install bi_invoice_backdate
