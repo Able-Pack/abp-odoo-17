@@ -78,7 +78,8 @@
             </xpath>
         </template>
 
-        <template id="purchase_agreement_report"
+        <!-- # NOT USED -->
+        <!-- <template id="purchase_agreement_report"
             inherit_id="purchase_requisition.report_purchaserequisition_document">
             <xpath expr="//table[1]/thead/tr/th[1]" position="before">
                 <th name="th_d" class="text-start">No.</th>
@@ -88,7 +89,7 @@
                     <span t-field="line_ids.purchase_requistion_sequence" />
                 </td>
             </xpath>
-        </template>
+        </template> -->
 
     </data>
 </odoo>
