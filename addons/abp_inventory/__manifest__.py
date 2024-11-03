@@ -3,11 +3,12 @@
     'category': '',
     'sequence': 23,
     'summary': 'Able Pack Inventory',
-    'version': '1.0',
+    'version': '17.0',
     'description': """
     """,
     'depends': [
         'stock',
+        'stock_landed_costs',
     ],
     'data': [
         'views/stock_picking_views.xml',
