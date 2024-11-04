@@ -4,7 +4,7 @@ from odoo.addons.abp_utils.utils import format_currency_amount
 
 class CustomerCatalogue(models.Model):
     _name = "customer.catalogue"
-    _desc = _name
+    _description = "Customer Catalogue"
     
     sequence = fields.Integer(string='Sequence')
     name = fields.Char(string="Name")

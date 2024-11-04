@@ -13,6 +13,7 @@
         'stock',
         'product',
         'point_of_sale',
+        'abp_pricelist',
     ],
     'data': [
         'security/ir.model.access.csv',
