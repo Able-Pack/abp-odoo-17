@@ -45,9 +45,9 @@ class CustomerCatalogue(models.Model):
                 rec.barcode = pricelist_item.barcode
                 rec.retail_price = pricelist_item.retail_price or pricelist_item.fixed_price
             elif len(pricelist_item) > 1:
-                rec.customer_product_ref = rec.barcode = rec.retail_price = "Multiple pricelist item found"
+                rec.customer_product_ref = rec.barcode = rec.retail_price = False
             else:
-                rec.customer_product_ref = rec.barcode = rec.retail_price = "No pricelist item found"
+                rec.customer_product_ref = rec.barcode = rec.retail_price = False
                 
             # If use customer product ref
             # rec.barcode = pricelist_item.barcode
