@@ -32,6 +32,7 @@
     ],
     'data': [
         'security/res_groups.xml',
+        'views/stock_picking_views.xml',
         'views/menu_views.xml',
     ],
     'assets': {
