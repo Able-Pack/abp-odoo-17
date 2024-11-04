@@ -8,6 +8,7 @@
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form,activity</field>
             <field name="domain">[('team_id.member_ids','=',uid)]</field>
+            <field name="context">{'create': False, 'edit': False}</field>
         </record>
 
     </data>
