@@ -2,7 +2,8 @@ from odoo import models
 
 
 class ReportProductBarcodeAblepack(models.AbstractModel):
-    _name = 'report.abp_report.report_product_barcode_abp'
+    _name = "report.abp_report.report_product_barcode_abp"
+    _description = "Ablepack Report Product Barcode"
     
     def _get_report_values(self, docids, data):
         model = self.env.context.get('active_model')

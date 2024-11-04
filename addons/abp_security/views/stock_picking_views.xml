@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.view.form.abp.security</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//button[@name='button_validate']" position="attributes"> -->
+                <xpath expr="//button[@class='o_btn_validate']" position="attributes">
+                    <attribute name="groups" remove="stock.group_stock_user" add="abp_security.group_administrator,abp_security.group_supervisor" separator=","></attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

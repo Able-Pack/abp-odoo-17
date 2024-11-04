@@ -12,8 +12,9 @@ class CustomerCatalogue(models.Model):
     product_tmpl_id = fields.Many2one(comodel_name='product.template', related='product_id.product_tmpl_id')
     product_id = fields.Many2one(comodel_name='product.product', required=True)
     customer_product_code = fields.Char(string='Customer Product Code')
-    customer_product_ref = fields.Char(string='Customer Product Ref', compute='_compute_pricelist_item')
-    barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item')
+    pricelist_item_id = fields.Many2one('pricelist.item', compute='_compute_pricelist_item', store=True)
+    customer_product_ref = fields.Char(string='Customer Product Ref', compute='_compute_pricelist_item', store=True)
+    barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item', store=True)
     retail_price = fields.Float(compute='_compute_pricelist_item')
     
     # @api.depends('product_tmpl_id', 'customer_product_code', 'customer_product_ref')
@@ -28,19 +29,16 @@ class CustomerCatalogue(models.Model):
                 
             rec.display_name = name
             
-    # @api.depends('customer_product_ref')
     @api.depends('product_id')
     def _compute_pricelist_item(self):
         for rec in self:
             pricelist_item = self.env['product.pricelist.item'].search([
                 ('pricelist_id', '=', rec.partner_id.property_product_pricelist.id),
                 ('product_tmpl_id', '=', rec.product_tmpl_id.id),
-                
-                # If use customer product ref
-                # ('customer_product_ref', '=', rec.customer_product_ref),
             ])
             
             if len(pricelist_item) == 1:
+                rec.pricelist_item_id = pricelist_item.id
                 rec.customer_product_ref = pricelist_item.customer_product_ref
                 rec.barcode = pricelist_item.barcode
                 rec.retail_price = pricelist_item.retail_price or pricelist_item.fixed_price
@@ -49,11 +47,6 @@ class CustomerCatalogue(models.Model):
             else:
                 rec.customer_product_ref = rec.barcode = rec.retail_price = False
                 
-            # If use customer product ref
-            # rec.barcode = pricelist_item.barcode
-            # rec.retail_price = pricelist_item.retail_price
-            
-            
     # Will be called from tree views
     def button_print_barcode(self):
         data = self._prepare_product_label_data(self)
