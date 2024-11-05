@@ -23,7 +23,6 @@
                     <attribute name="options">{
                         'no_create': True, 
                         'no_create_edit': True,
-                        'no_open': True,
                         'no_quick_create': True,
                     }</attribute>
                 </xpath>
