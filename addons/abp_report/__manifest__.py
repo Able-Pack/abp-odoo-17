@@ -8,9 +8,12 @@
     """,
     'depends': [
         # 'sale',
+        # 'abp_customer_catalogue',
+        'account',
     ],
     'data': [
         'reports/product_barcode.xml',
+        'reports/invoice_default.xml',
         # 'reports/sale/ir_actions_report_templates.xml',
         # 'reports/sale/ir_actions_report.xml',
     ],
