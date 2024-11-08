@@ -9,11 +9,14 @@
     'depends': [
         # 'sale',
         # 'abp_customer_catalogue',
+        'base',
         'account',
     ],
     'data': [
+        'reports/report_header.xml',
         'reports/product_barcode.xml',
         'reports/invoice_default.xml',
+        'reports/consignment_memo.xml',
         # 'reports/sale/ir_actions_report_templates.xml',
         # 'reports/sale/ir_actions_report.xml',
     ],
