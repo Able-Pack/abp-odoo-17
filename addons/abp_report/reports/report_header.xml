@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_template_header_abp">
+        <div class="header">
+            <div class="row align-items-center">
+                <!-- Logo Column -->
+                <div class="col-2 text-center">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:80px;" alt="Logo"/>
+                </div>
+                
+                <!-- Company Info and Report Title Column -->
+                <div class="col-10">
+                    <div class="row">
+                        <!-- Company Name -->
+                        <div class="col-12">
+                            <strong class="text-uppercase" style="font-size:26px; font-family:Helvetica-Bold;">
+                                <span t-field="company.name"/>
+                            </strong>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Company Address and Contact Info -->
+                        <div class="col-8">
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.street"/> 
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.city"/> 
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.zip"/>
+                            <br/>
+                            <span style="font-size:13px; font-family:Helvetica;">Tel:</span>
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.phone"/>
+                            <span style="font-size:13px; font-family:Helvetica;">Fax:</span>
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.fax"/>
+                            <span style="font-size:13px; font-family:Helvetica;">Email:</span>
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.email"/>
+                        </div>
+                        
+                        <!-- Report Title and Registration Info -->
+                        <div t-if="report_name == 'CONSIGNMENT MEMO'" class="col-4 text-right">
+                            <strong style="font-size:20px; font-family:Helvetica-Bold;">
+                                <t t-esc="report_name"/>
+                            </strong>
+                            <span style="font-size:10px; font-family:Helvetica;">
+                                Co. Reg. &amp; GST No: <span t-field="company.vat"/>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

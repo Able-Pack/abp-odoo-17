@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_template_consignment_memo_abp">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-if="not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                    <t t-set="report_name" t-value="'CONSIGNMENT MEMO'"/>
+                    <t t-call="abp_report.report_template_header_abp"/>
+                    <div class="page">
+                        <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:14px;">
+                            <tr>
+                                <t t-value="o.partner_id" t-set="partner"/>
+                                <td style="border:1px solid black; padding:5px;" width="55%;">
+                                    <span t-field="o.partner_id.name"/>
+                                    <br/>
+                                    <span t-field="o.partner_id.street2"/>
+                                    <br/>
+                                    <span t-field="o.partner_id.street"/>
+                                    <br/>
+                                    <span t-field="o.partner_id.country_id.name"/>
+                                    <span t-field="o.partner_id.zip"/>
+                                </td>
+                                <td width="10%;">
+                                </td>
+                                <td width="35%;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong>Consignment:</strong>
+                                                </span>
+                                                <span t-esc="o.consignment_serial"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span>
+                                                    <strong>Date:</strong>
+                                                </span>
+                                                <span t-esc="datetime.datetime.strptime(str(o.scheduled_date), '%Y-%m-%d %H:%M:%S').strftime('%d/%m/%Y')"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <t t-set="grand_total_amount" t-value="0"/>
+                        <table class="table-borderless" width="100%" style="margin-top:20px; font-family:Helvetica; font-size:13px;">
+                            <thead>
+                                <tr style="font-weight: bold;">
+                                    <td width="5%" style="text-align:center">Quantity</td>
+                                    <td width="20%" style="text-align:center">Product Code</td>
+                                    <td width="45%">Description</td>
+                                    <td style="text-align:right" width="15%">
+                                        Retail Price
+                                    </td>
+                                    <td style="text-align:right" width="15%">
+                                        Total Amount
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.move_ids" t-as="move">
+                                    <t t-set="customer_catalogue" t-value="move._get_customer_catalogue_values(o.partner_id)"/>
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:center">
+                                            <span t-esc="'%.0f'% move.quantity"/>
+                                            <span t-esc="move.product_uom.name" style="margin-left:10px;"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:center">
+                                            <span t-esc="customer_catalogue['customer_product_code']"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd;">
+                                            <span t-field="move.product_id.name"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:right">
+                                            <span t-esc="customer_catalogue['retail_price']"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:right">
+                                            <t t-set="total_amount" t-value="move.quantity * customer_catalogue['retail_price']"/>
+                                            <span t-esc="total_amount"/>
+                                            <t t-set="grand_total_amount" t-value="grand_total_amount + total_amount"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:14px; margin-top:50px;">
+                            <tr>
+                                <td colspan="2" style="padding-bottom:30px;">
+                                    Remark: <span t-field="o.note"/>
+                                </td>
+                                <td style="text-align:right; border-top:1px solid; border-bottom: 1px solid; padding: 2px 0px 2px">
+                                    <b>GRAND TOTAL: </b>
+                                    <span t-esc="grand_total_amount"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%" style="padding-bottom:100px;">
+                                    Received Above in good order
+                                </td>
+                                <td width="50%">
+                                </td>
+                                <td width="25%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%" style="padding-bottom:2px;border-bottom-style:solid;border-width:2px;">
+                                </td>
+                                <td width="49%">
+                                </td>
+                                <td width="26%" style="padding-bottom:2px;border-bottom-style:solid;border-width:2px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="25%">
+                                </td>
+                                <td width="49%">
+                                </td>
+                                <td width="26%" style="padding-top:4px;">
+                                    <center>
+                                        <b>
+                                            For <span style="text-transform: uppercase;" t-field="company.name"></span>
+                                        </b>
+                                    </center>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <record id="actions_report_consignment_memo_abp" model="ir.actions.report">
+            <field name="name">Consignment Memo</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">abp_report.report_template_consignment_memo_abp</field>
+            <field name="report_file">abp_report.report_template_consignment_memo_abp</field>
+            <field name="print_report_name">'Consignment Memo - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="base.paperformat_euro"/>
+        </record>
+    </data>
+</odoo>
