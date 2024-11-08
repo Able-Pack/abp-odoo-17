@@ -27,7 +27,7 @@ class ProductProduct(models.Model):
     def write(self, vals):
         res = super().write(vals)
         
-        if vals['standard_price']:
+        if 'standard_price' in vals:
             for bom_line in self.bom_line_ids:
                 bom_line.bom_id.product_tmpl_id.action_bom_cost()
                 
