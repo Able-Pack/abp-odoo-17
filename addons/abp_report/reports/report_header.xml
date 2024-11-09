@@ -23,13 +23,13 @@
                         <!-- Company Address and Contact Info -->
                         <div class="col-8">
                             <span style="font-size:13px; font-family:Helvetica;" t-field="company.street"/> 
-                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.city"/> 
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.street2"/> 
+                            <br/>
+                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.country_id.name"/> 
                             <span style="font-size:13px; font-family:Helvetica;" t-field="company.zip"/>
                             <br/>
                             <span style="font-size:13px; font-family:Helvetica;">Tel:</span>
                             <span style="font-size:13px; font-family:Helvetica;" t-field="company.phone"/>
-                            <span style="font-size:13px; font-family:Helvetica;">Fax:</span>
-                            <span style="font-size:13px; font-family:Helvetica;" t-field="company.fax"/>
                             <span style="font-size:13px; font-family:Helvetica;">Email:</span>
                             <span style="font-size:13px; font-family:Helvetica;" t-field="company.email"/>
                         </div>
