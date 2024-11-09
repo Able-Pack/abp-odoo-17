@@ -9,6 +9,7 @@
     'depends': [
         'stock',
         'stock_landed_costs',
+        'abp_report'
     ],
     'data': [
         'views/stock_picking_views.xml',
