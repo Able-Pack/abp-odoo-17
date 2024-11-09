@@ -35,7 +35,7 @@
                                                 <span>
                                                     <strong>Consignment:</strong>
                                                 </span>
-                                                <span t-esc="o.consignment_serial"/>
+                                                <span t-esc="o.name"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -66,8 +66,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-foreach="o.move_ids" t-as="move">
+                                <t t-foreach="o._get_consignment_memo_lines()" t-as="line">
+                                    <tr>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:center">
+                                            <span t-esc="'%.0f'% line['quantity']"/>
+                                            <span t-esc="line['uom']" style="margin-left:10px;"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:center">
+                                            <span t-esc="line['product_code']"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd;">
+                                            <span t-esc="line['product_name']"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:right">
+                                            <span t-esc="'{:,.2f}'.format(line['retail_price'])"/>
+                                        </td>
+                                        <td style="border-bottom: 2px solid #ddd; text-align:right">
+                                            <t t-set="total_amount" t-value="line['quantity'] * line['retail_price']"/>
+                                            <span t-esc="'{:,.2f}'.format(total_amount)"/>
+                                            <t t-set="grand_total_amount" t-value="grand_total_amount + total_amount"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <!-- <t t-foreach="o.move_ids" t-as="move">
                                     <t t-set="customer_catalogue" t-value="move._get_customer_catalogue_values(o.partner_id)"/>
+                                    <t t-set="pricelist_item" t-value="move._get_pricelist_item_values(o.partner_id)"/>
                                     <tr>
                                         <td style="border-bottom: 2px solid #ddd; text-align:center">
                                             <span t-esc="'%.0f'% move.quantity"/>
@@ -88,7 +111,7 @@
                                             <t t-set="grand_total_amount" t-value="grand_total_amount + total_amount"/>
                                         </td>
                                     </tr>
-                                </t>
+                                </t> -->
                             </tbody>
                         </table>
                         <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:14px; margin-top:50px;">
@@ -98,7 +121,7 @@
                                 </td>
                                 <td style="text-align:right; border-top:1px solid; border-bottom: 1px solid; padding: 2px 0px 2px">
                                     <b>GRAND TOTAL: </b>
-                                    <span t-esc="grand_total_amount"/>
+                                    <span t-esc="'{:,.2f}'.format(grand_total_amount)"/>
                                 </td>
                             </tr>
                             <tr>

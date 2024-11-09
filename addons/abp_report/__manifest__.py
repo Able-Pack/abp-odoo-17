@@ -7,10 +7,12 @@
     'description': """
     """,
     'depends': [
+        # Should not depends to ABP module, but its ok to depends to Odoo default module
         # 'sale',
         # 'abp_customer_catalogue',
         'base',
         'account',
+        'stock',
     ],
     'data': [
         'reports/report_header.xml',
