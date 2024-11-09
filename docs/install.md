@@ -1,6 +1,6 @@
 # ablepack modules
 install abp_utils
-install abp_base
+# install abp_base
 install abp_payroll
 # abp_pricelist must be installed before abp_customer_catalogue 
 install abp_pricelist
