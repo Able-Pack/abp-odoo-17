@@ -12,7 +12,8 @@
                     </t>
                     <t t-set="report_name" t-value="'CONSIGNMENT MEMO'"/>
                     <t t-call="abp_report.report_template_header_abp"/>
-                    <div class="page" style="page-break-after:always;">
+                    <div class="page" t-attf-style="#{'page-break-after: always;' if o != docs[-1] else ''}">
+                    <!-- <div class="page" t-attf-style="page-break-after: always;" t-if="counter != total_docs"> -->
                         <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:14px;">
                             <tr>
                                 <t t-value="o.partner_id" t-set="partner"/>
