@@ -12,7 +12,7 @@
                     </t>
                     <t t-set="report_name" t-value="'CONSIGNMENT MEMO'"/>
                     <t t-call="abp_report.report_template_header_abp"/>
-                    <div class="page">
+                    <div class="page" style="page-break-after:always;">
                         <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:14px;">
                             <tr>
                                 <t t-value="o.partner_id" t-set="partner"/>
