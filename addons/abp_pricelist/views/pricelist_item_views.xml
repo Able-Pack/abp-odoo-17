@@ -22,6 +22,7 @@
                 <xpath expr="//form/sheet/group[last()]" position="after">
                     <group string="General Information">
                         <group>
+                            <field name="customer_product_ref"/>
                             <field name="barcode"/>
                         </group>
                         <!-- <group>

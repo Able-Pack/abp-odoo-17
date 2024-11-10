@@ -11,7 +11,6 @@ class SaleOrderLine(models.Model):
     # customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue', compute='_compute_customer_catalogue')
     customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue')
     customer_product_code = fields.Char(string='Customer Product Code')
-    customer_product_ref = fields.Char(string='Customer Product Ref')
     
     @api.depends('order_id.partner_id', 'order_id.show_all_product')
     def _compute_product_template_domain(self):

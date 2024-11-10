@@ -5,6 +5,7 @@ class PricelistItem(models.Model):
     _inherit = 'product.pricelist.item'
     
     sequence = fields.Integer(string='Sequence')
+    customer_product_ref = fields.Char()
     barcode = fields.Char(string='EAN13')
     label_qty = fields.Integer(string='Label Qty')
     retail_price = fields.Float()
@@ -17,6 +18,17 @@ class PricelistItem(models.Model):
         ('HALF_EVEN', 'Half Even'),
         ('DOWN', 'Round Down'),
     ], default='DOWN')
+    
+    def write(self, vals):
+        res = super().write(vals)
+        # if 'customer_product_ref' in vals or 'barcode' in vals or 'retail_price' in vals:
+        # Trigger recompute on linked customer.catalogue records
+        related_catalogues = self.env['customer.catalogue'].search([
+            ('pricelist_item_id', 'in', self.ids)
+        ])
+        related_catalogues._compute_pricelist_item()
+        
+        return res
     
     # Will be called from tree views
     def button_print_barcode(self):
