@@ -3,6 +3,7 @@ install abp_utils
 # install abp_base
 install abp_payroll
 # abp_pricelist must be installed before abp_customer_catalogue 
+# abp_pricelist must be upgraded also before abp_customer_catalogue 
 install abp_pricelist
 install abp_contact
 install abp_sale
