@@ -12,7 +12,6 @@
         'abp_report'
     ],
     'data': [
-        'views/stock_picking_views.xml',
     ],
     'assets': {
     },
