@@ -21,6 +21,8 @@
         'reports/consignment_memo.xml',
         # 'reports/sale/ir_actions_report_templates.xml',
         # 'reports/sale/ir_actions_report.xml',
+        
+        'views/stock_picking_views.xml',
     ],
     'assets': {
     },
