@@ -24,6 +24,7 @@
                         <group>
                             <field name="customer_product_ref"/>
                             <field name="barcode"/>
+                            <field name="label_qty"/>
                         </group>
                         <!-- <group>
                             <group>
