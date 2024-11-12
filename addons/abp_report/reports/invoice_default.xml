@@ -38,7 +38,7 @@
                                         </div>
                                     </td>
                                     <td width="30%">
-                                        <table class="table" width="100%" style="line-height:20pt;">
+                                        <table class="table" width="100%" style="line-height:22pt;">
                                             <tr>
                                                 <td width="40%"></td>
                                                 <td width="60%">
@@ -79,17 +79,17 @@
                             </table>
                         </div>
                         <!-- Invoice lines -->
-                        <div style="padding-top:30px; height: 590px;">
-                            <table class="table-border" width="100%" style="font-family:Helvetica; font-size:15px; page-break-inside:always; line-height:11pt;">
+                        <div style="padding-top:50px; height: 540px;">
+                            <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:15px; page-break-inside:always; line-height:11pt;">
                                 <thead>
                                     <t t-if="o.move_type == 'out_invoice'">
                                         <tr>
                                             <td width="5%"/>
                                             <td width="20%"/>
                                             <td width="25%"/>
-                                            <td width="20%"/>
+                                            <td width="25%"/>
                                             <td width="15%"/>
-                                            <td width="15%"/>
+                                            <td width="10%"/>
                                         </tr>
                                     </t>
                                 </thead>
@@ -145,7 +145,7 @@
                         </div>
                         <!-- Subtotal, tax, and grand total -->
                         <div style="margin-top:0px;">
-                            <table class="table table-borderless" width="100%" style="font-family:Helvetica; font-size:15px;">
+                            <table class="table table-borderless" width="100%" style="line-height:20pt; font-family:Helvetica; font-size:15px;">
                                 <tr>
                                     <td style="padding-bottom:2px;" width="12%"/>
                                     <td width="12%"/>
@@ -200,7 +200,7 @@
             <field name="page_height">280</field>
             <field name="page_width">210</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">41</field>
+            <field name="margin_top">40</field>
             <field name="margin_bottom">0</field>
             <field name="margin_left">7</field>
             <field name="margin_right">10</field>
