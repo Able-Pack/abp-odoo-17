@@ -7,7 +7,12 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form,activity</field>
-            <field name="domain">[('team_id.member_ids','=',uid)]</field>
+            <field name="domain">[
+                '|',
+                ('user_id','=',uid),
+                ('team_id.member_ids','=',uid)
+            ]</field>
+            <field name="context">{'create': False, 'edit': False}</field>
         </record>
 
     </data>

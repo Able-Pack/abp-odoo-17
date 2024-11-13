@@ -12,7 +12,7 @@ class ResPartner(models.Model):
         doc = etree.XML(res["arch"])
         
         if view_type in ("tree", "kanban", "form"):
-            if not utils.user_has_any_group(self, ['base.group_partner_manager']):
+            if utils.user_has_any_group(self, ['abp_security.group_salesperson']):
                 
                 # Set no create edit delete
                 utils.set_no_create_edit_delete(doc, ['//tree', '//kanban', '//form'], no_create=True, no_edit=True, no_delete=True)

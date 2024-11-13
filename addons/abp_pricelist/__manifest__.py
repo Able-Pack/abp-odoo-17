@@ -9,12 +9,14 @@
     'depends': [
         'sale_management',
         'product',
+        'stock',
         'abp_report',
     ],
     'data': [
         'views/pricelist_views.xml',
         'views/pricelist_item_views.xml',
         'views/sale_order_views.xml',
+        'views/stock_picking_views.xml',
         'reports/product_barcode_action.xml',
     ],
     'assets': {

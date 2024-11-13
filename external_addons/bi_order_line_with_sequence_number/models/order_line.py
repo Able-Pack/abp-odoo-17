@@ -79,17 +79,17 @@ class MrpProduction(models.Model):
 
     sequence1 = fields.Char(string='Sequence Number   ')
 
+# NOT USED
+# class PurchaseRequisition(models.Model):
+#     _inherit = 'purchase.requisition.line'
 
-class PurchaseRequisition(models.Model):
-    _inherit = 'purchase.requisition.line'
+#     purchase_requistion_sequence = fields.Integer(string='No.    ',compute='_compute_purchase_requistion_sequence') 
 
-    purchase_requistion_sequence = fields.Integer(string='No.    ',compute='_compute_purchase_requistion_sequence') 
-
-    @api.depends('purchase_requistion_sequence')
-    def _compute_purchase_requistion_sequence(self):
-        number = 1
-        for record in self.requisition_id.line_ids:
-            record.purchase_requistion_sequence = number
-            number += 1
+#     @api.depends('purchase_requistion_sequence')
+#     def _compute_purchase_requistion_sequence(self):
+#         number = 1
+#         for record in self.requisition_id.line_ids:
+#             record.purchase_requistion_sequence = number
+#             number += 1
 
 

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="abp_invoice_default_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" t-attf-style="#{'page-break-after: always;' if o != docs[-1] else ''}">
+                        <!-- Address and document information -->
+                        <div>
+                            <table class="table table-borderless" width="100%" style="line-height:17pt; margin-top:0px; padding-top:0px; font-family:Helvetica; font-size:15px;">
+                                <tr>
+                                    <td width="70%;">
+                                        <div>
+                                            <br/>
+                                            <span t-field="o.partner_id.title.name"/>
+                                            <span t-field="o.partner_id.name"/>
+                                            <br/>
+                                            <t t-if="o.partner_id.street">
+                                                <span t-field="o.partner_id.street"/>
+                                                <br/>
+                                            </t>
+                                            <t t-if="o.partner_id.street2">
+                                                <span t-field="o.partner_id.street2"/>
+                                                <br/>
+                                            </t>
+                                            <t t-if="o.partner_id.zip">
+                                                <span t-field="o.partner_id.zip"/>
+                                                <br/>
+                                            </t>
+                                            <t t-if="o.partner_id.state_id">
+                                                <span t-field="o.partner_id.state_id.name"/>
+                                                <br/>
+                                            </t>
+                                            <t t-if="o.partner_id.country_id">
+                                                <span t-field="o.partner_id.country_id.name"/>
+                                                <br/>
+                                            </t>
+                                        </div>
+                                    </td>
+                                    <td width="30%">
+                                        <table class="table" width="100%" style="line-height:22pt;">
+                                            <tr>
+                                                <td width="40%"></td>
+                                                <td width="60%">
+                                                    <span t-field="o.name"/>
+                                                </td>
+                                            </tr>
+                                            <t t-if="o.move_type == 'out_invoice'">
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <span t-if="o.ref" t-field="o.ref"/>
+                                                        <span t-elif="not o.ref">-</span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <tr>
+                                                <td></td>
+                                                <td>-</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                    <span t-if="o.invoice_date" t-esc="datetime.datetime.strptime(str(o.invoice_date), '%Y-%m-%d').strftime('%d/%m/%Y')"/>
+                                                </td>
+                                            </tr>
+                                            <t t-if="o.move_type == 'out_invoice'">
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <span t-if="o.invoice_payment_term_id" t-field="o.invoice_payment_term_id.name"/>
+                                                        <span t-elif="not o.invoice_payment_term_id">-</span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- Invoice lines -->
+                        <div style="padding-top:50px; height: 520px;">
+                            <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:15px; page-break-inside:always; line-height:11pt;">
+                                <thead>
+                                    <t t-if="o.move_type == 'out_invoice'">
+                                        <tr>
+                                            <td width="5%"/>
+                                            <td width="20%"/>
+                                            <td width="25%"/>
+                                            <td width="25%"/>
+                                            <td width="15%"/>
+                                            <td width="10%"/>
+                                        </tr>
+                                    </t>
+                                </thead>
+                                <tbody>
+                                    <t t-if="o.move_type == 'out_invoice'">
+                                        <t t-foreach="o.invoice_line_ids" t-as="vline">
+                                            <t t-set="customer_catalogue" t-value="o._get_customer_catalogue_values(o.partner_id, vline.product_id)"/>
+                                            <tr>
+                                                <t t-if="vline.display_type not in ('line_section', 'line_note')">
+                                                    <td style="padding-bottom:2px; padding-top:2px; text-align:left">
+                                                        <span t-esc="customer_catalogue['customer_product_ref']"/>
+                                                    </td>
+                                                    <td style="padding-bottom:2px; padding-top:1px; text-align:left">
+                                                        <div style="text-align:right; padding-right:90px;">
+                                                            <span t-esc="'%.0f'% vline.quantity"/>
+                                                            <span t-field="vline.product_uom_id.name"/>
+                                                        </div>
+                                                    </td>
+                                                    <td style="padding-bottom:2px; padding-top:2px">
+                                                        <span t-esc="vline.product_id.default_code"/>
+                                                        <!-- <span t-esc="customer_catalogue['customer_product_code']"/> -->
+                                                    </td>
+                                                    <td style="padding-bottom:2px; padding-top:2px">
+                                                        <span t-field="vline.product_id.name"/>
+                                                        <!-- <t t-if="vline.is_online_or_consignment">
+                                                                <span t-field="vline.name"/>
+                                                            </t>
+                                                            <t t-if="not vline.is_online_or_consignment">
+                                                                <span t-field="vline.product_id.name"/>
+                                                            </t> -->
+                                                    </td>
+                                                    <td style="padding-bottom:2px; padding-top:2px; text-align:right">
+                                                        <span t-esc="'{0:,.2f}'.format(vline.price_unit)"/>
+                                                    </td>
+                                                    <td style="padding-bottom:2px; padding-top:2px; text-align:right">
+                                                        <span t-esc="'{0:,.2f}'.format(vline.price_subtotal)"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Subtotal, tax, and grand total -->
+                        <div style="margin-top:0px;">
+                            <table class="table table-borderless" width="100%" style="line-height:20pt; font-family:Helvetica; font-size:15px;">
+                                <tr>
+                                    <td style="padding-bottom:2px;" width="12%"/>
+                                    <td width="12%"/>
+                                    <td width="20%"/>
+                                    <td width="26%"/>
+                                    <td width="15%"/>
+                                    <td width="15%"/>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td style="padding-top:2px; padding-bottom:2px; ">
+                                    Subtotal
+                                    </td>
+                                    <td style="padding-top:2px; padding-bottom:2px; text-align:right;">
+                                        <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <!-- <t t-set="tax_name" t-value="o.get_tax_name(o.invoice_line_ids[0])"/> -->
+                                    <td style="padding-top:2px;">
+                                        <!-- <span t-esc="tax_name"/> -->
+                                        <span t-if="o.invoice_line_ids[0].tax_ids" t-esc="o.invoice_line_ids[0].tax_ids[0].name"/>
+                                    </td>
+                                    <td style="padding-top:2px; text-align:right;">
+                                        <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="height: 20px;"></td> <!-- Spacer Row -->
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <!-- <span t-esc="o.narration or o.get_note()"/> -->
+                                        <span t-esc="o.narration"/>
+                                    </td>
+                                    <td></td>
+                                    <td style="padding-top:2px; padding-bottom:2px; text-align:right;">
+                                        <b>
+                                            <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="abp_default_invoice_report_format" model="report.paperformat">
+            <field name="name">Ablepack Invoice</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">280</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_invoice_default_abp" model="ir.actions.report">
+            <field name="name">Ablepack Invoice (Default)</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">abp_report.abp_invoice_default_report</field>
+            <field name="report_file">abp_report.abp_invoice_default_report</field>
+            <field name="print_report_name">'Ablepack Invoice (Default) - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="abp_default_invoice_report_format"/>
+        </record>
+    </data>
+</odoo>

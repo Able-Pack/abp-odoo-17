@@ -59,7 +59,7 @@ class CustomerStatementWizard(models.TransientModel):
                     end_date = date_utils.end_of(start_date, "month")
                     invoice_ids = self.env['account.move'].search(
                         [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date_due', '>=', start_date),
-                         ('invoice_date_due', '<=', end_date), ('move_type', '=', 'out_invoice'),
+                         ('invoice_date_due', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('state', '=', 'posted'),
                          ('amount_residual', '>', 0)])
                     rec.invoice_ids = [(6, 0, invoice_ids.ids)]
@@ -68,7 +68,7 @@ class CustomerStatementWizard(models.TransientModel):
                     end_date = date_utils.end_of(start_date, "month")
                     invoice_ids = self.env['account.move'].search(
                         [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date_due', '>=', start_date),
-                         ('invoice_date_due', '<=', end_date), ('move_type', '=', 'out_invoice'),
+                         ('invoice_date_due', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('state', '=', 'posted'),
                          ('amount_residual', '>', 0)])
                     rec.invoice_ids = [(6, 0, invoice_ids.ids)]
@@ -81,7 +81,7 @@ class CustomerStatementWizard(models.TransientModel):
                     invoice_ids = self.env['account.move'].search(
                         [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date', '>=', start_date),
                          ('state', '=', 'posted'),
-                         ('invoice_date', '<=', end_date), ('move_type', '=', 'out_invoice'),
+                         ('invoice_date', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('amount_residual', '>', 0)])
                     rec.invoice_ids = [(6, 0, invoice_ids.ids)]
                 else:
@@ -90,7 +90,7 @@ class CustomerStatementWizard(models.TransientModel):
                     invoice_ids = self.env['account.move'].search(
                         [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date', '>=', start_date),
                          ('state', '=', 'posted'),
-                         ('invoice_date', '<=', end_date), ('move_type', '=', 'out_invoice'),
+                         ('invoice_date', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('amount_residual', '>', 0)])
                     rec.invoice_ids = [(6, 0, invoice_ids.ids)]
 

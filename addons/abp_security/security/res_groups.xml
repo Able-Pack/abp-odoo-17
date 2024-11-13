@@ -2,6 +2,27 @@
 <odoo>
     <data>
 
+        <record model="ir.module.category" id="abp_group_role_category">
+            <field name="name">Able Pack Roles</field>
+            <field name="sequence">21</field>
+        </record>
+
+        <record id="group_administrator" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="abp_group_role_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="group_supervisor" model="res.groups">
+            <field name="name">Supervisor</field>
+            <field name="category_id" ref="abp_group_role_category"/>
+        </record>
+
+        <record id="group_salesperson" model="res.groups">
+            <field name="name">Salesperson</field>
+            <field name="category_id" ref="abp_group_role_category"/>
+        </record>
+
         <record model="ir.module.category" id="abp_group_app_category">
             <field name="name">Able Pack Apps Access</field>
             <field name="sequence">25</field>

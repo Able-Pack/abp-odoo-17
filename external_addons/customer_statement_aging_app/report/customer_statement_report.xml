@@ -29,10 +29,19 @@
                                  <t t-foreach="doc.invoice_ids" t-as="invoice_id">
 
                                      <t t-if="invoice_id.partner_id == partner_id">
+                                        <!-- Logic to determine whether to add or subtract -->
+                                        <t t-set="is_credit_note" t-value="invoice_id.move_type == 'out_refund'"/>
+                                        <t t-set="total_amount_total" t-value="round(total_amount_total + (is_credit_note and -invoice_id.amount_total or invoice_id.amount_total), 2)"/>
+                                        <t t-set="paid_amount" t-value="round(invoice_id.amount_total - invoice_id.amount_residual, 2)"/>
+                                        <t t-set="total_paid_amount" t-value="round(total_paid_amount + (is_credit_note and -paid_amount or paid_amount), 2)"/>
+                                        <t t-set="total_amount_residual" t-value="round(total_amount_residual + (is_credit_note and -invoice_id.amount_residual or invoice_id.amount_residual), 2)"/>
+
+                                         <!-- 
                                          <t t-set="total_amount_total" t-value="round(total_amount_total + invoice_id.amount_total,2)"/>
                                          <t t-set="total_amount_residual" t-value="round(total_amount_residual + invoice_id.amount_residual,2)"/>
                                          <t t-set="paid_amount" t-value="round(invoice_id.amount_total - invoice_id.amount_residual,2)"/>
                                          <t t-set="total_paid_amount" t-value="round(total_paid_amount + paid_amount,2)"/>
+                                         -->
                                          <tr>
                                              <td width="13%"><span t-field="invoice_id.narration"/> </td>
                                              <td width="15%"><span t-field="invoice_id.invoice_date_due"/> </td>
@@ -40,7 +49,15 @@
                                              <td width="15%"><span t-field="invoice_id.name"/> </td>
                                              <td width="15%"><span t-field="invoice_id.amount_total"/> </td>
                                              <td width="17%"><span t-esc="paid_amount"/></td>
-                                             <td width="15%"><span t-field="invoice_id.amount_residual"/> </td>
+                                             <td width="15%">
+                                                <span t-if="invoice_id.currency_id">
+                                                    <span t-esc="invoice_id.currency_id.symbol"/>
+                                                    <span t-esc="is_credit_note and -invoice_id.amount_residual or invoice_id.amount_residual"/>
+                                                </span>
+                                                <span t-else="">
+                                                    <span t-esc="is_credit_note and -invoice_id.amount_residual or invoice_id.amount_residual"/>
+                                                </span>
+                                             </td>
                                          </tr>
 
                                      </t>

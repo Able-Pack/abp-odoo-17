@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_team_related_picking" model="ir.rule">
+            <field name="name">Sales Team Related Picking</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">
+                [
+                    '|',
+                    ('partner_id.user_id', '=', user.id), 
+                    ('partner_id.team_id.member_ids', '=', user.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('abp_security.group_salesperson'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

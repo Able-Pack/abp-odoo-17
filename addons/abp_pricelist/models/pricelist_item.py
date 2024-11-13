@@ -5,6 +5,7 @@ class PricelistItem(models.Model):
     _inherit = 'product.pricelist.item'
     
     sequence = fields.Integer(string='Sequence')
+    customer_product_ref = fields.Char()
     barcode = fields.Char(string='EAN13')
     label_qty = fields.Integer(string='Label Qty')
     retail_price = fields.Float()
@@ -17,6 +18,7 @@ class PricelistItem(models.Model):
         ('HALF_EVEN', 'Half Even'),
         ('DOWN', 'Round Down'),
     ], default='DOWN')
+    
     
     # Will be called from tree views
     def button_print_barcode(self):
