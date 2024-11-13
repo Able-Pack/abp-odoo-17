@@ -79,7 +79,7 @@
                             </table>
                         </div>
                         <!-- Invoice lines -->
-                        <div style="padding-top:50px; height: 540px;">
+                        <div style="padding-top:50px; height: 520px;">
                             <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:15px; page-break-inside:always; line-height:11pt;">
                                 <thead>
                                     <t t-if="o.move_type == 'out_invoice'">
@@ -173,6 +173,9 @@
                                     <td style="padding-top:2px; text-align:right;">
                                         <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="height: 20px;"></td> <!-- Spacer Row -->
                                 </tr>
                                 <tr>
                                     <td colspan="4">
