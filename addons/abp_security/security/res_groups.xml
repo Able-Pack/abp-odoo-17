@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
+        <!-- TODO: Create dynamic menu filtering function -->
+        <!-- Able Pack Roles -->
         <record model="ir.module.category" id="abp_group_role_category">
             <field name="name">Able Pack Roles</field>
             <field name="sequence">21</field>
@@ -23,6 +24,7 @@
             <field name="category_id" ref="abp_group_role_category"/>
         </record>
 
+        <!-- Able Pack Apps Access -->
         <record model="ir.module.category" id="abp_group_app_category">
             <field name="name">Able Pack Apps Access</field>
             <field name="sequence">25</field>
