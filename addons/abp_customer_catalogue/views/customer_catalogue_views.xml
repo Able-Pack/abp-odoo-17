@@ -14,7 +14,7 @@
                     <field name="customer_product_ref"/>
                     <field name="barcode"/>
                     <button name="button_print_barcode" string="Print Barcode" type="object" class="btn btn-primary"/>
-                    <button type="object" icon="fa-trash" string="Delete" confirm="Are you sure you want to delete this record? This action cannot be undone." name="unlink"/>
+                    <button type="object" icon="fa-trash" string="Delete" confirm="Are you sure you want to delete this record? This action cannot be undone." name="unlink" groups="base.group_system"/>
                 </tree>
             </field>
         </record>
@@ -24,13 +24,14 @@
             <field name="model">customer.catalogue</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="name" string="Partner/Product/Code/Ref" filter_domain="[
-                        '|', '|', '|', '|',
+                    <field name="name" string="Partner/Product/Code/Ref/EAN13" filter_domain="[
+                        '|', '|', '|', '|', '|',
                         ('partner_id.name', 'ilike', self),
                         ('product_id.default_code', 'ilike', self),
                         ('product_id.name', 'ilike', self),
                         ('customer_product_code', 'ilike', self),
-                        ('customer_product_ref', 'ilike', self)
+                        ('customer_product_ref', 'ilike', self),
+                        ('barcode', 'ilike', self)
                     ]"/>
                     <separator/>
                     <group expand="1" string="Group By">

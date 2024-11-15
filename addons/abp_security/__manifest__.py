@@ -14,6 +14,7 @@
         'crm',
         'sale',
         'abp_salesperson_dashboard',
+        'abp_customer_catalogue',
         'spreadsheet_dashboard',
         'sale_subscription',
         'point_of_sale',
@@ -33,6 +34,7 @@
     'data': [
         'security/res_groups.xml',
         'security/ir_rule.xml',
+        'security/ir.model.access.csv',
         'views/stock_picking_views.xml',
         'views/menu_views.xml',
     ],

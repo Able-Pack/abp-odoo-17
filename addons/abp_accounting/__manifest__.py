@@ -1,18 +1,16 @@
 {
-    'name': 'Able Pack Inventory',
-    'category': '',
-    'sequence': 23,
-    'summary': 'Able Pack Inventory',
+    'name': 'Able Pack Accounting',
     'version': '17.0',
+    'author': 'Victor Imannuel (Child of God)',
+    'sequence': 23,
+    'category': 'Able Pack',
+    'summary': 'Able Pack Accounting',
     'description': """
     """,
     'depends': [
-        'stock',
-        'stock_landed_costs',
-        'abp_report'
+        'account',
     ],
     'data': [
-        'views/res_partner_views.xml',
     ],
     'assets': {
     },
