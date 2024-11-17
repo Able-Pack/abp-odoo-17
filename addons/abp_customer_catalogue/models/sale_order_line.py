@@ -16,9 +16,6 @@ class SaleOrderLine(models.Model):
     @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_base_product', 'order_id.show_customer_spesific_product')
     def _compute_product_template_domain(self):
         for rec in self:
-            product_template = rec.env['product.template'].search([
-                ('customer_catalogue_ids.partner_id', '=', rec.order_id.partner_id.id),
-            ])
             if rec.order_id.show_all_product:
                 rec.product_template_domain = json.dumps([('sale_ok', '=', True)])
             elif rec.order_id.show_base_product:
@@ -94,4 +91,3 @@ class SaleOrderLine(models.Model):
             # if rec.customer_catalogue_id:
             #     rec.customer_product_code = rec.customer_catalogue_id.customer_product_code
             #     rec.customer_product_ref = rec.customer_catalogue_id.customer_product_ref
-    
