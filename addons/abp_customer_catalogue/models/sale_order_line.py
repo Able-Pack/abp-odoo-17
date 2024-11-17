@@ -12,7 +12,8 @@ class SaleOrderLine(models.Model):
     customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue')
     customer_product_code = fields.Char(string='Customer Product Code')
     
-    @api.depends('order_id.partner_id', 'order_id.show_all_product')
+    # @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_base_product')
+    @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_base_product', 'order_id.show_customer_spesific_product')
     def _compute_product_template_domain(self):
         for rec in self:
             product_template = rec.env['product.template'].search([
@@ -20,7 +21,16 @@ class SaleOrderLine(models.Model):
             ])
             if rec.order_id.show_all_product:
                 rec.product_template_domain = json.dumps([('sale_ok', '=', True)])
-            else:
+            elif rec.order_id.show_base_product:
+                product_templates = self.env['product.template'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('AP'))
+                rec.product_template_domain = json.dumps([('id', 'in', product_templates.ids), ('sale_ok', '=', True)])
+            elif rec.order_id.show_customer_spesific_product:
+                product_templates = self.env['product.template'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('Customer Specific'))
+                rec.product_template_domain = json.dumps([('id', 'in', product_templates.ids), ('sale_ok', '=', True)])
+            elif not rec.order_id.show_all_product and not rec.order_id.show_base_product and not rec.order_id.show_customer_spesific_product:
+                product_template = rec.env['product.template'].search([
+                    ('customer_catalogue_ids.partner_id', '=', rec.order_id.partner_id.id),
+                ])
                 rec.product_template_domain = json.dumps([('id', 'in', product_template.ids), ('sale_ok', '=', True)])
             
     # @api.depends('product_template_id', 'order_id.partner_id')

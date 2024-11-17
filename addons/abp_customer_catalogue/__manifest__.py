@@ -12,6 +12,7 @@
         'sale',
         'stock',
         'product',
+        'account',
         'point_of_sale',
         'abp_pricelist',
     ],

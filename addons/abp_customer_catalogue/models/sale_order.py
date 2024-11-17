@@ -6,6 +6,8 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     show_all_product = fields.Boolean(string='Show all products?')
+    show_base_product = fields.Boolean(string='Show base products?', default=False)
+    show_customer_spesific_product = fields.Boolean(string='Show customer-specific products?', default=False)
     has_new_customer_catalogue = fields.Boolean(default=False)
     new_customer_catalogue_json = fields.Json()
     
@@ -115,10 +117,23 @@ class SaleOrder(models.Model):
     def _get_product_catalog_additional_domain(self):
         order = self
         if not order.show_all_product:
-            customer_catalogue = self.env['customer.catalogue'].search([
-                ('partner_id', '=', order.partner_id.id)
-            ])
-            product_ids = customer_catalogue.mapped('product_id').mapped('id')
+            product_ids = False
+            # Product in category AP
+            if order.show_base_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('AP'))
+                product_ids = products.mapped('id')
+            
+            # Product in category Customer Specific
+            if order.show_customer_spesific_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Customer Specific'))
+                product_ids = products.mapped('id')
+            
+            if not order.show_base_product and not order.show_customer_spesific_product:
+                customer_catalogue = self.env['customer.catalogue'].search([
+                    ('partner_id', '=', order.partner_id.id)
+                ])
+                product_ids = customer_catalogue.mapped('product_id').mapped('id')
+                
             additional_domain = [('id', 'in', product_ids)]
             return additional_domain
             
