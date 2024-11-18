@@ -11,6 +11,16 @@ class SaleOrder(models.Model):
     has_new_customer_catalogue = fields.Boolean(default=False)
     new_customer_catalogue_json = fields.Json()
     
+    def write(self, vals):
+        if 'show_base_product' in vals:
+            if vals['show_base_product'] == True:
+                vals['show_customer_spesific_product'] = False
+        if 'show_customer_spesific_product' in vals:
+            if vals['show_customer_spesific_product'] == True:
+                vals['show_base_product'] = False
+                
+        return super().write(vals)
+    
     def action_confirm(self):
         # Needed data that will be use to send email of the newly created customer catalogue
         new_customer_catalogues = self._create_customer_catalogue()
