@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='action_cancel']" position="after">
                     <button name="button_print_barcode" icon="fa-print" string="Print Barcode" type="object" class="btn btn-primary"/>
+                    <button name="button_sync_pricelist" icon="fa-refresh" string="Sync Pricelist" type="object" class="btn btn-danger"/>
                 </xpath>
                 <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
                     <field name="customer_product_ref"/>
