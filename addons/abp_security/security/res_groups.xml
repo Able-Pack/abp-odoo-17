@@ -24,6 +24,17 @@
             <field name="category_id" ref="abp_group_role_category"/>
         </record>
 
+        <!-- Price Lock -->
+        <record id="abp_group_sale_price_readonly" model="res.groups">
+            <field name="name">Sale Order Price Lock</field>
+        </record>
+        <record id="abp_group_purchase_price_readonly" model="res.groups">
+            <field name="name">Purchase Order Price Lock</field>
+        </record>
+        <record id="abp_group_product_price_readonly" model="res.groups">
+            <field name="name">Product Price Lock</field>
+        </record>
+
         <!-- Able Pack Apps Access -->
         <record model="ir.module.category" id="abp_group_app_category">
             <field name="name">Able Pack Apps Access</field>
