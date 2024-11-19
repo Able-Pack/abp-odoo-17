@@ -12,5 +12,16 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.view.form.abp.security</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="abp_pricelist.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_sync_pricelist']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator</attribute>
+                </xpath>
+            </field>
+        </record>
     </data>
 </odoo>

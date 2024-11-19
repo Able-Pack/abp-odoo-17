@@ -13,6 +13,7 @@
         'contacts',
         'crm',
         'sale',
+        'abp_pricelist',
         'abp_salesperson_dashboard',
         'abp_customer_catalogue',
         'spreadsheet_dashboard',
@@ -35,6 +36,8 @@
         'security/res_groups.xml',
         'security/ir_rule.xml',
         'security/ir.model.access.csv',
+        
+        'views/sale_order_views.xml',
         'views/stock_picking_views.xml',
         'views/menu_views.xml',
     ],
