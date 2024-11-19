@@ -12,11 +12,13 @@
         'sale',
         'stock',
         'product',
+        'account',
         'point_of_sale',
         'abp_pricelist',
     ],
     'data': [
         'security/ir.model.access.csv',
+        'security/res_groups.xml',
         
         'data/ir_config_parameter.xml',
         

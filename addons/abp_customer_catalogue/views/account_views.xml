@@ -8,7 +8,15 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='invoice_line_ids']" position="before">
                     <group>
-                        <field name="show_all_product" widget="boolean_toggle"/>
+                        <group invisible="1">
+                            <field name="show_all_product" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="show_base_product" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="show_customer_spesific_product" widget="boolean_toggle"/>
+                        </group>
                     </group>
                 </xpath>
                 <xpath expr="//field[@name='product_id']" position="before">
@@ -19,6 +27,8 @@
                         'model': 'stock.move',
                         'partner_id': parent.partner_id,
                         'show_all_product': parent.show_all_product,
+                        'show_base_product': parent.show_base_product,
+                        'show_customer_spesific_product': parent.show_customer_spesific_product,
                     }</attribute>
                     <attribute name="options">{
                         'no_create': True, 

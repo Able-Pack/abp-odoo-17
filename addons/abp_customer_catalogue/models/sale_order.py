@@ -1,4 +1,6 @@
+from lxml import etree
 from odoo import api, fields, models, _
+from odoo.addons.abp_utils import views as utils
 from odoo.exceptions import UserError
 
 
@@ -6,8 +8,37 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     show_all_product = fields.Boolean(string='Show all products?')
+    show_base_product = fields.Boolean(string='Show base products?', default=False)
+    show_customer_spesific_product = fields.Boolean(string='Show customer-specific products?', default=False)
     has_new_customer_catalogue = fields.Boolean(default=False)
     new_customer_catalogue_json = fields.Json()
+    
+    @api.model
+    def get_view(self, view_id=None, view_type="form", **options):
+        res = super().get_view(view_id, view_type, **options)
+        doc = etree.XML(res["arch"])
+        
+        if view_type in ("form"):
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_base_product']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//field[@name='show_base_product']/.."])
+                
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_customer_spesific_product']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//field[@name='show_customer_spesific_product']/.."])
+                
+        res["arch"] = etree.tostring(doc, encoding="unicode")
+        return res
+    
+    def write(self, vals):
+        if 'show_base_product' in vals:
+            if vals['show_base_product'] == True:
+                vals['show_customer_spesific_product'] = False
+        if 'show_customer_spesific_product' in vals:
+            if vals['show_customer_spesific_product'] == True:
+                vals['show_base_product'] = False
+                
+        return super().write(vals)
     
     def action_confirm(self):
         # Needed data that will be use to send email of the newly created customer catalogue
@@ -115,10 +146,23 @@ class SaleOrder(models.Model):
     def _get_product_catalog_additional_domain(self):
         order = self
         if not order.show_all_product:
-            customer_catalogue = self.env['customer.catalogue'].search([
-                ('partner_id', '=', order.partner_id.id)
-            ])
-            product_ids = customer_catalogue.mapped('product_id').mapped('id')
+            product_ids = False
+            # Product in category AP
+            if order.show_base_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('AP'))
+                product_ids = products.mapped('id')
+            
+            # Product in category Customer Specific
+            if order.show_customer_spesific_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Customer Specific'))
+                product_ids = products.mapped('id')
+            
+            if not order.show_base_product and not order.show_customer_spesific_product:
+                customer_catalogue = self.env['customer.catalogue'].search([
+                    ('partner_id', '=', order.partner_id.id)
+                ])
+                product_ids = customer_catalogue.mapped('product_id').mapped('id')
+                
             additional_domain = [('id', 'in', product_ids)]
             return additional_domain
             
