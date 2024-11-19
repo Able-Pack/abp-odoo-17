@@ -19,12 +19,12 @@ class StockMove(models.Model):
             if line.bom_line_id:
                 if line.bom_line_id.bom_id not in [dt['bom_id'] for dt in data]:
                     pricelist_item = self.env['product.pricelist.item'].search([
-                        ('pricelist_id', '=', self.partner_id.property_product_pricelist.id),
+                        ('pricelist_id', '=', line.picking_id.partner_id.property_product_pricelist.id),
                         ('product_tmpl_id', '=', line.bom_line_id.bom_id.product_tmpl_id.id),
                     ])
             else:
                 pricelist_item = self.env['product.pricelist.item'].search([
-                    ('pricelist_id', '=', self.partner_id.property_product_pricelist.id),
+                    ('pricelist_id', '=', line.picking_id.partner_id.property_product_pricelist.id),
                     ('product_tmpl_id', '=', line.product_id.product_tmpl_id.id),
                 ])
             
