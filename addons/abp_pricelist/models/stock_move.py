@@ -27,11 +27,18 @@ class StockMove(models.Model):
                     ('pricelist_id', '=', self.partner_id.property_product_pricelist.id),
                     ('product_tmpl_id', '=', line.product_id.product_tmpl_id.id),
                 ])
-                
-            line.pricelist_item_id = pricelist_item
-            line.customer_product_ref = pricelist_item.customer_product_ref
-            line.barcode = pricelist_item.barcode
-            line.retail_price = pricelist_item.retail_price or line.pricelist_item_id.fixed_price
+            
+            if len(pricelist_item) == 1:
+                line.pricelist_item_id = pricelist_item
+                line.customer_product_ref = pricelist_item.customer_product_ref
+                line.barcode = pricelist_item.barcode
+                line.retail_price = pricelist_item.retail_price or line.pricelist_item_id.fixed_price
+            elif len(pricelist_item) == 0:
+                line.customer_product_ref = line.barcode = "No matching pricelist item"
+                line.retail_price = 0.0
+            elif len(pricelist_item) > 1:
+                line.customer_product_ref = line.barcode = "Multiple pricelist item found"
+                line.retail_price = 0.0
     
     # Deprecated because we need to get the pricelist item matching the component's parent, not the component itself
     # @api.depends('product_id')
