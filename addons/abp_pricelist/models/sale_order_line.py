@@ -4,9 +4,9 @@ from odoo import api, fields, models, _
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     
-    customer_product_ref = fields.Char(string='Customer Product Ref', compute='_compute_pricelist_item_id')
-    barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item_id')
-    retail_price = fields.Float(string="Retail Price", compute='_compute_pricelist_item_id')
+    customer_product_ref = fields.Char(string='Customer Product Ref', compute='_compute_pricelist_item_id', store=True)
+    barcode = fields.Char(string='EAN13', compute='_compute_pricelist_item_id', store=True)
+    retail_price = fields.Float(string="Retail Price", compute='_compute_pricelist_item_id', store=True)
     
     # Override parent method
     @api.depends('product_id', 'product_uom', 'product_uom_qty')
