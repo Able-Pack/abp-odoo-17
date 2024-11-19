@@ -20,5 +20,15 @@ class ProductTemplate(models.Model):
                 # Set readonly = True
                 utils.set_readonly(doc, True, ["//field[@name='list_price']"])
                 
+            if not utils.user_has_any_group(self, ['abp_security.group_administrator']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//button", "//field[@name='is_published']"])
+                
+                # Set options no_open
+                utils.set_field_option(doc, ["//field"], no_open=True)
+                
+                # Set widget falues to empty
+                utils.set_empty_widget(doc, ["//field[@name='responsible_id']"])
+                
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
