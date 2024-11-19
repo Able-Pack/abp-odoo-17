@@ -34,10 +34,17 @@ class ProductTemplate(models.Model):
                 domain += [('id', 'in', [])]
                 
         else:
-            domain += [
-                '|',
-                ('name', operator, name), 
-                ('default_code', operator, name), 
-            ]
+            if domain:
+                domain += [
+                    '|',
+                    ('name', operator, name), 
+                    ('default_code', operator, name), 
+                ]
+            else:
+                domain = [
+                    '|',
+                    ('name', operator, name), 
+                    ('default_code', operator, name), 
+                ]
             
         return self._search(domain, limit=limit, order=order)
