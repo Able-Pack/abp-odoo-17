@@ -41,10 +41,7 @@ class ProductProduct(models.Model):
                     ('default_code', operator, name), 
                 ]
             else:
-                domain += [
-                    '|',
-                    ('name', operator, name), 
-                    ('default_code', operator, name), 
-                ]
+                query = super()._name_search(name, domain, operator, 10, order)
+                return query
             
         return self._search(domain, limit=limit, order=order)
