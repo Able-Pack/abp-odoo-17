@@ -5,6 +5,11 @@ from odoo.addons.abp_utils.utils import format_currency_amount
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
+    def button_sync_pricelist(self):
+        for rec in self:
+            for line in rec.order_line:
+                line._compute_pricelist_item_id()
+    
     def button_print_barcode(self):
         data = self._prepare_product_label_data(self)
         return self.env.ref('abp_pricelist.action_report_sales_product_barcode').report_action(self, data={'data': data})

@@ -24,6 +24,10 @@ install muk_web_colors
 install one2many_search_widget
 install reset_journal_entries
 install sttl_prevent_auto_save
+install fx_hide_action_menu
+install purchase_down_payment
+install web_chatter_position_cr
+install deltatech_stock_negative
 
 # ablepack modules
 # should be installed last to implement able pack's security (reset app menu groups)

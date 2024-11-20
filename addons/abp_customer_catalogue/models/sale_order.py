@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
     
     show_all_product = fields.Boolean(string='Show all products?')
     show_base_product = fields.Boolean(string='Show base products?', default=False)
-    show_customer_spesific_product = fields.Boolean(string='Show customer-specific products?', default=False)
+    show_customer_specific_product = fields.Boolean(string='Show customer-specific products?', default=False)
     has_new_customer_catalogue = fields.Boolean(default=False)
     new_customer_catalogue_json = fields.Json()
     
@@ -23,9 +23,9 @@ class SaleOrder(models.Model):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_base_product']/.."])
                 
-            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_customer_spesific_product']):
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_customer_specific_product']):
                 # Set invisible = True
-                utils.set_invisible(doc, True, ["//field[@name='show_customer_spesific_product']/.."])
+                utils.set_invisible(doc, True, ["//field[@name='show_customer_specific_product']/.."])
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
@@ -33,9 +33,9 @@ class SaleOrder(models.Model):
     def write(self, vals):
         if 'show_base_product' in vals:
             if vals['show_base_product'] == True:
-                vals['show_customer_spesific_product'] = False
-        if 'show_customer_spesific_product' in vals:
-            if vals['show_customer_spesific_product'] == True:
+                vals['show_customer_specific_product'] = False
+        if 'show_customer_specific_product' in vals:
+            if vals['show_customer_specific_product'] == True:
                 vals['show_base_product'] = False
                 
         return super().write(vals)
@@ -153,11 +153,11 @@ class SaleOrder(models.Model):
                 product_ids = products.mapped('id')
             
             # Product in category Customer Specific
-            if order.show_customer_spesific_product:
+            if order.show_customer_specific_product:
                 products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Customer Specific'))
                 product_ids = products.mapped('id')
             
-            if not order.show_base_product and not order.show_customer_spesific_product:
+            if not order.show_base_product and not order.show_customer_specific_product:
                 customer_catalogue = self.env['customer.catalogue'].search([
                     ('partner_id', '=', order.partner_id.id)
                 ])

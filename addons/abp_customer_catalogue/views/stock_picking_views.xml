@@ -16,7 +16,7 @@
                             <field name="show_base_product" widget="boolean_toggle"/>
                         </group>
                         <group>
-                            <field name="show_customer_spesific_product" widget="boolean_toggle"/>
+                            <field name="show_customer_specific_product" widget="boolean_toggle"/>
                         </group>
                     </group>
                 </xpath>
@@ -32,7 +32,7 @@
                         'partner_id': parent.partner_id,
                         'show_all_product': parent.show_all_product,
                         'show_base_product': parent.show_base_product,
-                        'show_customer_spesific_product': parent.show_customer_spesific_product,
+                        'show_customer_specific_product': parent.show_customer_specific_product,
                     }</attribute>
                     <attribute name="options">{
                         'no_create': True, 
