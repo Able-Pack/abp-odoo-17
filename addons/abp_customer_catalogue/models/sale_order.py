@@ -40,6 +40,11 @@ class SaleOrder(models.Model):
                 
         return super().write(vals)
     
+    @api.onchange('order_line')
+    def _onchange_order_line(self):
+        self.show_base_product = False
+        self.show_customer_specific_product = False
+    
     def action_confirm(self):
         # Needed data that will be use to send email of the newly created customer catalogue
         new_customer_catalogues = self._create_customer_catalogue()
