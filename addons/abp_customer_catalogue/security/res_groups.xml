@@ -9,8 +9,8 @@
             <field name="name">Show Base Products</field>
             <field name="category_id" ref="abp_product_visibility"/>
         </record>
-        <record id="group_show_customer_spesific_product" model="res.groups">
-            <field name="name">Show Customer Spesific Products</field>
+        <record id="group_show_customer_specific_product" model="res.groups">
+            <field name="name">Show Customer Specific Products</field>
             <field name="category_id" ref="abp_product_visibility"/>
         </record>
     </data>
