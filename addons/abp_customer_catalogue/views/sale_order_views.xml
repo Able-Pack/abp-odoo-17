@@ -32,11 +32,14 @@
                         </group>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="product_domain" column_invisible="1"/>
+                </xpath>
                 <xpath expr="//field[@name='product_template_id']" position="before">
                     <field name="product_template_domain" column_invisible="1"/>
                 </xpath>
                 <!-- Manually add existing context because haven't found way to extend context instead of overwrite it -->
-                <!-- Only add context 'show_all_product' -->
+                <!-- Only add context 'show_* and model' -->
                 <xpath expr="//field[@name='product_template_id']" position="attributes">
                     <attribute name="context">{
                         'partner_id': parent.partner_id,
@@ -58,6 +61,26 @@
                         'no_quick_create': True,
                     }</attribute>
                     <attribute name="domain">product_template_domain</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="context">{
+                        'partner_id':parent.partner_id, 
+                        'quantity':product_uom_qty, 
+                        'pricelist':parent.pricelist_id, 
+                        'uom':product_uom, 
+                        'company_id': parent.company_id,
+                        'show_all_product': parent.show_all_product,
+                        'show_base_product': parent.show_base_product,
+                        'show_customer_specific_product': parent.show_customer_specific_product,
+                        'model': 'sale.order'
+                    }</attribute>
+                    <attribute name="options">{
+                        'no_create': True, 
+                        'no_create_edit': True,
+                        'no_open': True,
+                        'no_quick_create': True,
+                    }</attribute>
+                    <attribute name="domain">product_domain</attribute>
                 </xpath>
             </field>
         </record>

@@ -6,6 +6,7 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
     
     product_template_domain = fields.Json(compute='_compute_product_template_domain')
+    product_domain = fields.Json(compute='_compute_product_template_domain')
     
     # customer_catalogue_domain = fields.Json(compute='_compute_customer_catalogue_domain')
     # customer_catalogue_id = fields.Many2one(comodel_name='customer.catalogue', compute='_compute_customer_catalogue')
@@ -18,17 +19,32 @@ class SaleOrderLine(models.Model):
         for rec in self:
             if rec.order_id.show_all_product:
                 rec.product_template_domain = json.dumps([('sale_ok', '=', True)])
+                rec.product_domain = json.dumps([('sale_ok', '=', True)])
+                
             elif rec.order_id.show_base_product:
                 product_templates = self.env['product.template'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('AP'))
                 rec.product_template_domain = json.dumps([('id', 'in', product_templates.ids), ('sale_ok', '=', True)])
+                
+                products = self.env['product.product'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('AP'))
+                rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
+                
             elif rec.order_id.show_customer_specific_product:
                 product_templates = self.env['product.template'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('Customer Specific'))
                 rec.product_template_domain = json.dumps([('id', 'in', product_templates.ids), ('sale_ok', '=', True)])
+                
+                products = self.env['product.product'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('Customer Specific'))
+                rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
+                
             elif not rec.order_id.show_all_product and not rec.order_id.show_base_product and not rec.order_id.show_customer_specific_product:
-                product_template = rec.env['product.template'].search([
+                product_templates = rec.env['product.template'].search([
                     ('customer_catalogue_ids.partner_id', '=', rec.order_id.partner_id.id),
                 ])
-                rec.product_template_domain = json.dumps([('id', 'in', product_template.ids), ('sale_ok', '=', True)])
+                rec.product_template_domain = json.dumps([('id', 'in', product_templates.ids), ('sale_ok', '=', True)])
+                
+                products = rec.env['product.product'].search([
+                    ('customer_catalogue_ids.partner_id', '=', rec.order_id.partner_id.id),
+                ])
+                rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
             
     # @api.depends('product_template_id', 'order_id.partner_id')
     # def _compute_customer_catalogue_domain(self):
