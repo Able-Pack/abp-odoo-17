@@ -38,3 +38,8 @@ class StockPicking(models.Model):
                 vals['show_base_product'] = False
                 
         return super().write(vals)
+    
+    @api.onchange('move_ids_without_package')
+    def _onchange_move_ids_without_package(self):
+        self.show_base_product = False
+        self.show_customer_specific_product = False

@@ -18,11 +18,11 @@
                     ]
                     </attribute> -->
                     <attribute name="filter_domain">[
-                        '|', '|', '|',  '|', 
+                        '|', '|', '|',
                         ('default_code', 'ilike', self),
                         ('name', 'ilike', self),
-                        ('barcode', 'ilike', self),
-                        ('customer_catalogue_ids.customer_product_code', 'ilike', self),
+                        ('customer_catalogue_ids.customer_product_ref', 'ilike', self),
+                        ('customer_catalogue_ids.barcode', 'ilike', self),
                     ]
                     </attribute>
                 </xpath>
