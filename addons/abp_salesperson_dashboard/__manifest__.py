@@ -10,6 +10,7 @@
     """,
     'depends': [
         'account_reports',
+        'account',
         'contacts',
         'sale',
         'sales_team',
