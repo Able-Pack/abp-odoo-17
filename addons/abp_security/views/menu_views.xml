@@ -126,5 +126,10 @@
         <!-- <record id="base.menu_tests" model="ir.ui.menu">
             <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_tests_app')])]"/>
         </record> -->
+
+        <!-- Accounting -->
+        <record id="abp_salesperson_dashboard.salesperson_dashboard_credit_notes_menu" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_administrator'), ref('abp_security.group_supervisor')])]"/>
+        </record>
     </data>
 </odoo>
