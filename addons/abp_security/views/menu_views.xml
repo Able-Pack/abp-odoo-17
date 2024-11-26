@@ -131,5 +131,10 @@
         <record id="abp_salesperson_dashboard.salesperson_dashboard_customers_menu" model="ir.ui.menu">
             <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_administrator'), ref('abp_security.group_supervisor')])]"/>
         </record>
+
+        <!-- Salesperson Dashboard/Inventory/Receipts -->
+        <record id="abp_salesperson_dashboard.salesperson_dashboard_inventory_receipts_menu_sub" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('abp_security.group_administrator'), ref('abp_security.group_supervisor')])]"/>
+        </record>
     </data>
 </odoo>
