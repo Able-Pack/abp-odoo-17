@@ -24,9 +24,14 @@
                 <menuitem id="salesperson_dashboard_delivery_order_menu" name="Delivery Order" action="stock.action_picking_tree_outgoing" sequence="20"/>
             </menuitem>
 
-            <!-- Salesperson Dashboard/Credit Notes -->
-            <menuitem id="salesperson_dashboard_credit_notes_menu" name="Credit notes" action="account.action_move_out_refund_type" sequence="40"/>
-            
+            <!-- Salesperson Dashboard/Customers -->
+            <menuitem id="salesperson_dashboard_customers_menu" name="Customers" sequence="40">
+                <!-- Salesperson Dashboard/Customers/Invoices -->
+                <menuitem id="salesperson_dashboard_customers_invoices_menu_sub" name="Invoices" action="account.action_move_out_invoice_type" sequence="10"/>
+                <!-- Salesperson Dashboard/Customers/Credit Notes -->
+                <menuitem id="salesperson_dashboard_customers_credit_notes_menu_sub" name="Credit notes" action="account.action_move_out_refund_type" sequence="20"/>
+            </menuitem>
+
             <!-- Salesperson Dashboard/Reporting -->
             <menuitem id="salesperson_dashboard_reporting_menu" name="Reporting" sequence="50">
                 <!-- <menuitem id="salesperson_dashboard_report_partner_ledger_menu_sub" name="Partner Ledger" action="account_reports.action_account_report_partner_ledger" sequence="10"/> -->
@@ -34,8 +39,6 @@
                 <!-- Salesperson Dashboard/Reporting/Aged Receivable -->
                 <menuitem id="salesperson_dashboard_report_aged_receivable_menu_sub" name="Aged Receivable" action="account_reports.action_account_report_ar" sequence="30"/>
             </menuitem>
-
         </menuitem>
-
     </data>
 </odoo>
