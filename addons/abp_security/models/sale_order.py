@@ -17,5 +17,9 @@ class SaleOrder(models.Model):
                 # Set readonly = True
                 utils.set_readonly(doc, True, ["//field[@name='price_unit']"])
                 
+            if not utils.user_has_any_group(self, ['abp_security.group_administrator', 'abp_security.group_supervisor']):
+                # Set readonly = True for all fields inside page "Other Information"
+                utils.set_readonly(doc, True, ["//page[@name='other_information']//*[self::field]"])
+                
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
