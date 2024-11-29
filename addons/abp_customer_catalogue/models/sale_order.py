@@ -1,7 +1,7 @@
 from lxml import etree
 from odoo import api, fields, models, _
 from odoo.addons.abp_utils import views as utils
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, AccessError
 
 
 class SaleOrder(models.Model):
@@ -147,6 +147,15 @@ class SaleOrder(models.Model):
         except Exception as e:
             raise UserError(_(str(e)))
         
+    # Override
+    def action_add_from_catalog(self):
+        if not self.env.user.has_group('base.group_system'):
+            if self.show_base_product or self.show_customer_specific_product:
+                raise AccessError(_("Catalog feature is not available"))
+            
+        res = super().action_add_from_catalog()
+        self.show_base_product = self.show_customer_specific_product = False
+        return res
         
     def _get_product_catalog_additional_domain(self):
         order = self
@@ -171,7 +180,7 @@ class SaleOrder(models.Model):
             additional_domain = [('id', 'in', product_ids)]
             return additional_domain
             
-            
+    # Override
     def _get_product_catalog_domain(self):
         result = super()._get_product_catalog_domain()
         
