@@ -36,7 +36,7 @@ class PricelistItem(models.Model):
             })
         return data
     
-    @api.depends('retail_price', 'price_discount', 'price_surcharge', 'price_round', 'rounding_option')
+    @api.depends('retail_price', 'price_discount', 'price_surcharge', 'price_round', 'rounding_option', 'base')
     def _compute_distributor_price(self):
         for rec in self:
             price = 0.0
