@@ -22,6 +22,9 @@
                 <!-- <xpath expr="//button[@name='action_detailed_operations']" position="attributes">
                     <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
                 </xpath> -->
+                <xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath>
             </field>
         </record>
 
