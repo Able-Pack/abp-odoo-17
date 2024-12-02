@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="action_report_account_move_document_number_qrcode" model="ir.actions.report">
+            <field name="name">Account Move Document QR Code</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">abp_report.report_document_qrcode_abp</field>
+            <field name="report_file">abp_report.report_document_qrcode_abp</field>
+            <field name="print_report_name">'QR Code - %s' % (object.name)</field>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="abp_report.abp_product_barcode_format"/>
+        </record>
+    </data>
+</odoo>

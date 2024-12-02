@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_document_qrcode_template">
+            <t t-call="web.html_container">
+                <div class="text-center" style="margin: 20px">
+                    <h1>
+                        <t t-if="o.get('document_number')" t-esc="o.get('document_number')"/>
+                        <t t-else="">Null Document Number</t>
+                    </h1>
+                    <div style="margin: 20px 0;">
+                        <style>
+                            .clean_barcode {
+                                image-rendering: nearest-neighbor;
+                                image-rendering: pixelated;
+                            }
+                        </style>
+                        <img t-if="o.get('document_number')" class="clean_barcode" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.get('barcode'), 300, 300)"/>
+                        <h3 t-else="">Null Document Number</h3>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="report_document_qrcode_abp">
+            <t t-call="web.basic_layout">
+                <t t-foreach="data" t-as="item">
+                    <div class="page" style="page-break-after:always;">
+                        <t t-call="abp_report.report_document_qrcode_template">
+                            <t t-set="o" t-value="item"/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
