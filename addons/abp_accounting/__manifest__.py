@@ -9,8 +9,11 @@
     """,
     'depends': [
         'account',
+        'abp_report',
     ],
     'data': [
+        'reports/report_action.xml',
+        'views/account_move_views.xml',
     ],
     'assets': {
     },

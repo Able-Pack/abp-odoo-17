@@ -17,10 +17,9 @@
     'data': [
         'reports/report_header.xml',
         'reports/product_barcode.xml',
+        'reports/document_qrcode.xml',
         'reports/invoice_default.xml',
         'reports/consignment_memo.xml',
-        # 'reports/sale/ir_actions_report_templates.xml',
-        # 'reports/sale/ir_actions_report.xml',
         
         'views/stock_picking_views.xml',
     ],
