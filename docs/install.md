@@ -5,6 +5,7 @@
 # ablepack modules
 install abp_utils
 # install abp_base
+install abp_report
 install abp_accounting
 install abp_payroll
 install abp_pricelist
