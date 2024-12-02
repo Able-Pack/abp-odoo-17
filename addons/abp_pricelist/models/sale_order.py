@@ -1,5 +1,6 @@
 from odoo import models, _
 from odoo.addons.abp_utils.utils import format_currency_amount
+from odoo.exceptions import ValidationError
 
 
 class SaleOrder(models.Model):
@@ -11,6 +12,11 @@ class SaleOrder(models.Model):
                 line._compute_pricelist_item_id()
     
     def button_print_barcode(self):
+        customer_product_refs = self.order_line.mapped('customer_product_ref')
+        barcode = self.order_line.mapped('barcode')
+        if 'Multiple pricelist item' in customer_product_refs or 'Multiple pricelist item' in barcode:
+            raise ValidationError(_('Duplicate items found on pricelist item. Remove duplicated items from pricelist item to continue'))
+        
         data = self._prepare_product_label_data(self)
         return self.env.ref('abp_pricelist.action_report_sales_product_barcode').report_action(self, data={'data': data})
     
