@@ -22,9 +22,6 @@
                 <!-- <xpath expr="//button[@name='action_detailed_operations']" position="attributes">
                     <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
                 </xpath> -->
-                <xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">
-                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
-                </xpath>
             </field>
         </record>
 
@@ -35,6 +32,17 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='button_sync_pricelist']" position="attributes">
                     <attribute name="groups">abp_security.group_administrator</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_form_abp_inventory" model="ir.ui.view">
+            <field name="name">stock.picking.view.form.abp.inventory.abp.security</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="abp_inventory.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
                 </xpath>
             </field>
         </record>
