@@ -13,9 +13,12 @@ class SaleOrder(models.Model):
         
         if view_type in ("tree", "kanban", "form"):
             if utils.user_has_any_group(self, ['abp_security.abp_group_sale_price_readonly']):
-                
                 # Set readonly = True
                 utils.set_readonly(doc, True, ["//field[@name='price_unit']"])
+                
+            if not utils.user_has_any_group(self, ['abp_security.group_administrator']):
+                # Set readonly = True for all fields inside page "Other Information"
+                utils.set_readonly(doc, True, ["//page[@name='other_information']//*[self::field]"])
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res

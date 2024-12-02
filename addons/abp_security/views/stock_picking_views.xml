@@ -6,15 +6,27 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <!-- <xpath expr="//button[@name='button_validate']" position="attributes"> -->
-                <xpath expr="//button[@class='o_btn_validate']" position="attributes">
-                    <attribute name="groups" remove="stock.group_stock_user" add="abp_security.group_administrator,abp_security.group_supervisor" separator=","></attribute>
+                <!-- <xpath expr="//button[@name='action_confirm']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath> -->
+                <xpath expr="//form[1]/header[1]/button[@name='button_validate']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
                 </xpath>
+                <xpath expr="//form[1]/header[1]/button[@name='button_validate'][2]" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath>
+                <!-- <xpath expr="//button[@name='444']" position="attributes"> -->
+                <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator</attribute>
+                </xpath>
+                <!-- <xpath expr="//button[@name='action_detailed_operations']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath> -->
             </field>
         </record>
 
-        <record id="view_picking_form" model="ir.ui.view">
-            <field name="name">stock.picking.view.form.abp.security</field>
+        <record id="view_picking_form_abp_pricelist" model="ir.ui.view">
+            <field name="name">stock.picking.view.form.abp.pricelist.abp.security</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="abp_pricelist.view_picking_form"/>
             <field name="arch" type="xml">

@@ -11,7 +11,7 @@
                     <field name="rounding_option" invisible="compute_price != 'formula'"/>
                 </field>
                 <field name="base" position="after">
-                    <field name="retail_price" widget="monetary" invisible="base != 'retail_price'"/>
+                    <field name="retail_price" widget="monetary"/>
                 </field>
                 <xpath expr="//field[@name='price_min_margin']/.." position="after">
                     <field name="distributor_price" widget="monetary" invisible="base != 'retail_price'"/>

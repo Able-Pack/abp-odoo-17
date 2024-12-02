@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+        <!-- <record id="view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.view.form.abp.security</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other_information']" position="attributes">
+                    <attribute name="readonly">user.hasgroup('abp_security.group_salesperson')</attribute>
+                </xpath>
+            </field>
+        </record> -->
         <record id="view_order_form" model="ir.ui.view">
             <field name="name">sale.order.view.form.abp.security</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="abp_pricelist.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@id='create_invoice']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath>
+                <xpath expr="//button[@id='create_invoice_percentage']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath>
                 <xpath expr="//button[@name='button_sync_pricelist']" position="attributes">
                     <attribute name="groups">abp_security.group_administrator</attribute>
                 </xpath>
