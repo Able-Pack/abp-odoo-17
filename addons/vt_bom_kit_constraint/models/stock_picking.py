@@ -46,9 +46,13 @@ class StockPicking(models.Model):
             # Available quantity = on hand quantity - reserved quantity
             minimum_product_qty_dict = {}
             for move in bom_moves:
+                # print(move.product_id.product_tmpl_id.name, move.product_id.qty_available)
+                # TODO: Use another way to get the WH/Stock
+                # Eg. using a field to determine the main stock location (not consignment, etc)
                 stock_quant = self.env['stock.quant'].search([
                     ('product_id', '=', move.product_id.id),
                     ('location_id.usage', '=', 'internal'),
+                    ('location_id.name', 'ilike', 'stock'),
                 ])
                 
                 available_qty = stock_quant.quantity - stock_quant.reserved_quantity
