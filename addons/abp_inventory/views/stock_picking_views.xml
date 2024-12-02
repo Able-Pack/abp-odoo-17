@@ -9,6 +9,10 @@
                 <xpath expr="//field[@name='origin']" position="attributes">
                     <attribute name="required">1</attribute>
                 </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="before">
+                    <button name="action_toggle_is_locked" string="Lock/Unlock" type="object" 
+                            icon="fa-lock" class="btn btn-danger"/>
+                </xpath>
             </field>
         </record>
     </data>
