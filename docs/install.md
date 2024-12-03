@@ -18,7 +18,7 @@ install abp_mrp
 
 # external modules
 install bi_invoice_backdate
-install bi_order_line_with_sequence_number
+install order_line_sequences
 install customer_statement_aging_app
 install dev_sales_commission
 install muk_web_colors
