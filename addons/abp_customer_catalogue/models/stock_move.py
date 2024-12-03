@@ -13,11 +13,15 @@ class StockMove(models.Model):
     # barcode = fields.Char(related='customer_catalogue_id.barcode')
     # retail_price = fields.Float(related='customer_catalogue_id.retail_price')
     
-    @api.depends('picking_id.partner_id', 'picking_id.show_all_product', 'picking_id.show_base_product', 'picking_id.show_customer_specific_product')
+    @api.depends('picking_id.partner_id', 'picking_id.show_all_product', 'picking_id.show_admin_product', 'picking_id.show_base_product', 'picking_id.show_customer_specific_product')
     def _compute_product_domain(self):
         for rec in self:
             if rec.picking_id.show_all_product:
                 rec.product_domain = json.dumps([('sale_ok', '=', True)])
+                
+            elif rec.picking_id.show_admin_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Admin'))
+                rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
                 
             elif rec.picking_id.show_base_product:
                 products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('AP'))

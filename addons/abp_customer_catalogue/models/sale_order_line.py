@@ -14,12 +14,19 @@ class SaleOrderLine(models.Model):
     customer_product_code = fields.Char(string='Customer Product Code')
     
     # @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_base_product')
-    @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_base_product', 'order_id.show_customer_specific_product')
+    @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_admin_product', 'order_id.show_base_product', 'order_id.show_customer_specific_product')
     def _compute_product_template_domain(self):
         for rec in self:
             if rec.order_id.show_all_product:
                 rec.product_template_domain = json.dumps([('sale_ok', '=', True)])
                 rec.product_domain = json.dumps([('sale_ok', '=', True)])
+                
+            elif rec.order_id.show_admin_product:
+                product_templates = self.env['product.template'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('Admin'))
+                products = self.env['product.product'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('Admin'))
+                
+                rec.product_template_domain = json.dumps([('id', 'in', product_templates.ids), ('sale_ok', '=', True)])
+                rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
                 
             elif rec.order_id.show_base_product:
                 product_templates = self.env['product.template'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('AP'))

@@ -8,6 +8,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     show_all_product = fields.Boolean(string='Show all products?')
+    show_admin_product = fields.Boolean(string='Show admin products')
     show_base_product = fields.Boolean(string='Show base products?', default=False)
     show_customer_specific_product = fields.Boolean(string='Show customer-specific products?', default=False)
     has_new_customer_catalogue = fields.Boolean(default=False)
@@ -19,6 +20,10 @@ class SaleOrder(models.Model):
         doc = etree.XML(res["arch"])
         
         if view_type in ("form"):
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_admin_product']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//field[@name='show_admin_product']/.."])
+            
             if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_base_product']):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_base_product']/.."])
@@ -27,16 +32,25 @@ class SaleOrder(models.Model):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_customer_specific_product']/.."])
                 
+            if self.show_base_product or self.show_customer_specific_product:
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//button[@name='action_add_from_catalog']"])
+                
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
     
     def write(self, vals):
+        if 'show_admin_product' in vals:
+            if vals['show_admin_product'] == True:
+                vals['show_base_product'] = vals['show_customer_specific_product'] = False
+                
         if 'show_base_product' in vals:
             if vals['show_base_product'] == True:
-                vals['show_customer_specific_product'] = False
+                vals['show_admin_product'] = vals['show_customer_specific_product'] = False
+                
         if 'show_customer_specific_product' in vals:
             if vals['show_customer_specific_product'] == True:
-                vals['show_base_product'] = False
+                vals['show_admin_product'] = vals['show_base_product'] = False
                 
         return super().write(vals)
     
@@ -161,6 +175,12 @@ class SaleOrder(models.Model):
         order = self
         if not order.show_all_product:
             product_ids = False
+            
+            # Product in category Admin
+            if order.show_admin_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Admin'))
+                product_ids = products.mapped('id')
+            
             # Product in category AP
             if order.show_base_product:
                 products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('AP'))
@@ -171,7 +191,7 @@ class SaleOrder(models.Model):
                 products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Customer Specific'))
                 product_ids = products.mapped('id')
             
-            if not order.show_base_product and not order.show_customer_specific_product:
+            if not order.show_admin_product and not order.show_base_product and not order.show_customer_specific_product:
                 customer_catalogue = self.env['customer.catalogue'].search([
                     ('partner_id', '=', order.partner_id.id)
                 ])

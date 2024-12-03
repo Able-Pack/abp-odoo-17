@@ -24,6 +24,9 @@
                             <field name="show_all_product" widget="boolean_toggle"/>
                         </group>
                         <group>
+                            <field name="show_admin_product" widget="boolean_toggle"/>
+                        </group>
+                        <group>
                             <field name="show_base_product" widget="boolean_toggle"/>
                         </group>
                         <group>
@@ -49,6 +52,7 @@
                         'default_list_price': 0,
                         'default_description_sale': False,
                         'show_all_product': parent.show_all_product,
+                        'show_admin_product': parent.show_admin_product,
                         'show_base_product': parent.show_base_product,
                         'show_customer_specific_product': parent.show_customer_specific_product,
                         'model': 'sale.order'
@@ -69,6 +73,7 @@
                         'uom':product_uom, 
                         'company_id': parent.company_id,
                         'show_all_product': parent.show_all_product,
+                        'show_admin_product': parent.show_admin_product,
                         'show_base_product': parent.show_base_product,
                         'show_customer_specific_product': parent.show_customer_specific_product,
                         'model': 'sale.order'
