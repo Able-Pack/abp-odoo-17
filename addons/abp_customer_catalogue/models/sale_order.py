@@ -8,7 +8,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
     
     show_all_product = fields.Boolean(string='Show all products?')
-    show_admin_product = fields.Boolean(string='Show admin products')
+    show_admin_product = fields.Boolean(string='Show admin products?')
     show_base_product = fields.Boolean(string='Show base products?', default=False)
     show_customer_specific_product = fields.Boolean(string='Show customer-specific products?', default=False)
     has_new_customer_catalogue = fields.Boolean(default=False)
