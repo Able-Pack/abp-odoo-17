@@ -59,13 +59,15 @@ class SaleOrder(models.Model):
         self.show_base_product = False
         self.show_customer_specific_product = False
     
-    def action_confirm(self):
-        # Needed data that will be use to send email of the newly created customer catalogue
-        new_customer_catalogues = self._create_customer_catalogue()
-        if new_customer_catalogues:
-            self.has_new_customer_catalogue = True
-            self.new_customer_catalogue_json = new_customer_catalogues
-        return super().action_confirm()
+    # def action_confirm(self):
+        # Save new customer catalogue draft values to a field
+        # The values will be used later to create customer catalogue record
+        # new_customer_catalogues = self._create_customer_catalogue()
+        # new_customer_catalogues = self._draft_new_customer_catalogue()
+        # if new_customer_catalogues:
+            # self.has_new_customer_catalogue = True
+            # self.new_customer_catalogue_json = new_customer_catalogues
+        # return super().action_confirm()
     
     def _create_customer_catalogue(self):
         result = []
@@ -94,7 +96,11 @@ class SaleOrder(models.Model):
                     'price_unit': line.price_unit
                 })
                 result.append(values)
-                
+        
+        if result:
+            self.has_new_customer_catalogue = True
+            self.new_customer_catalogue_json = result
+        
         return result
     
     def button_notify_catalogue_creation(self):
