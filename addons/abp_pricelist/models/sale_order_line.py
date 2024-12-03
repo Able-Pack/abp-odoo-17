@@ -20,6 +20,9 @@ class SaleOrderLine(models.Model):
                 rec.customer_product_ref = rec.pricelist_item_id.customer_product_ref
                 rec.barcode = rec.pricelist_item_id.barcode
                 rec.retail_price = rec.pricelist_item_id.retail_price or rec.pricelist_item_id.fixed_price
+            elif not rec.pricelist_item_id:
+                rec.customer_product_ref = rec.barcode = 'No matching pricelist item'
+                rec.retail_price = 0.0
                 
             # Manually search to product.pricelist.item to make sure if there is only single pricelist item record
             pricelist_item_temp = self.env['product.pricelist.item'].search([
@@ -27,5 +30,5 @@ class SaleOrderLine(models.Model):
                 ('product_tmpl_id', '=', rec.product_template_id.id)
             ])
             if len(pricelist_item_temp) > 1:
-                rec.customer_product_ref = rec.barcode = 'Multiple pricelist item'
+                rec.customer_product_ref = rec.barcode = 'Multiple pricelist item found'
                 rec.retail_price = 0.0
