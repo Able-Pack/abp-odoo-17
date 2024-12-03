@@ -12,6 +12,9 @@
                             <field name="show_all_product" widget="boolean_toggle"/>
                         </group>
                         <group>
+                            <field name="show_admin_product" widget="boolean_toggle"/>
+                        </group>
+                        <group>
                             <field name="show_base_product" widget="boolean_toggle"/>
                         </group>
                         <group>
@@ -27,6 +30,7 @@
                         'model': 'stock.move',
                         'partner_id': parent.partner_id,
                         'show_all_product': parent.show_all_product,
+                        'show_admin_product': parent.show_admin_product,
                         'show_base_product': parent.show_base_product,
                         'show_customer_specific_product': parent.show_customer_specific_product,
                     }</attribute>
