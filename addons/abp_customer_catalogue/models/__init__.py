@@ -8,3 +8,4 @@ from . import sale_order_line
 from . import stock_picking
 from . import stock_move
 from . import account
+from . import sale_make_invoice_advance

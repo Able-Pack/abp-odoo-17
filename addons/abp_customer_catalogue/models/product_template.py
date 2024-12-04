@@ -12,10 +12,11 @@ class ProductTemplate(models.Model):
         model = self._context.get('model')
         partner_id = self._context.get('partner_id')
         show_all_product = self._context.get('show_all_product')
+        show_admin_product = self._context.get('show_admin_product')
         show_base_product = self._context.get('show_base_product')
         show_customer_specific_product = self._context.get('show_customer_specific_product')
         
-        if model == 'sale.order' and partner_id and (not show_all_product and not show_base_product and not show_customer_specific_product):
+        if model == 'sale.order' and partner_id and (not show_all_product and not show_admin_product and not show_base_product and not show_customer_specific_product):
             customer_catalogue_ids = self.env['customer.catalogue'].search([
                 '|', '|', '|', '|',
                 ('product_tmpl_id.default_code', operator, name),

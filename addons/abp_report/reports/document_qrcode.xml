@@ -15,7 +15,7 @@
                                 image-rendering: pixelated;
                             }
                         </style>
-                        <img t-if="o.get('document_number')" class="clean_barcode" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.get('barcode'), 300, 300)"/>
+                        <img t-if="o.get('document_number')" class="clean_barcode" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', o.get('document_number'), 300, 300)"/>
                         <h3 t-else="">Null Document Number</h3>
                     </div>
                 </div>

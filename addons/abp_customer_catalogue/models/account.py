@@ -8,6 +8,7 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
     
     show_all_product = fields.Boolean(string='Show all products?')
+    show_admin_product = fields.Boolean(string='Show admin products?')
     show_base_product = fields.Boolean(string='Show base products?', default=False)
     show_customer_specific_product = fields.Boolean(string='Show customer-specific products?', default=False)
     
@@ -17,6 +18,10 @@ class AccountMove(models.Model):
         doc = etree.XML(res["arch"])
         
         if view_type in ("form"):
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_admin_product']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//field[@name='show_admin_product']/.."])
+                
             if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_base_product']):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_base_product']/.."])
@@ -29,12 +34,17 @@ class AccountMove(models.Model):
         return res
     
     def write(self, vals):
+        if 'show_admin_product' in vals:
+            if vals['show_admin_product'] == True:
+                vals['show_base_product'] = vals['show_customer_specific_product'] = False
+                
         if 'show_base_product' in vals:
             if vals['show_base_product'] == True:
-                vals['show_customer_specific_product'] = False
+                vals['show_admin_product'] = vals['show_customer_specific_product'] = False
+                
         if 'show_customer_specific_product' in vals:
             if vals['show_customer_specific_product'] == True:
-                vals['show_base_product'] = False
+                vals['show_admin_product'] = vals['show_base_product'] = False
                 
         return super().write(vals)
     
@@ -44,11 +54,14 @@ class AccountMoveLine(models.Model):
     
     product_domain = fields.Json(compute='_compute_product_domain')
     
-    @api.depends('move_id.partner_id', 'move_id.show_all_product', 'move_id.show_base_product', 'move_id.show_customer_specific_product')
+    @api.depends('move_id.partner_id', 'move_id.show_all_product', 'move_id.show_admin_product', 'move_id.show_base_product', 'move_id.show_customer_specific_product')
     def _compute_product_domain(self):
         for rec in self:
             if rec.move_id.show_all_product:
                 rec.product_domain = json.dumps([('sale_ok', '=', True)])
+            elif rec.move_id.show_admin_product:
+                products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Admin'))
+                rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
             elif rec.move_id.show_base_product:
                 products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('AP'))
                 rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
