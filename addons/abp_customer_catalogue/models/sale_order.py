@@ -112,7 +112,7 @@ class SaleOrder(models.Model):
         
         body_html = f"""
             <p>Hello,</p>
-            <p>A new customer catalogue for partner {partner_id.name} has been created with the following details:</p>
+            <p>A new customer catalogue for partner <strong>{partner_id.name}</strong> has been created with the following details:</p>
             
             <table border="1" cellpadding="5" cellspacing="0">
                 <thead>
