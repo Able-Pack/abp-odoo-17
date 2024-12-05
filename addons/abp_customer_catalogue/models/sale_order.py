@@ -31,10 +31,11 @@ class SaleOrder(models.Model):
             if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_customer_specific_product']):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_customer_specific_product']/.."])
-                
-            if self.show_base_product or self.show_customer_specific_product:
-                # Set invisible = True
-                utils.set_invisible(doc, True, ["//button[@name='action_add_from_catalog']"])
+            
+            # TODO: Delete due to deprecated
+            # if self.show_base_product or self.show_customer_specific_product:
+            #     # Set invisible = True
+            #     utils.set_invisible(doc, True, ["//button[@name='action_add_from_catalog']"])
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
