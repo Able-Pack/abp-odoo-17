@@ -11,6 +11,10 @@
 <!--                 <t t-foreach="doc.partner_ids" t-as="partner_id">-->
 <!--                     -->
 
+                        <t t-set="sum_total_amount_total" t-value="0"/>
+                        <t t-set="sum_paid_amount" t-value="0"/>
+                        <t t-set="sum_total_paid_amount" t-value="0"/>
+                        <t t-set="sum_total_amount_residual" t-value="0"/>
                          <t t-foreach="doc.invoice_ids.mapped('partner_id')" t-as="partner_id">
                              <table width="100%">
                                  <t t-set="total_amount_total" t-value="0"/>
@@ -47,15 +51,15 @@
                                              <td width="15%"><span t-field="invoice_id.invoice_date_due"/> </td>
                                              <td width="10%"><span t-field="invoice_id.invoice_date"/> </td>
                                              <td width="15%"><span t-field="invoice_id.name"/> </td>
-                                             <td width="15%"><span t-field="invoice_id.amount_total"/> </td>
-                                             <td width="17%"><span t-esc="paid_amount"/></td>
+                                             <td width="15%"><span style="margin-left:10px;" t-esc="doc.format_currency_amount(invoice_id.amount_total, invoice_id.currency_id)"/> </td>
+                                             <td width="17%"><span style="margin-left:10px;" t-esc="doc.format_currency_amount(paid_amount, invoice_id.currency_id)"/></td>
                                              <td width="15%">
                                                 <span t-if="invoice_id.currency_id">
-                                                    <span t-esc="invoice_id.currency_id.symbol"/>
-                                                    <span t-esc="is_credit_note and -invoice_id.amount_residual or invoice_id.amount_residual"/>
+                                                    <span style="margin-left:10px;" t-esc="invoice_id.currency_id.symbol"/>
+                                                    <span t-esc="is_credit_note and doc.format_currency_amount(-invoice_id.amount_residual) or doc.format_currency_amount(invoice_id.amount_residual)"/>
                                                 </span>
                                                 <span t-else="">
-                                                    <span t-esc="is_credit_note and -invoice_id.amount_residual or invoice_id.amount_residual"/>
+                                                    <span style="margin-left:10px;" t-esc="is_credit_note and doc.format_currency_amount(-invoice_id.amount_residual) or doc.format_currency_amount(invoice_id.amount_residual)"/>
                                                 </span>
                                              </td>
                                          </tr>
@@ -67,12 +71,28 @@
                                      <td width="15%" style="border-top:1px solid black;"></td>
                                      <td width="10%" style="border-top:1px solid black;"></td>
                                      <th width="15%" style="border-top:1px solid black;">Total</th>
-                                     <th width="15%" style="border-top:1px solid black;"><span t-esc="total_amount_total"/> </th>
-                                     <th width="17%" style="border-top:1px solid black;"><span t-esc="total_paid_amount"/></th>
-                                     <th width="15%" style="border-top:1px solid black;"><span t-esc="total_amount_residual"/> </th>
+                                     <th width="15%" style="border-top:1px solid black;"><span t-esc="doc.format_currency_amount(total_amount_total, invoice_id.currency_id)"/> </th>
+                                     <th width="17%" style="border-top:1px solid black;"><span t-esc="doc.format_currency_amount(total_paid_amount, invoice_id.currency_id)"/></th>
+                                     <th width="15%" style="border-top:1px solid black;"><span t-esc="doc.format_currency_amount(total_amount_residual, invoice_id.currency_id)"/> </th>
+                                    
+                                    <!-- Sum Total -->
+                                    <t t-set="sum_total_amount_total" t-value="sum_total_amount_total + total_amount_total"/>
+                                    <t t-set="sum_total_paid_amount" t-value="sum_total_paid_amount + total_paid_amount"/>
+                                    <t t-set="sum_total_amount_residual" t-value="sum_total_amount_residual + total_amount_residual"/>
                                  </tr>
                              </table>
-                         </t>
+                        </t>
+                        <table class="table-borderless mt-3" width="100%">
+                            <tr>
+                                <th width="13%"></th>
+                                <th width="15%"></th>
+                                <th width="10%"></th>
+                                <th width="15%">Sum Total </th>
+                                <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_total, invoice_id.currency_id)"/></th>
+                                <th width="17%"><span t-esc="doc.format_currency_amount(sum_total_paid_amount, invoice_id.currency_id)"/></th>
+                                <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_residual, invoice_id.currency_id)"/></th>
+                            </tr>
+                        </table>
 <!--                 </t>-->
                 <div class="oe_structure"/>
             </div>
