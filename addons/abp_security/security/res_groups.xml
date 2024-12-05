@@ -24,6 +24,30 @@
             <field name="category_id" ref="abp_group_role_category"/>
         </record>
 
+        <!-- Sale -->
+        <!-- <record id="abp_group_sale_category" model="ir.module.category">
+            <field name="name">Sales</field>
+            <field name="sequence">30</field>
+        </record> -->
+        <record id="abp_group_sale_button_confirm" model="res.groups">
+            <field name="name">Sale: Button Confirm</field>
+            <!-- <field name="category_id" ref="abp_group_sale_category"/> -->
+        </record>
+
+        <!-- Inventory -->
+        <!-- <record id="abp_group_inventory_category" model="ir.module.category">
+            <field name="name">Inventory</field>
+            <field name="sequence">40</field>
+        </record> -->
+        <record id="abp_group_inventory_button_todo" model="res.groups">
+            <field name="name">Inventory: Button Mark as todo</field>
+            <!-- <field name="category_id" ref="abp_group_inventory_category"/> -->
+        </record>
+        <record id="abp_group_inventory_button_validate" model="res.groups">
+            <field name="name">Inventory: Button Validate</field>
+            <!-- <field name="category_id" ref="abp_group_inventory_category"/> -->
+        </record>
+
         <!-- Price Lock -->
         <record id="abp_group_sale_price_readonly" model="res.groups">
             <field name="name">Sale Order Price Lock</field>
