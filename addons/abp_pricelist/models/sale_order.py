@@ -1,3 +1,4 @@
+from itertools import islice
 from odoo import models, _
 from odoo.addons.abp_utils.utils import format_currency_amount
 from odoo.exceptions import ValidationError
@@ -12,13 +13,37 @@ class SaleOrder(models.Model):
                 line._compute_pricelist_item_id()
     
     def button_print_barcode(self):
+        report_actions = []
         customer_product_refs = self.order_line.mapped('customer_product_ref')
         barcode = self.order_line.mapped('barcode')
         if 'Multiple pricelist item' in customer_product_refs or 'Multiple pricelist item' in barcode:
             raise ValidationError(_('Duplicate items found on pricelist item. Remove duplicated items from pricelist item to continue'))
         
         data = self._prepare_product_label_data(self)
-        return self.env.ref('abp_pricelist.action_report_sales_product_barcode').report_action(self, data={'data': data})
+        batch_size = 30  # Adjust the batch size as needed
+        
+        def chunks(iterable, size):
+            it = iter(iterable)
+            return iter(lambda: tuple(islice(it, size)), ())
+        
+        for batch in chunks(data, batch_size):
+            action = self.env.ref('abp_pricelist.action_report_sales_product_barcode')\
+                        .report_action(self, data={
+                            'data': batch,
+                            'name': 'TEST'
+                        })
+            report_actions.append(action)
+            
+        if len(report_actions) == 1: 
+            return report_actions[0]
+        elif len(report_actions) > 1:  
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'do_multi_print',
+                'params': {
+                    'reports': report_actions,
+                }
+            }
     
     def _prepare_product_label_data(self, docs):
         data = []
