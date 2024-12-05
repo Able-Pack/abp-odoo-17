@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
             raise ValidationError(_('Duplicate items found on pricelist item. Remove duplicated items from pricelist item to continue'))
         
         data = self._prepare_product_label_data(self)
-        batch_size = 30  # Adjust the batch size as needed
+        batch_size = 50  # Adjust the batch size as needed
         
         def chunks(iterable, size):
             it = iter(iterable)
