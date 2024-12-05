@@ -1,5 +1,6 @@
 import json
 from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class SaleOrderLine(models.Model):
@@ -108,6 +109,10 @@ class SaleOrderLine(models.Model):
                 ('partner_id', '=', rec.order_id.partner_id.id),
                 ('product_id', '=', rec.product_id.id),
             ])
+            
+            if len(customer_catalogue) > 1:
+                multiple_record = customer_catalogue.mapped('product_tmpl_id')
+                raise ValidationError(_(f'Multiple customer catalogue found {multiple_record.display_name}'))
             
             rec.customer_product_code = customer_catalogue.customer_product_code
             # rec.customer_catalogue_id = customer_catalogue
