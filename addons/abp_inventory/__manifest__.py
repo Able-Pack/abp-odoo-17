@@ -13,7 +13,9 @@
         'abp_report'
     ],
     'data': [
+        'data/ir_cron.xml',
         'views/res_partner_views.xml',
+        'views/stock_location_views.xml',
         'views/stock_picking_views.xml',
         'views/product_views.xml',
     ],
