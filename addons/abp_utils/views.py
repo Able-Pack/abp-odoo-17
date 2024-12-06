@@ -1,5 +1,36 @@
 import json
+from lxml import etree
 
+def _apply_field_options(res, paths=[], no_create=False, no_create_edit=False, no_open=False, no_quick_create=False):
+    """
+    Applies no_create, no_create_edit, and no_quick_create options to all fields.
+    """
+    doc = etree.XML(res["arch"])
+    for path in paths:
+        for node in doc.xpath(path):
+            options = node.attrib.get("options", "{}")
+            options = options.strip().replace('true', 'True').replace('false', 'False')
+            # Update options dictionary with the restrictions
+            options_dict = eval(options) if options.strip() else {}
+            options_dict.update({
+                'no_create': True if no_create else False,
+                'no_create_edit': True if no_create_edit else False,
+                'no_open': True if no_open else False,
+                'no_quick_create': True if no_quick_create else False,
+            })
+            node.set("options", str(options_dict))
+        
+    res["arch"] = etree.tostring(doc, encoding="unicode")
+    
+def apply_list_record_limit(res, paths=[], limit=80):
+    """
+    Applies record limit to list view.
+    """
+    doc = etree.XML(res["arch"])
+    for path in paths:
+        for node in doc.xpath(path):
+            node.set('limit', str(limit))
+    res["arch"] = etree.tostring(doc, encoding="unicode")
 
 def set_readonly(doc, value, paths=[],):
     for path in paths:
