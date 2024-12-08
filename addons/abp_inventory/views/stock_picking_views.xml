@@ -12,7 +12,7 @@
                 <xpath expr="//button[@name='action_confirm']" position="before">
                     <button name="action_toggle_is_locked" string="Lock" type="object" icon="fa-lock" class="btn btn-danger" invisible="is_locked"/>
                     <button name="action_toggle_is_locked" string="Unlock" type="object" icon="fa-unlock-alt" class="btn btn-success" invisible="not is_locked"/>
-                    <button name="create_delivery_from_consignment_location" string="Create Delivery From Consignment Location" type="object" icon="fa-lock" class="btn btn-danger"/>
+                    <button name="create_delivery_from_consignment_location" string="Create Delivery From Consignment Location" type="object" icon="fa-truck" class="btn btn-gre" invisible="True"/>
                 </xpath>
             </field>
         </record>
