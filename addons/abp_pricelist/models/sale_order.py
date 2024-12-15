@@ -1,6 +1,5 @@
-from itertools import islice
 from odoo import models, _
-from odoo.addons.abp_utils.utils import format_currency_amount
+from odoo.addons.abp_utils.utils import format_currency_amount, chunks
 from odoo.exceptions import ValidationError
 
 
@@ -21,10 +20,6 @@ class SaleOrder(models.Model):
         
         data = self._prepare_product_label_data(self)
         batch_size = 50  # Adjust the batch size as needed
-        
-        def chunks(iterable, size):
-            it = iter(iterable)
-            return iter(lambda: tuple(islice(it, size)), ())
         
         for batch in chunks(data, batch_size):
             action = self.env.ref('abp_pricelist.action_report_sales_product_barcode')\
