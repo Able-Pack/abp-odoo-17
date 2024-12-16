@@ -31,7 +31,7 @@
                                 </tr>
                                  <b style="font-size:130%;"><span t-field="partner_id.name"/> </b>
                                  <t t-foreach="doc.invoice_ids" t-as="invoice_id">
-
+                                    <t t-set="currency_id" t-value="invoice_id.currency_id"/>
                                      <t t-if="invoice_id.partner_id == partner_id">
                                         <!-- Logic to determine whether to add or subtract -->
                                         <t t-set="is_credit_note" t-value="invoice_id.move_type == 'out_refund'"/>
@@ -88,7 +88,6 @@
                                 <th width="12%"></th>
                                 <th width="13%"></th>
                                 <th width="19%">Sum Total </th>
-                                <t t-set="currency_id" t-value="doc.invoice_ids[0].currency_id"/>
                                 <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_total, currency_id)"/></th>
                                 <th width="14%"><span t-esc="doc.format_currency_amount(sum_total_paid_amount, currency_id)"/></th>
                                 <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_residual, currency_id)"/></th>
