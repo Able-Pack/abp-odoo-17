@@ -47,7 +47,10 @@ class StockPicking(models.Model):
                 'location_id': delivery_location.target_partner_id.property_stock_customer.id,
                 'location_dest_id': delivery_location.id
             })
-            
+        
+        # Validate the picking
+        stock_picking.button_validate()
+        
     @classmethod
     def get_last_day_of_month(cls):
         today = datetime.today()
