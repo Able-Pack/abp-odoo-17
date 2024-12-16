@@ -65,14 +65,15 @@ class CustomReportController(ReportController):
                         filename = "%s.%s" % (report_name, extension)
                         
                 ### MODIFICATION START
-                data_options = data.get('options')
-                # Replace 'false' with 'null' to make it a valid JSON string
-                data_options = data_options.replace("false", "null")
-                # Convert the string to a Python dictionary
-                options_dict = json.loads(data_options)
-                custom_filename = options_dict.get('filename')
-                if custom_filename:
-                    filename = "%s.%s" % (custom_filename, extension)
+                if 'options' in data:
+                    data_options = data.get('options')
+                    # Replace 'false' with 'null' to make it a valid JSON string
+                    data_options = data_options.replace("false", "null")
+                    # Convert the string to a Python dictionary
+                    options_dict = json.loads(data_options)
+                    custom_filename = options_dict.get('filename')
+                    if custom_filename:
+                        filename = "%s.%s" % (custom_filename, extension)
                 ### MODIFICATION END
                 
                 response.headers.add('Content-Disposition', content_disposition(filename))
