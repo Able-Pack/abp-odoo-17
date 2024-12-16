@@ -88,9 +88,10 @@
                                 <th width="12%"></th>
                                 <th width="13%"></th>
                                 <th width="19%">Sum Total </th>
-                                <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_total, invoice_id.currency_id)"/></th>
-                                <th width="14%"><span t-esc="doc.format_currency_amount(sum_total_paid_amount, invoice_id.currency_id)"/></th>
-                                <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_residual, invoice_id.currency_id)"/></th>
+                                <t t-set="currency_id" t-value="doc.invoice_ids[0].currency_id"/>
+                                <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_total, currency_id)"/></th>
+                                <th width="14%"><span t-esc="doc.format_currency_amount(sum_total_paid_amount, currency_id)"/></th>
+                                <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_residual, currency_id)"/></th>
                             </tr>
                         </table>
 <!--                 </t>-->
