@@ -44,8 +44,8 @@ class StockPicking(models.Model):
                 'picking_id': stock_picking.id,
                 'product_id': quant.product_id.id,
                 'product_uom_qty': quant.quantity,
-                'location_id': delivery_location.target_partner_id.property_stock_customer.id,
-                'location_dest_id': delivery_location.id
+                'location_id': delivery_location.id,
+                'location_dest_id': delivery_location.target_partner_id.property_stock_customer.id,
             })
         
         # Validate the picking
