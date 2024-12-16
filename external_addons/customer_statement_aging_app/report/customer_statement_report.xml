@@ -20,15 +20,15 @@
                                  <t t-set="total_amount_total" t-value="0"/>
                                      <t t-set="total_paid_amount" t-value="0"/>
                                      <t t-set="total_amount_residual" t-value="0"/>
-                                 <tr>
-                                     <th width="13%">Description</th>
-                                     <th width="15%">Due Date</th>
-                                     <th width="10%">Invoice Date</th>
-                                     <th width="15%">Invoice Number</th>
-                                     <th width="15%">Invoice Amount</th>
-                                     <th width="17%">Payment Amount</th>
-                                     <th width="15%">Balance Due</th>
-                                 </tr>
+                                <tr>
+                                    <th style="padding:3px" width="12%">Description</th>
+                                    <th style="padding:3px" width="12%">Due Date</th>
+                                    <th style="padding:3px" width="13%">Invoice Date</th>
+                                    <th style="padding:3px" width="19%">Invoice Number</th>
+                                    <th style="padding:3px" width="15%">Invoice Amount</th>
+                                    <th style="padding:3px" width="14%">Payment Amount</th>
+                                    <th style="padding:3px" width="15%">Balance Due</th>
+                                </tr>
                                  <b style="font-size:130%;"><span t-field="partner_id.name"/> </b>
                                  <t t-foreach="doc.invoice_ids" t-as="invoice_id">
 
@@ -46,20 +46,20 @@
                                          <t t-set="paid_amount" t-value="round(invoice_id.amount_total - invoice_id.amount_residual,2)"/>
                                          <t t-set="total_paid_amount" t-value="round(total_paid_amount + paid_amount,2)"/>
                                          -->
-                                         <tr>
-                                             <td width="13%"><span t-field="invoice_id.narration"/> </td>
-                                             <td width="15%"><span t-field="invoice_id.invoice_date_due"/> </td>
-                                             <td width="10%"><span t-field="invoice_id.invoice_date"/> </td>
-                                             <td width="15%"><span t-field="invoice_id.name"/> </td>
-                                             <td width="15%"><span style="margin-left:10px;" t-esc="doc.format_currency_amount(invoice_id.amount_total, invoice_id.currency_id)"/> </td>
-                                             <td width="17%"><span style="margin-left:10px;" t-esc="doc.format_currency_amount(paid_amount, invoice_id.currency_id)"/></td>
-                                             <td width="15%">
+                                        <tr>
+                                            <td style="padding:3px;text-align:center;" width="12%"><span t-field="invoice_id.narration"/> </td>
+                                            <td style="padding:3px;text-align:center;" width="12%"><span t-field="invoice_id.invoice_date_due"/> </td>
+                                            <td style="padding:3px;text-align:center;" width="13%"><span t-field="invoice_id.invoice_date"/> </td>
+                                            <td style="padding:3px;text-align:center;" width="19%"><span t-field="invoice_id.name"/> </td>
+                                            <td style="padding:3px;text-align:center;" width="15%"><span t-esc="doc.format_currency_amount(invoice_id.amount_total, invoice_id.currency_id)"/> </td>
+                                            <td style="padding:3px;text-align:center;" width="14%"><span t-esc="doc.format_currency_amount(paid_amount, invoice_id.currency_id)"/></td>
+                                            <td style="padding:3px;text-align:center;" width="15%">
                                                 <span t-if="invoice_id.currency_id">
-                                                    <span style="margin-left:10px;" t-esc="invoice_id.currency_id.symbol"/>
+                                                    <span t-esc="invoice_id.currency_id.symbol"/>
                                                     <span t-esc="is_credit_note and doc.format_currency_amount(-invoice_id.amount_residual) or doc.format_currency_amount(invoice_id.amount_residual)"/>
                                                 </span>
                                                 <span t-else="">
-                                                    <span style="margin-left:10px;" t-esc="is_credit_note and doc.format_currency_amount(-invoice_id.amount_residual) or doc.format_currency_amount(invoice_id.amount_residual)"/>
+                                                    <span t-esc="is_credit_note and doc.format_currency_amount(-invoice_id.amount_residual) or doc.format_currency_amount(invoice_id.amount_residual)"/>
                                                 </span>
                                              </td>
                                          </tr>
@@ -67,13 +67,13 @@
                                      </t>
                                  </t>
                                  <tr>
-                                     <td width="13%" style="border-top:1px solid black;"></td>
-                                     <td width="15%" style="border-top:1px solid black;"></td>
-                                     <td width="10%" style="border-top:1px solid black;"></td>
-                                     <th width="15%" style="border-top:1px solid black;">Total</th>
-                                     <th width="15%" style="border-top:1px solid black;"><span t-esc="doc.format_currency_amount(total_amount_total, invoice_id.currency_id)"/> </th>
-                                     <th width="17%" style="border-top:1px solid black;"><span t-esc="doc.format_currency_amount(total_paid_amount, invoice_id.currency_id)"/></th>
-                                     <th width="15%" style="border-top:1px solid black;"><span t-esc="doc.format_currency_amount(total_amount_residual, invoice_id.currency_id)"/> </th>
+                                    <td width="12%" style="border-top:1px solid black;padding:3px;text-align:center;"></td>
+                                    <td width="12%" style="border-top:1px solid black;padding:3px;text-align:center;"></td>
+                                    <td width="13%" style="border-top:1px solid black;padding:3px;text-align:center;"></td>
+                                    <td width="19%" style="border-top:1px solid black;padding:3px;text-align:center;font-weight:bold;">Total</td>
+                                    <td width="15%" style="border-top:1px solid black;padding:3px;text-align:center;font-weight:bold;"><span t-esc="doc.format_currency_amount(total_amount_total, invoice_id.currency_id)"/> </td>
+                                    <td width="14%" style="border-top:1px solid black;padding:3px;text-align:center;font-weight:bold;"><span t-esc="doc.format_currency_amount(total_paid_amount, invoice_id.currency_id)"/></td>
+                                    <td width="15%" style="border-top:1px solid black;padding:3px;text-align:center;font-weight:bold;"><span t-esc="doc.format_currency_amount(total_amount_residual, invoice_id.currency_id)"/> </td>
                                     
                                     <!-- Sum Total -->
                                     <t t-set="sum_total_amount_total" t-value="sum_total_amount_total + total_amount_total"/>
@@ -84,12 +84,12 @@
                         </t>
                         <table class="table-borderless mt-3" width="100%">
                             <tr>
+                                <th width="12%"></th>
+                                <th width="12%"></th>
                                 <th width="13%"></th>
-                                <th width="15%"></th>
-                                <th width="10%"></th>
-                                <th width="15%">Sum Total </th>
+                                <th width="19%">Sum Total </th>
                                 <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_total, invoice_id.currency_id)"/></th>
-                                <th width="17%"><span t-esc="doc.format_currency_amount(sum_total_paid_amount, invoice_id.currency_id)"/></th>
+                                <th width="14%"><span t-esc="doc.format_currency_amount(sum_total_paid_amount, invoice_id.currency_id)"/></th>
                                 <th width="15%"><span t-esc="doc.format_currency_amount(sum_total_amount_residual, invoice_id.currency_id)"/></th>
                             </tr>
                         </table>
