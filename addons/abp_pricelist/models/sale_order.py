@@ -1,3 +1,4 @@
+import math
 from odoo import models, _
 from odoo.addons.abp_utils.utils import format_currency_amount, chunks
 from odoo.exceptions import ValidationError
@@ -20,12 +21,13 @@ class SaleOrder(models.Model):
         
         data = self._prepare_product_label_data(self)
         batch_size = 50  # Adjust the batch size as needed
+        page_count = math.ceil((len(data) / batch_size)) # Use this because can't use len on chunked_data
         
-        for batch in chunks(data, batch_size):
+        for i, batch in enumerate(chunks(data, batch_size)):
             action = self.env.ref('abp_pricelist.action_report_sales_product_barcode')\
                         .report_action(self, data={
                             'data': batch,
-                            'name': 'TEST'
+                            'filename': f'{self.name} ({(i+1)} of {page_count})'
                         })
             report_actions.append(action)
             
