@@ -29,6 +29,7 @@ install fx_hide_action_menu
 install purchase_down_payment
 install web_chatter_position_cr
 install deltatech_stock_negative
+install vt_bom_kit_constraint
 
 # ablepack modules
 # should be installed last to implement able pack's security (reset app menu groups)

@@ -21,6 +21,7 @@
         'reports/invoice_default.xml',
         'reports/consignment_memo.xml',
         
+        'views/account_move_views.xml',
         'views/stock_picking_views.xml',
     ],
     'assets': {

@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <button name="button_draft" position="after">
                     <button name="button_print_qrcode" string="Print Document QR Code" type="object" 
-                            icon="fa-print" class="btn btn-warning" invisible="move_type != 'out_invoice'"/>
+                            icon="fa-print" class="btn btn-warning"/>
                 </button>
             </field>
         </record>
@@ -21,6 +21,12 @@
                     <button name="button_print_qrcode" string="Print Document QR Code" type="object" 
                             icon="fa-print" class="btn btn-warning"/>
                 </button>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="move_type" widget="badge" 
+                        decoration-success="move_type == 'out_invoice'"
+                        decoration-warning="move_type == 'out_refund'"
+                    />
+                </xpath>
             </field>
         </record>
     </data>

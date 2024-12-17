@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.tools import date_utils
+from odoo.addons.abp_utils.utils import format_currency_amount
 
 
 class CustomerStatementWizard(models.TransientModel):
@@ -131,3 +132,6 @@ class CustomerStatementWizard(models.TransientModel):
                 template.body_html = body_html
                 template.email_to = partner_id.email
                 template.sudo().send_mail(self.id, force_send=True)
+                
+    def format_currency_amount(self, amount, currency_id=False):
+        return format_currency_amount(amount, currency_id)

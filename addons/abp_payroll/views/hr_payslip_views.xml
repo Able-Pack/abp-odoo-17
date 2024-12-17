@@ -9,6 +9,9 @@
                 <field name="struct_id" position="after">
                     <field name="date_created" readonly="state != 'draft'"/>
                 </field>
+                <xpath expr="//button[@name='action_print_payslip']" position="after">
+                    <button name="hr_payroll.action_edit_payslip_lines" string="Edit Payslip Lines" type="action" icon="fa-pencil-square-o" class="btn-warning"/>
+                </xpath>
             </field>
         </record>
     </data>

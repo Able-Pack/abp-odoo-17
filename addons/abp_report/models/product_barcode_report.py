@@ -6,7 +6,7 @@ class ReportProductBarcodeAblepack(models.AbstractModel):
     _description = "Ablepack Report Product Barcode"
     
     def _get_report_values(self, docids, data):
-        model = self.env.context.get('active_model')
+        model = self.env.context.get('active_model') or self.env.context.get('params').get('model')
         docs = self.env[str(model)].browse(docids)
         
         # If printed not using button and don't have data passed

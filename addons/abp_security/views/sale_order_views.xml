@@ -16,6 +16,12 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="abp_pricelist.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="groups">abp_security.abp_group_sale_button_confirm</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="groups">abp_security.abp_group_sale_button_confirm</attribute>
+                </xpath>
                 <xpath expr="//button[@id='create_invoice']" position="attributes">
                     <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
                 </xpath>

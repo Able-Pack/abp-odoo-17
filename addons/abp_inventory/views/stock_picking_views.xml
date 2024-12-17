@@ -10,8 +10,23 @@
                     <attribute name="required">1</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_confirm']" position="before">
-                    <button name="action_toggle_is_locked" string="Lock/Unlock" type="object" 
-                            icon="fa-lock" class="btn btn-danger"/>
+                    <button name="action_toggle_is_locked" string="Lock" type="object" icon="fa-lock" class="btn btn-danger" invisible="is_locked"/>
+                    <button name="action_toggle_is_locked" string="Unlock" type="object" icon="fa-unlock-alt" class="btn btn-success" invisible="not is_locked"/>
+                    <button name="create_delivery_from_consignment_location" string="Create Delivery From Consignment Location" type="object" icon="fa-truck" class="btn btn-success" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="vpicktree" model="ir.ui.view">
+            <field name="name">stock.picking.view.tree.abp.inventory</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="picking_type_code" widget="badge" 
+                        decoration-warning="picking_type_code == 'internal'"
+                        decoration-success="picking_type_code == 'outgoing'"
+                        decoration-info="picking_type_code == 'incoming'"
+                    />
                 </xpath>
             </field>
         </record>

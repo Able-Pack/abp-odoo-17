@@ -31,10 +31,11 @@ class SaleOrder(models.Model):
             if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_customer_specific_product']):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_customer_specific_product']/.."])
-                
-            if self.show_base_product or self.show_customer_specific_product:
-                # Set invisible = True
-                utils.set_invisible(doc, True, ["//button[@name='action_add_from_catalog']"])
+            
+            # TODO: Delete due to deprecated
+            # if self.show_base_product or self.show_customer_specific_product:
+            #     # Set invisible = True
+            #     utils.set_invisible(doc, True, ["//button[@name='action_add_from_catalog']"])
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
@@ -71,29 +72,27 @@ class SaleOrder(models.Model):
     
     def _create_customer_catalogue(self):
         result = []
-        line_product_template_ids = self.order_line.mapped('product_template_id').mapped('id')
-        customer_catalogue_model = self.env['customer.catalogue']
-        customer_catalogue_ids = customer_catalogue_model.search([
-            ('product_tmpl_id', 'in', line_product_template_ids),
-            ('partner_id', '=', self.partner_id.id),
-        ])
+        products = self.order_line.mapped('product_template_id')
+        draft_new_customer_catalogue = []
         
-        customer_catalogue_product_tmpl_ids = customer_catalogue_ids.mapped('product_tmpl_id').mapped('id')
-        for line in self.order_line:
-            if line.product_template_id.id not in customer_catalogue_product_tmpl_ids:
+        for product in products:
+            customer_catalogue_ids = self.env['customer.catalogue'].search([
+                ('product_tmpl_id', '=', product.id),
+                ('partner_id', '=', self.partner_id.id),
+            ])
+            if not customer_catalogue_ids:
                 values = {
                     'partner_id': self.partner_id.id,
-                    'product_id': line.product_id.id,
-                    'customer_product_code': line.customer_product_code,
-                    # 'customer_product_ref': line.customer_product_ref,
+                    'product_id': product.product_variant_ids[0].id
                 }
+                draft_new_customer_catalogue.append(values)
                 # create new customer catalogue record
-                customer_catalogue_model.create(values)
+                self.env['customer.catalogue'].create(values)
                 # include product template name and price unit in the email but not for the customer catalogue values
                 values.update({
-                    'barcode': line.barcode,
-                    'product_tmpl_name': line.product_template_id.display_name,
-                    'price_unit': line.price_unit
+                    'barcode': False,
+                    'product_tmpl_name':product.display_name,
+                    'price_unit': False
                 })
                 result.append(values)
         
@@ -102,6 +101,40 @@ class SaleOrder(models.Model):
             self.new_customer_catalogue_json = result
         
         return result
+        
+        # DEPRECATED
+        # result = []
+        # line_product_template_ids = self.order_line.mapped('product_template_id').mapped('id')
+        # customer_catalogue_model = self.env['customer.catalogue']
+        # customer_catalogue_ids = customer_catalogue_model.search([
+        #     ('product_tmpl_id', 'in', line_product_template_ids),
+        #     ('partner_id', '=', self.partner_id.id),
+        # ])
+        
+        # customer_catalogue_product_tmpl_ids = customer_catalogue_ids.mapped('product_tmpl_id').mapped('id')
+        # for line in self.order_line:
+        #     if line.product_template_id.id not in customer_catalogue_product_tmpl_ids:
+        #         values = {
+        #             'partner_id': self.partner_id.id,
+        #             'product_id': line.product_id.id,
+        #             'customer_product_code': line.customer_product_code,
+        #             # 'customer_product_ref': line.customer_product_ref,
+        #         }
+        #         # create new customer catalogue record
+        #         customer_catalogue_model.create(values)
+        #         # include product template name and price unit in the email but not for the customer catalogue values
+        #         values.update({
+        #             'barcode': line.barcode,
+        #             'product_tmpl_name': line.product_template_id.display_name,
+        #             'price_unit': line.price_unit
+        #         })
+        #         result.append(values)
+        
+        # if result:
+        #     self.has_new_customer_catalogue = True
+        #     self.new_customer_catalogue_json = result
+        
+        # return result
     
     def button_notify_catalogue_creation(self):
         self._notify_catalogue_creation(self.new_customer_catalogue_json, self.partner_id)
@@ -112,7 +145,7 @@ class SaleOrder(models.Model):
         
         body_html = f"""
             <p>Hello,</p>
-            <p>A new customer catalogue for partner {partner_id.name} has been created with the following details:</p>
+            <p>A new customer catalogue for partner <strong>{partner_id.name}</strong> has been created with the following details:</p>
             
             <table border="1" cellpadding="5" cellspacing="0">
                 <thead>

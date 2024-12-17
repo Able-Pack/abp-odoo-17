@@ -5,10 +5,10 @@
         <template id="report_product_barcode_template">
             <t t-call="web.html_container">
                 <div class="text-center" style="margin: 20px">
-                    <h1>
+                    <h2>
                         <t t-if="o.get('product_code')" t-esc="o.get('product_code')"/>
                         <t t-else="">Null Product Code</t>
-                    </h1>
+                    </h2>
                     <h1>
                         <t t-if="o.get('product_name')" t-esc="o.get('product_name')"/>
                         <t t-else="">Null Product Name</t>
