@@ -1,4 +1,5 @@
 from odoo import models
+from odoo.addons.abp_utils.utils import chunks
 
 
 class AccountMove(models.Model):
@@ -12,3 +13,6 @@ class AccountMove(models.Model):
             'customer_product_ref': customer_catalogue.customer_product_ref,
         }
         return values
+    
+    def chunks(self, iterable, size):
+        return chunks(iterable, size)

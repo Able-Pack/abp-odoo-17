@@ -4,131 +4,137 @@
         <template id="abp_invoice_default_report">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <div class="page" t-attf-style="#{'page-break-after: always;' if o != docs[-1] else ''}">
-                        <!-- Address and document information -->
-                        <div>
-                            <table class="table table-borderless" width="100%" style="line-height:17pt; margin-top:0px; padding-top:0px; font-family:Helvetica; font-size:15px;">
-                                <tr>
-                                    <td width="70%;">
-                                        <div>
-                                            <br/>
-                                            <span t-field="o.partner_id.title.name"/>
-                                            <span t-field="o.partner_id.name"/>
-                                            <br/>
-                                            <t t-if="o.partner_id.street">
-                                                <span t-field="o.partner_id.street"/>
+                    <!-- Address and document information -->
+                    <!-- Invoice lines -->
+                    <t t-set="chunk_count" t-value="0"/>
+                    <t t-set="line_chunks" t-value="o.chunks(o.invoice_line_ids, 23)"/>
+                    <!-- Not using line_chunks on length directly because somehow it affect the original variable -->
+                    <t t-set="line_chunks_length" t-value="len(list(o.chunks(o.invoice_line_ids, 23)))"/>
+                    <t t-foreach="line_chunks" t-as="chunk">
+                        <t t-set="chunk_count" t-value="chunk_count + 1"/>
+                        <div class="page" t-attf-style="page-break-after: #{'always' if (chunk_count != line_chunks_length or o != docs[-1]) else 'avoid'}">
+                            <div>
+                                <table class="table table-borderless" width="100%" style="line-height:17pt; font-family:Helvetica; font-size:15px;">
+                                    <tr>
+                                        <td width="70%;">
+                                            <div>
                                                 <br/>
-                                            </t>
-                                            <t t-if="o.partner_id.street2">
-                                                <span t-field="o.partner_id.street2"/>
+                                                <span t-field="o.partner_id.title.name"/>
+                                                <span t-field="o.partner_id.name"/>
                                                 <br/>
-                                            </t>
-                                            <t t-if="o.partner_id.zip">
-                                                <span t-field="o.partner_id.zip"/>
-                                                <br/>
-                                            </t>
-                                            <t t-if="o.partner_id.state_id">
-                                                <span t-field="o.partner_id.state_id.name"/>
-                                                <br/>
-                                            </t>
-                                            <t t-if="o.partner_id.country_id">
-                                                <span t-field="o.partner_id.country_id.name"/>
-                                                <br/>
-                                            </t>
-                                        </div>
-                                    </td>
-                                    <td width="30%">
-                                        <table class="table" width="100%" style="line-height:22pt;">
-                                            <tr>
-                                                <td width="40%"></td>
-                                                <td width="60%">
-                                                    <span t-field="o.name"/>
-                                                </td>
-                                            </tr>
-                                            <t t-if="o.move_type == 'out_invoice'">
+                                                <t t-if="o.partner_id.street">
+                                                    <span t-field="o.partner_id.street"/>
+                                                    <br/>
+                                                </t>
+                                                <t t-if="o.partner_id.street2">
+                                                    <span t-field="o.partner_id.street2"/>
+                                                    <br/>
+                                                </t>
+                                                <t t-if="o.partner_id.zip">
+                                                    <span t-field="o.partner_id.zip"/>
+                                                    <br/>
+                                                </t>
+                                                <t t-if="o.partner_id.state_id">
+                                                    <span t-field="o.partner_id.state_id.name"/>
+                                                    <br/>
+                                                </t>
+                                                <t t-if="o.partner_id.country_id">
+                                                    <span t-field="o.partner_id.country_id.name"/>
+                                                    <br/>
+                                                </t>
+                                            </div>
+                                        </td>
+                                        <td width="30%">
+                                            <table class="table" width="100%" style="padding-top:20px; line-height:20pt;">
+                                                <tr>
+                                                    <td width="40%"></td>
+                                                    <td width="60%">
+                                                        <span t-field="o.name"/>
+                                                    </td>
+                                                </tr>
+                                                <t t-if="o.move_type == 'out_invoice'">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <span t-if="o.ref" t-field="o.ref"/>
+                                                            <span t-elif="not o.ref">-</span>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>-</td>
+                                                </tr>
                                                 <tr>
                                                     <td></td>
                                                     <td>
-                                                        <span t-if="o.ref" t-field="o.ref"/>
-                                                        <span t-elif="not o.ref">-</span>
+                                                        <span t-if="o.invoice_date" t-esc="datetime.datetime.strptime(str(o.invoice_date), '%Y-%m-%d').strftime('%d/%m/%Y')"/>
                                                     </td>
                                                 </tr>
-                                            </t>
+                                                <t t-if="o.move_type == 'out_invoice'">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            <span t-if="o.invoice_payment_term_id" t-field="o.invoice_payment_term_id.name"/>
+                                                            <span t-elif="not o.invoice_payment_term_id">-</span>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="padding-top:50px; height:480px;">
+                                <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:15px; line-height:11pt;">
+                                    <thead>
+                                        <t t-if="o.move_type == 'out_invoice'">
                                             <tr>
-                                                <td></td>
-                                                <td>-</td>
+                                                <td width="5%"/>
+                                                <td width="20%"/>
+                                                <td width="25%"/>
+                                                <td width="25%"/>
+                                                <td width="15%"/>
+                                                <td width="10%"/>
                                             </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <span t-if="o.invoice_date" t-esc="datetime.datetime.strptime(str(o.invoice_date), '%Y-%m-%d').strftime('%d/%m/%Y')"/>
-                                                </td>
-                                            </tr>
-                                            <t t-if="o.move_type == 'out_invoice'">
+                                        </t>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="o.move_type == 'out_invoice'">
+                                            <t t-foreach="chunk" t-as="vline">
+                                                <t t-set="customer_catalogue" t-value="o._get_customer_catalogue_values(o.partner_id, vline.product_id)"/>
                                                 <tr>
-                                                    <td></td>
-                                                    <td>
-                                                        <span t-if="o.invoice_payment_term_id" t-field="o.invoice_payment_term_id.name"/>
-                                                        <span t-elif="not o.invoice_payment_term_id">-</span>
-                                                    </td>
-                                                </tr>
-                                            </t>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <!-- Invoice lines -->
-                        <div style="padding-top:50px; height: 520px;">
-                            <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:15px; page-break-inside:always; line-height:11pt;">
-                                <thead>
-                                    <t t-if="o.move_type == 'out_invoice'">
-                                        <tr>
-                                            <td width="5%"/>
-                                            <td width="20%"/>
-                                            <td width="25%"/>
-                                            <td width="25%"/>
-                                            <td width="15%"/>
-                                            <td width="10%"/>
-                                        </tr>
-                                    </t>
-                                </thead>
-                                <tbody>
-                                    <t t-if="o.move_type == 'out_invoice'">
-                                        <t t-foreach="o.invoice_line_ids" t-as="vline">
-                                            <t t-set="customer_catalogue" t-value="o._get_customer_catalogue_values(o.partner_id, vline.product_id)"/>
-                                            <tr>
-                                                <t t-if="vline.display_type not in ('line_section', 'line_note')">
-                                                    <td style="padding-bottom:2px; padding-top:2px; text-align:left">
-                                                        <span t-esc="customer_catalogue['customer_product_ref']"/>
-                                                    </td>
-                                                    <td style="padding-bottom:2px; padding-top:1px; text-align:left">
-                                                        <div style="text-align:right; padding-right:90px;">
-                                                            <span t-esc="'%.0f'% vline.quantity"/>
-                                                            <span t-field="vline.product_uom_id.name"/>
-                                                        </div>
-                                                    </td>
-                                                    <td style="padding-bottom:2px; padding-top:2px">
-                                                        <span t-esc="vline.product_id.default_code"/>
-                                                        <!-- <span t-esc="customer_catalogue['customer_product_code']"/> -->
-                                                    </td>
-                                                    <td style="padding-bottom:2px; padding-top:2px">
-                                                        <span t-field="vline.product_id.name"/>
-                                                        <!-- <t t-if="vline.is_online_or_consignment">
+                                                    <t t-if="vline.display_type not in ('line_section', 'line_note')">
+                                                        <td style="padding-bottom:2px; padding-top:2px; text-align:left">
+                                                            <span t-esc="customer_catalogue['customer_product_ref']"/>
+                                                        </td>
+                                                        <td style="padding-bottom:2px; padding-top:1px; text-align:left">
+                                                            <div style="text-align:right; padding-right:90px;">
+                                                                <span t-esc="'%.0f'% vline.quantity"/>
+                                                                <span t-field="vline.product_uom_id.name"/>
+                                                            </div>
+                                                        </td>
+                                                        <td style="padding-bottom:2px; padding-top:2px">
+                                                            <span t-esc="vline.product_id.default_code"/>
+                                                        </td>
+                                                        <td style="padding-bottom:2px; padding-top:2px">
+                                                            <span t-field="vline.product_id.name"/>
+                                                            <!-- <t t-if="vline.is_online_or_consignment">
                                                                 <span t-field="vline.name"/>
                                                             </t>
                                                             <t t-if="not vline.is_online_or_consignment">
                                                                 <span t-field="vline.product_id.name"/>
                                                             </t> -->
-                                                    </td>
-                                                    <td style="padding-bottom:2px; padding-top:2px; text-align:right">
-                                                        <span t-esc="'{0:,.2f}'.format(vline.price_unit)"/>
-                                                    </td>
-                                                    <td style="padding-bottom:2px; padding-top:2px; text-align:right">
-                                                        <span t-esc="'{0:,.2f}'.format(vline.price_subtotal)"/>
-                                                    </td>
-                                                </t>
-                                            </tr>
+                                                        </td>
+                                                        <td style="padding-bottom:2px; padding-top:2px; text-align:right">
+                                                            <span t-esc="'{0:,.2f}'.format(vline.price_unit)"/>
+                                                        </td>
+                                                        <td style="padding-bottom:2px; padding-top:2px; text-align:right">
+                                                            <span t-esc="'{0:,.2f}'.format(vline.price_subtotal)"/>
+                                                        </td>
+                                                    </t>
+                                                </tr>
+                                            </t>
                                         </t>
                                         <tr>
                                             <td colspan="6"></td>
@@ -139,13 +145,11 @@
                                         <tr>
                                             <td colspan="6"></td>
                                         </tr>
-                                    </t>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- Subtotal, tax, and grand total -->
-                        <div style="margin-top:0px;">
-                            <table class="table table-borderless" width="100%" style="line-height:20pt; font-family:Helvetica; font-size:15px;">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Subtotal, tax, and grand total -->
+                            <table t-if="chunk_count == line_chunks_length" class="table table-borderless" width="100%" style="line-height:20pt; font-family:Helvetica; font-size:15px;">
                                 <tr>
                                     <td style="padding-bottom:2px;" width="12%"/>
                                     <td width="12%"/>
@@ -175,7 +179,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="height: 20px;"></td> <!-- Spacer Row -->
+                                    <td colspan="6" style="height: 20px;"></td>                                    <!-- Spacer Row -->
                                 </tr>
                                 <tr>
                                     <td colspan="4">
@@ -191,7 +195,7 @@
                                 </tr>
                             </table>
                         </div>
-                    </div>
+                    </t>
                 </t>
             </t>
         </template>
