@@ -27,7 +27,8 @@ class StockPicking(models.Model):
             action = self.env.ref('abp_pricelist.actions_report_stock_picking_product_barcode')\
                         .report_action(self, data={
                             'data': batch,
-                            'filename': f'{self.name} ({(i+1)} of {page_count})'
+                            'filename': f'{self.name} ({(i+1)} of {page_count})',
+                            'model': 'stock.picking',
                         })
             report_actions.append(action)
             
