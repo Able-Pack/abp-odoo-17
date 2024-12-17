@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_move_line_reconcile_tree" model="ir.ui.view">
+            <field name="name">account.move.line.view.tree.reconcile.abp.accounting</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account_accountant.view_move_line_reconcile_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_name']" position="before">
+                    <field name="partner_parent_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
