@@ -13,11 +13,11 @@
                     <t t-foreach="line_chunks" t-as="chunk">
                         <t t-set="chunk_count" t-value="chunk_count + 1"/>
                         <div class="page" t-attf-style="page-break-after: #{'always' if (chunk_count != line_chunks_length or o != docs[-1]) else 'avoid'}">
-                            <div style="margin:0; padding:0;">
+                            <div style="margin-left:-3mm; padding:0;">
                                 <table class="table table-borderless" width="100%" style="line-height:17pt; font-family:Helvetica; font-size:15px;">
                                     <tr valign="top">
                                         <td width="70%;">
-                                            <div>
+                                            <div style="margin-top:10px;">
                                                 <br/>
                                                 <span t-field="o.partner_id.title.name"/>
                                                 <span t-field="o.partner_id.name"/>
@@ -45,7 +45,7 @@
                                             </div>
                                         </td>
                                         <td width="30%">
-                                            <table class="table" width="100%" style="padding-top:20px; line-height:20pt;">
+                                            <table class="table" width="100%" style="padding-top:20px; line-height:22pt;">
                                                 <tr>
                                                     <td width="40%"></td>
                                                     <td width="60%">
@@ -91,8 +91,8 @@
                                         <t t-if="o.move_type == 'out_invoice'">
                                             <tr>
                                                 <td width="5%"/>
-                                                <td width="19%"/>
-                                                <td width="26%"/>
+                                                <td width="20%"/>
+                                                <td width="25%"/>
                                                 <td width="25%"/>
                                                 <td width="15%"/>
                                                 <td width="10%"/>
@@ -149,7 +149,7 @@
                                 </table>
                             </div>
                             <!-- Subtotal, tax, and grand total -->
-                            <div style="margin-top:23mm; padding:0;">
+                            <div style="margin-top:11mm; padding:0;">
                                 <table t-if="chunk_count == line_chunks_length" class="table table-borderless" width="100%" style="line-height:20pt; font-family:Helvetica; font-size:15px;">
                                     <tr>
                                         <td style="padding-bottom:2px;" width="12%"/>
@@ -195,7 +195,10 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <div width="100%" style="text-align:right;">
+                                <div t-if="chunk_count != line_chunks_length" width="100%" style="text-align:right; padding-right:56mm; margin-top:37mm;">
+                                    <span t-esc="chunk_count"/> of <span t-esc="line_chunks_length"/>
+                                </div>
+                                <div t-else="" width="100%" style="text-align:right; padding-right:56mm; margin-top:-7mm;">
                                     <span t-esc="chunk_count"/> of <span t-esc="line_chunks_length"/>
                                 </div>
                             </div>
@@ -212,7 +215,7 @@
             <field name="page_height">280</field>
             <field name="page_width">210</field>
             <field name="orientation">Portrait</field>
-            <field name="margin_top">40</field>
+            <field name="margin_top">35</field>
             <field name="margin_bottom">0</field>
             <field name="margin_left">7</field>
             <field name="margin_right">10</field>
