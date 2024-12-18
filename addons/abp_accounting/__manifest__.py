@@ -9,11 +9,13 @@
     """,
     'depends': [
         'account',
+        'account_accountant',
         'abp_report',
     ],
     'data': [
         'reports/report_action.xml',
         'views/account_move_views.xml',
+        'views/account_move_line_views.xml',
     ],
     'assets': {
     },

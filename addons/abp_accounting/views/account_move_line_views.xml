@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_move_line_reconcile_tree" model="ir.ui.view">
+            <field name="name">account.move.line.view.tree.reconcile.abp.accounting</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account_accountant.view_move_line_reconcile_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="partner_parent_id"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="optional" value="show"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_account_move_line_reconcile_search" model="ir.ui.view">
+            <field name="name">account.move.line.view.search.reconcile.abp.accounting</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account_accountant.view_account_move_line_reconcile_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="partner_parent_id"/>
+                </xpath>
+                <xpath expr="//filter[@name='group_by_partner']" position="after">
+                    <filter string="Partner's Parent" name="group_by_partner_parent" domain="[]" context="{'group_by': 'partner_parent_id'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

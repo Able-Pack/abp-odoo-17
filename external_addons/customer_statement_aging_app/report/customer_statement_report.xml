@@ -15,6 +15,7 @@
                         <t t-set="sum_paid_amount" t-value="0"/>
                         <t t-set="sum_total_paid_amount" t-value="0"/>
                         <t t-set="sum_total_amount_residual" t-value="0"/>
+                        <t t-set="currency_id" t-value="False"/>
                          <t t-foreach="doc.invoice_ids.mapped('partner_id')" t-as="partner_id">
                              <table width="100%">
                                  <t t-set="total_amount_total" t-value="0"/>
