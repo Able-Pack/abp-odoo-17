@@ -162,38 +162,39 @@
                                     <td colspan="4"></td>
                                     <td style="padding-top:2px; padding-bottom:2px; ">
                                     Subtotal
-                                    </td>
-                                    <td style="padding-top:2px; padding-bottom:2px; text-align:right;">
-                                        <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <!-- <t t-set="tax_name" t-value="o.get_tax_name(o.invoice_line_ids[0])"/> -->
-                                    <td style="padding-top:2px;">
-                                        <!-- <span t-esc="tax_name"/> -->
-                                        <span t-if="o.invoice_line_ids[0].tax_ids" t-esc="o.invoice_line_ids[0].tax_ids[0].name"/>
-                                    </td>
-                                    <td style="padding-top:2px; text-align:right;">
-                                        <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" style="height: 20px;"></td>                                    <!-- Spacer Row -->
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <!-- <span t-esc="o.narration or o.get_note()"/> -->
-                                        <span t-esc="o.narration"/>
-                                    </td>
-                                    <td></td>
-                                    <td style="padding-top:2px; padding-bottom:2px; text-align:right;">
-                                        <b>
-                                            <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
-                                        </b>
-                                    </td>
-                                </tr>
-                            </table>
+                                        </td>
+                                        <td style="padding-top:2px; padding-bottom:2px; text-align:right;">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount_untaxed)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <!-- <t t-set="tax_name" t-value="o.get_tax_name(o.invoice_line_ids[0])"/> -->
+                                        <td style="padding-top:2px;">
+                                            <!-- <span t-esc="tax_name"/> -->
+                                            <span t-if="o.invoice_line_ids[0].tax_ids" t-esc="o.invoice_line_ids[0].tax_ids[0].name"/>
+                                        </td>
+                                        <td style="padding-top:2px; text-align:right;">
+                                            <span t-esc="'{0:,.2f}'.format(o.amount_tax)"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="height: 20px;"></td>                                        <!-- Spacer Row -->
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <!-- <span t-esc="o.narration or o.get_note()"/> -->
+                                            <span t-esc="o.narration"/>
+                                        </td>
+                                        <td></td>
+                                        <td style="padding-top:2px; padding-bottom:2px; text-align:right;">
+                                            <b>
+                                                <span t-esc="'{0:,.2f}'.format(o.amount_total)"/>
+                                            </b>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </t>
                 </t>
