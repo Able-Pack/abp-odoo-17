@@ -9,6 +9,9 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="partner_parent_id"/>
                 </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="optional" value="show"/>
+                </xpath>
             </field>
         </record>
         <record id="view_account_move_line_reconcile_search" model="ir.ui.view">
