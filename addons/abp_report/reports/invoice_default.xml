@@ -13,9 +13,9 @@
                     <t t-foreach="line_chunks" t-as="chunk">
                         <t t-set="chunk_count" t-value="chunk_count + 1"/>
                         <div class="page" t-attf-style="page-break-after: #{'always' if (chunk_count != line_chunks_length or o != docs[-1]) else 'avoid'}">
-                            <div>
+                            <div style="margin:0; padding:0;">
                                 <table class="table table-borderless" width="100%" style="line-height:17pt; font-family:Helvetica; font-size:15px;">
-                                    <tr>
+                                    <tr valign="top">
                                         <td width="70%;">
                                             <div>
                                                 <br/>
@@ -85,14 +85,14 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div style="padding-top:50px; height:480px;">
+                            <div style="padding-top:50px; margin:0; height:480px;">
                                 <table class="table-borderless" width="100%" style="font-family:Helvetica; font-size:15px; line-height:11pt;">
                                     <thead>
                                         <t t-if="o.move_type == 'out_invoice'">
                                             <tr>
                                                 <td width="5%"/>
-                                                <td width="20%"/>
-                                                <td width="25%"/>
+                                                <td width="19%"/>
+                                                <td width="26%"/>
                                                 <td width="25%"/>
                                                 <td width="15%"/>
                                                 <td width="10%"/>
@@ -149,7 +149,7 @@
                                 </table>
                             </div>
                             <!-- Subtotal, tax, and grand total -->
-                            <div style="margin-top:45px;">
+                            <div style="margin-top:23mm; padding:0;">
                                 <table t-if="chunk_count == line_chunks_length" class="table table-borderless" width="100%" style="line-height:20pt; font-family:Helvetica; font-size:15px;">
                                     <tr>
                                         <td style="padding-bottom:2px;" width="12%"/>
