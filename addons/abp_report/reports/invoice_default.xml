@@ -195,6 +195,9 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <div width="100%" style="text-align:right;">
+                                    <span t-esc="chunk_count"/> of <span t-esc="line_chunks_length"/>
+                                </div>
                             </div>
                         </div>
                     </t>
