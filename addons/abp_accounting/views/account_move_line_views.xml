@@ -12,6 +12,9 @@
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="optional" value="show"/>
                 </xpath>
+                <xpath expr="//field[@name='date_maturity']" position="attributes">
+                    <attribute name="optional" value="show"/>
+                </xpath>
             </field>
         </record>
         <record id="view_account_move_line_reconcile_search" model="ir.ui.view">
