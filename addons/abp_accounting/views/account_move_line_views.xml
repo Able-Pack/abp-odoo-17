@@ -22,6 +22,9 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="partner_parent_id"/>
                 </xpath>
+                <xpath expr="//filter[@name='invoice_date']" position="after">
+                    <filter string="Due Date" name="date_maturity" date="date_maturity"/>
+                </xpath>
                 <xpath expr="//filter[@name='group_by_partner']" position="after">
                     <filter string="Partner's Parent" name="group_by_partner_parent" domain="[]" context="{'group_by': 'partner_parent_id'}"/>
                 </xpath>
