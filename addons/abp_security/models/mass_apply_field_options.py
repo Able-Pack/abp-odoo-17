@@ -30,27 +30,51 @@ def apply_field_options(res):
         no_quick_create=True
     )
 
-# Function to dynamically override `get_view` safely
-def inject_get_view():
-    def _get_view(self, view_id=None, view_type="form", **options):
-        # Directly call the parent class' `get_view` method to avoid recursion
-        parent = super(models.Model, self)
-        res = parent.get_view(view_id, view_type, **options)
-        # Modify the result for 'tree' or 'form' views
+# REVAMPED: Modify old solution
+# Because old solution will disrespect all inherited get_view functions
+class BaseOverrideMixin(models.AbstractModel):
+    _name = 'base.override.mixin'
+    
+    def get_view(self, view_id=None, view_type="form", **options):
+        # Call the original method without causing recursion
+        res = super(BaseOverrideMixin, self).get_view(view_id=view_id, view_type=view_type, **options)
         if view_type in ("tree", "form"):
             apply_field_options(res)
         return res
-    return _get_view
 
-# Dynamically create classes and inject behavior
+# Create a new model class for each target
 for model_name in target_models:
-    class_name = model_name.replace('.', '_').capitalize()
+    class_name = f"{model_name.replace('.', '_').capitalize()}Override"
     globals()[class_name] = type(
-        class_name,  # Class name
-        (models.Model,),  # Base class
+        class_name,
+        (BaseOverrideMixin, models.Model),
         {
             '_inherit': model_name,
             '__module__': __name__,
-            'get_view': inject_get_view(),  # Dynamically inject the `get_view` override
         }
     )
+
+# OLD SOLUTION
+# # Function to dynamically override `get_view` safely
+# def inject_get_view():
+#     def _get_view(self, view_id=None, view_type="form", **options):
+#         # Directly call the parent class' `get_view` method to avoid recursion
+#         parent = super(models.Model, self)
+#         res = parent.get_view(view_id, view_type, **options)
+#         # Modify the result for 'tree' or 'form' views
+#         if view_type in ("tree", "form"):
+#             apply_field_options(res)
+#         return res
+#     return _get_view
+# # Dynamically create classes and inject behavior
+# for model_name in target_models:
+#     class_name = model_name.replace('.', '_').capitalize()
+#     globals()[class_name] = type(
+#         class_name,  # Class name
+#         (models.Model,),  # Base class
+#         {
+#             '_inherit': model_name,
+#             '__module__': __name__,
+#             'get_view': inject_get_view(),  # Dynamically inject the `get_view` override
+#         }
+#     )
