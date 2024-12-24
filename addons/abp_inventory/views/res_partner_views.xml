@@ -6,9 +6,16 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="stock.view_partner_stock_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='property_stock_supplier']" position="after">
-                    <field name="location_src_id"/>
-                    <field name="location_dest_id"/>
+                <xpath expr="//group[@name='inventory']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='misc']" position="after">
+                    <group string="Inventory" name="inventory_abp">
+                        <field name="property_stock_customer"/>
+                        <field name="property_stock_supplier"/>
+                        <field name="location_src_id"/>
+                        <field name="location_dest_id"/>
+                    </group>
                 </xpath>
             </field>
         </record>
