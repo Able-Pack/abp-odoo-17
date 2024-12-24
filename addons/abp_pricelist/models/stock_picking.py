@@ -20,7 +20,7 @@ class StockPicking(models.Model):
             raise ValidationError(_('Duplicate items found on pricelist item. Remove duplicated items from pricelist item to continue'))
         
         data = self._prepare_product_label_data(self)
-        batch_size = 50  # Adjust the batch size as needed
+        batch_size =  int(self.env["ir.config_parameter"].sudo().get_param("abp_pricelist.barcode_batch_size_integer"))
         page_count = math.ceil((len(data) / batch_size)) # Use this because can't use len on chunked_data
         
         for i, batch in enumerate(chunks(data, batch_size)):
