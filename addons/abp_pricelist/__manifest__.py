@@ -13,6 +13,7 @@
         'abp_report',
     ],
     'data': [
+        'data/ir_config_parameter.xml',
         'views/pricelist_views.xml',
         'views/pricelist_item_views.xml',
         'views/sale_order_views.xml',
