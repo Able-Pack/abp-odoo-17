@@ -18,6 +18,10 @@ class StockPicking(models.Model):
                     # Set no create edit delete
                     utils.set_no_create_edit_delete(doc, ['//tree', '//kanban', '//form'], no_create=True, no_edit=True, no_delete=True)
                     
+        if view_type in ("form"):
+            if utils.user_has_any_group(self, ['abp_security.group_administrator']):
+                # Set readonly
+                utils.set_readonly(doc, False, ["//field[@name='origin']"])
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
