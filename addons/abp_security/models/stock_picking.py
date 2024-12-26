@@ -13,10 +13,11 @@ class StockPicking(models.Model):
         
         deliveries_tree_action_id = self.env.ref('stock.action_picking_tree_outgoing').id # deliveries
         if view_type in ("tree", "kanban", "form"):
-            if options['action_id'] == action_id:
+            if options['action_id'] == deliveries_tree_action_id:
                 if utils.user_has_any_group(self, ['abp_security.group_salesperson']):
                     # Set no create edit delete
                     utils.set_no_create_edit_delete(doc, ['//tree', '//kanban', '//form'], no_create=True, no_edit=True, no_delete=True)
+                    
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
