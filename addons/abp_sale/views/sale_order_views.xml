@@ -7,6 +7,12 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="class">btn-success</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="class">btn-success</attribute>
+                </xpath>
                 <xpath expr="//button[@name='action_cancel']" position="after">
                     <button name="sale.action_report_saleorder" type="action" string="Print Quotation/Order" class="btn-info"/>
                 </xpath>

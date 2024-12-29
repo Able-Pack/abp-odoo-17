@@ -27,6 +27,7 @@
                 </xpath>
                 <xpath expr="//filter[@name='invoice_date']" position="after">
                     <filter string="Due Date" name="date_maturity" date="date_maturity"/>
+                    <filter name="date_maturity_till_today" string="Due Date Till Today" domain="[('date_maturity', '&lt;=', context_today().strftime('%Y-%m-%d'))]" />
                 </xpath>
                 <xpath expr="//filter[@name='group_by_partner']" position="after">
                     <filter string="Partner's Parent" name="group_by_partner_parent" domain="[]" context="{'group_by': 'partner_parent_id'}"/>

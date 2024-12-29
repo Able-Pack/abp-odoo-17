@@ -19,6 +19,7 @@
         'spreadsheet_dashboard',
         'sale_subscription',
         'point_of_sale',
+        'account',
         'account_accountant',
         'documents',
         'website',
@@ -39,6 +40,7 @@
         
         'views/sale_order_views.xml',
         'views/stock_picking_views.xml',
+        'views/account_move_views.xml',
         'views/menu_views.xml',
     ],
     'assets': {
