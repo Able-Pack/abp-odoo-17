@@ -59,7 +59,8 @@ class CustomerStatementWizard(models.TransientModel):
                     start_date = now_date.replace(year=year)
                     end_date = date_utils.end_of(start_date, "month")
                     invoice_ids = self.env['account.move'].search(
-                        [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date_due', '>=', start_date),
+                        # [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date_due', '>=', start_date),
+                        [('partner_id', 'in', rec.partner_ids.ids),
                          ('invoice_date_due', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('state', '=', 'posted'),
                          ('amount_residual', '>', 0)])
@@ -68,7 +69,8 @@ class CustomerStatementWizard(models.TransientModel):
                     start_date = fields.Date.today().replace(month=month, day=1)
                     end_date = date_utils.end_of(start_date, "month")
                     invoice_ids = self.env['account.move'].search(
-                        [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date_due', '>=', start_date),
+                        # [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date_due', '>=', start_date),
+                        [('partner_id', 'in', rec.partner_ids.ids),
                          ('invoice_date_due', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('state', '=', 'posted'),
                          ('amount_residual', '>', 0)])
@@ -80,7 +82,8 @@ class CustomerStatementWizard(models.TransientModel):
                     start_date = now_date.replace(year=year)
                     end_date = date_utils.end_of(start_date, "month")
                     invoice_ids = self.env['account.move'].search(
-                        [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date', '>=', start_date),
+                        # [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date', '>=', start_date),
+                        [('partner_id', 'in', rec.partner_ids.ids),
                          ('state', '=', 'posted'),
                          ('invoice_date', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('amount_residual', '>', 0)])
@@ -89,7 +92,8 @@ class CustomerStatementWizard(models.TransientModel):
                     start_date = fields.Date.today().replace(month=month, day=1)
                     end_date = date_utils.end_of(start_date, "month")
                     invoice_ids = self.env['account.move'].search(
-                        [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date', '>=', start_date),
+                        # [('partner_id', 'in', rec.partner_ids.ids), ('invoice_date', '>=', start_date),
+                        [('partner_id', 'in', rec.partner_ids.ids),
                          ('state', '=', 'posted'),
                          ('invoice_date', '<=', end_date), ('move_type', 'in', ('out_invoice', 'out_refund')),
                          ('amount_residual', '>', 0)])
