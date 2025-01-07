@@ -6,7 +6,7 @@
                 <div class="oe_structure"/>
 
                  <center>
-                     <h4><b>Customer Statement - <span t-field="doc.months"/> </b></h4>
+                     <h4><b>Customer Statement - until <span t-field="doc.months"/> </b></h4>
                  </center>
 <!--                 <t t-foreach="doc.partner_ids" t-as="partner_id">-->
 <!--                     -->
