@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_customer_catalogue_admin_crud,access_customer_catalogue_admin_crud,abp_customer_catalogue.model_customer_catalogue,abp_security.group_administrator,1,1,1,1
+access_stock_move_inventory_user_crud,access_stock_move_inventory_user_crud,stock.model_stock_move,abp_security.group_supervisor,1,1,1,1
