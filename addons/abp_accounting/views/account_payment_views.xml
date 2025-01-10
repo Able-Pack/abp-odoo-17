@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="account.view_account_payment_search"/>
             <field name="arch" type="xml">
                 <filter name="partner" position="before">
-                    <filter string="Sales Team" name='sales_team' domain="[]" context="{'group_by': 'partner_team_id'}"/>
+                    <filter string="Partner Sales Team" name='sales_team' domain="[]" context="{'group_by': 'partner_team_id'}"/>
                 </filter>
             </field>
         </record>
