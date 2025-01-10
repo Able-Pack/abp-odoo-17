@@ -32,6 +32,11 @@ def apply_list_record_limit(res, paths=[], limit=80):
             node.set('limit', str(limit))
     res["arch"] = etree.tostring(doc, encoding="unicode")
 
+def set_domain(doc, field_paths, domain):
+    for path in field_paths:
+        for node in doc.xpath(path):
+            node.set('domain', domain)
+
 def set_readonly(doc, value, paths=[],):
     for path in paths:
         for node in doc.xpath(path):
