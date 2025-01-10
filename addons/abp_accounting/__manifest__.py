@@ -10,6 +10,7 @@
     'depends': [
         'account',
         'account_accountant',
+        'sale',
         'abp_report',
     ],
     'data': [
