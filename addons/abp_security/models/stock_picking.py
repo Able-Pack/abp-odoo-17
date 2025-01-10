@@ -1,5 +1,5 @@
 from lxml import etree
-from odoo import models, api
+from odoo import _, models, api
 from odoo.addons.abp_utils import views as utils
 
 
@@ -22,6 +22,9 @@ class StockPicking(models.Model):
             if utils.user_has_any_group(self, ['abp_security.group_administrator']):
                 # Set readonly
                 utils.set_readonly(doc, False, ["//field[@name='origin']"])
+            if utils.user_has_any_group(self, ['abp_security.group_salesperson']):
+                # Set domain
+                utils.set_domain(doc, ["//field[@name='partner_id']"], "[('team_id', '!=', False)]")
                 
         res["arch"] = etree.tostring(doc, encoding="unicode")
         return res
