@@ -1,9 +1,14 @@
-from odoo import api, models
-from odoo.addons.abp_utils.utils import format_currency_amount
+from odoo import api, fields, models
 
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
+    
+    partner_team_id = fields.Many2one(
+        string='Partner Sales Team',
+        related='partner_id.team_id',
+        store=True
+    )
     
     @api.model
     def create(self, vals):

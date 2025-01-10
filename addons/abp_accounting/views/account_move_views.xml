@@ -29,5 +29,16 @@
                 </xpath>
             </field>
         </record>
+        <record id="account_invoice_groupby_inherit" model="ir.ui.view">
+            <field name="name">account.move.filter.abp.accounting</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="sale.account_invoice_groupby_inherit"/>
+            <field name="arch" type="xml">
+                <filter name="sales_channel" position="attributes">
+                    <attribute name="string">Partner Sales Team</attribute>
+                    <attribute name="context">{'group_by': 'partner_team_id'}</attribute>
+                </filter>
+            </field>
+        </record>
     </data>
 </odoo>
