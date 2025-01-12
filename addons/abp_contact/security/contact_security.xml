@@ -15,6 +15,7 @@
         <record id="sales_team_related_contact" model="ir.rule">
             <field name="name">Sales Team Related Contact</field>
             <field name="model_id" ref="base.model_res_partner"/>
+            <!-- Exclude false user_id -->
             <!-- <field name="domain_force">
                 [
                     '|', '|', '|',

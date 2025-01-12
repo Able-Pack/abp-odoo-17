@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_account_payment_search" model="ir.ui.view">
+            <field name="name">account.payment.search.abp.accounting</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_search"/>
+            <field name="arch" type="xml">
+                <filter name="partner" position="before">
+                    <filter string="Partner Sales Team" name='sales_team' domain="[]" context="{'group_by': 'partner_team_id'}"/>
+                </filter>
+            </field>
+        </record>
+    </data>
+</odoo>
