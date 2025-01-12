@@ -17,3 +17,9 @@ class StockMove(models.Model):
         for line in self:
             if line.quantity > line.product_uom_qty:
                 raise ValidationError(_("Quantity cannot be greater than demand."))
+            
+    @api.onchange('quantity')
+    def _onchange_quantity(self):
+        for line in self:
+            if line.quantity > line.product_uom_qty:
+                raise ValidationError(_("Quantity cannot be greater than demand."))
