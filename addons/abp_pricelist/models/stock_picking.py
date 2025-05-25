@@ -94,7 +94,9 @@ class StockPicking(models.Model):
                     ])
                     
                     label_qty = pricelist_item.label_qty
-                    qty = int(line.quantity) * label_qty if label_qty > 0 else int(line.quantity)
+                    line_qty = int(line.quantity or line.product_uom_qty)
+                    qty = line_qty * label_qty if label_qty > 0 else line_qty
+                    
                     for _ in range(qty):
                         data.append({
                             'bom_id': False,
