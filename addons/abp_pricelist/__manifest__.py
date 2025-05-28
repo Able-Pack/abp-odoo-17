@@ -4,6 +4,7 @@
     'sequence': 23,
     'summary': 'Able Pack Pricelist',
     'version': '17.0',
+    'author': "Victor Imannuel",
     'description': """
     """,
     'depends': [
