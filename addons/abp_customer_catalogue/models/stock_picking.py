@@ -85,14 +85,29 @@ class StockPicking(models.Model):
                     'product_id': product.product_variant_ids[0].id
                 }
                 draft_new_customer_catalogue.append(values)
-                # create new customer catalogue record
+                
+                # create new customer catalogue record here
+                # because we want to exclude there fields from the creation values:
+                # product template name, barcode (ean13), csutomer product ref, and price unit
+                # but we will use it in email notification
                 self.env['customer.catalogue'].create(values)
-                # include product template name and price unit in the email but not for the customer catalogue values
                 values.update({
+                    'product_tmpl_name': product.display_name,
+                    'customer_product_ref': False,
                     'barcode': False,
-                    'product_tmpl_name':product.display_name,
-                    'price_unit': False
+                    'price_unit': False,
                 })
+                
+                sale_order_origin = self.env['sale.order'].browse(self.sale_id.id) if self.sale_id else False
+                if sale_order_origin:
+                    for line in sale_order_origin.order_line:
+                        if line.product_id.product_tmpl_id == product:
+                            values.update({
+                                'customer_product_ref': line.customer_product_ref,
+                                'barcode': line.barcode,
+                                'price_unit': line.price_unit,
+                            })
+                
                 result.append(values)
         
         if result:
@@ -118,7 +133,7 @@ class StockPicking(models.Model):
                         <th>No.</th>
                         <th>Product</th>
                         <th>EAN13</th>
-                        <th>Customer Product Code</th>
+                        <th>Customer Product Ref</th>
                         <th>Price</th>
                     </tr>
                 </thead>
@@ -132,7 +147,7 @@ class StockPicking(models.Model):
                     <td style="text-align: center;">{idx+1}</td>
                     <td>{item.get('product_tmpl_name', '-')}</td>
                     <td>{item.get('barcode', '-')}</td>
-                    <td>{item.get('customer_product_code', '-')}</td>
+                    <td>{item.get('customer_product_ref', '-')}</td>
                     <td>{item.get('price_unit', '-')}</td>
                 </tr>
             """
