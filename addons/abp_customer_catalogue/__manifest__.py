@@ -3,7 +3,8 @@
     'category': '',
     'sequence': 23,
     'summary': 'Able Pack Customer Catalogue',
-    'version': '1.0',
+    'version': '17.0',
+    'author': "Victor Imannuel",
     'description': """
     """,
     'depends': [
