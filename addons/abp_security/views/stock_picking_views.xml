@@ -9,6 +9,10 @@
                 <xpath expr="//button[@name='action_confirm']" position="attributes">
                     <attribute name="groups">abp_security.abp_group_inventory_button_todo</attribute>
                 </xpath>
+                <!-- Button "Cancel" -->
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath>
                 <xpath expr="//form[1]/header[1]/button[@name='button_validate']" position="attributes">
                     <attribute name="groups">abp_security.abp_group_inventory_button_validate</attribute>
                 </xpath>
@@ -46,6 +50,18 @@
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">
                     <attribute name="groups">abp_security.group_administrator,abp_security.group_supervisor</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="vpicktree" model="ir.ui.view">
+            <field name="name">stock.picking.view.tree.abp.security</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <!-- Button "Unreserve" -->
+                <xpath expr="//button[@name='do_unreserve']" position="attributes">
+                    <attribute name="groups">abp_security.group_administrator</attribute>
                 </xpath>
             </field>
         </record>
