@@ -9,7 +9,6 @@
     'depends': [
         'product',
         'stock',
-        'stock_landed_costs',
         'abp_report'
     ],
     'data': [
