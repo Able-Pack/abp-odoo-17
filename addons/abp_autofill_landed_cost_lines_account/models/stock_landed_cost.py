@@ -8,5 +8,3 @@ class StockLandedCostLine(models.Model):
     def onchange_product_id(self):
         super().onchange_product_id()
         self.account_id = self.product_id.property_account_expense_id
-        
-        
