@@ -51,3 +51,5 @@ install contacts
 install web_studio
 install partner_commission
 
+May 30, 2025:
+- install abp_autofill_landed_cost_lines_account
