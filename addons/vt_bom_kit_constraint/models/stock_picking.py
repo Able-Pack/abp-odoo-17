@@ -6,12 +6,12 @@ from odoo.exceptions import ValidationError
 class StockPicking(models.Model):
     _inherit = "stock.picking"
     
-    def action_confirm(self):
-        for move in self.move_ids_without_package:
-            move.bom_parent_qty = move.product_uom_qty
+    # def action_confirm(self):
+    #     for move in self.move_ids_without_package:
+    #         move.bom_parent_qty = move.product_uom_qty
             
-        res = super().action_confirm()
-        return res
+    #     res = super().action_confirm()
+    #     return res
     
     def button_validate(self):
         def check_if_same_qty(lst):
