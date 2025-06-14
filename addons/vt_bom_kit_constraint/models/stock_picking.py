@@ -1,39 +1,35 @@
 import math
 from odoo import _, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
+from collections import defaultdict
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
     
-    # def action_confirm(self):
-    #     for move in self.move_ids_without_package:
-    #         move.bom_parent_qty = move.product_uom_qty
-            
-    #     res = super().action_confirm()
-    #     return res
     
     def button_validate(self):
-        def check_if_same_qty(lst):
-            return all(x == lst[0] for x in lst) if lst else True  # Returns True for an empty list
-        
-        moves = self.mapped("move_ids_without_package").filtered(
-            lambda x: x.bom_line_id
-        )
-        boms = moves.mapped("bom_line_id.bom_id")
-        for bom in boms:
-            bom_moves = moves.filtered(lambda x: x.bom_line_id.bom_id == bom)
-            if not check_if_same_qty(bom_moves.mapped('quantity')):
-                print('not same')
-                raise ValidationError(
-                    _(
-                        "You can't make a partial delivery of components of the "
-                        "%s kit",
-                        bom.product_tmpl_id.display_name,
-                    )
-                )
-            else:
-                print('same')
+        # Check if BOM lines are in correct multiples of their BoM quantities
+        grouped_moves = defaultdict(list)
+        bom_moves = self.mapped("move_ids_without_package").filtered(lambda m: m.bom_line_id)
+
+        # Group by BoM
+        for move in bom_moves:
+            grouped_moves[move.bom_line_id.bom_id].append(move)
+
+        for bom, moves in grouped_moves.items():
+            ratios = set()
+            for move in moves:
+                bom_qty = move.bom_line_id.product_qty
+                if bom_qty == 0:
+                    continue  # skip invalid bom line
+                ratio = move.quantity / bom_qty
+                ratios.add(round(ratio, 6))  # avoid float error
+
+            if len(ratios) > 1:
+                raise UserError(_(
+                    "Move lines for BoM [%s] are not in correct multiples to their BoM quantities."
+                ) % bom.display_name)
                 
         res = super().button_validate()
         return res
