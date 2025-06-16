@@ -65,7 +65,7 @@ class StockLandedCost(models.Model):
                 product = line.move_id.product_id
                 if product.cost_method == 'average':
                     original_price = product.standard_price
-                    new_price = product.standard_price - line.additional_landed_cost
+                    new_price = product.standard_price - (line.additional_landed_cost / line.quantity)
                     product.write({'standard_price': new_price})
                     stock_valuation_layer = self.env['stock.valuation.layer'] \
                         .search([('product_id', '=', product.id),
@@ -103,7 +103,7 @@ class StockLandedCost(models.Model):
                 product = line.move_id.product_id
                 if product.cost_method == 'average':
                     original_price = product.standard_price
-                    new_price = product.standard_price - line.additional_landed_cost
+                    new_price = product.standard_price - (line.additional_landed_cost / line.quantity)
                     product.write({'standard_price': new_price})
                     stock_valuation_layer = self.env['stock.valuation.layer'] \
                         .search([('product_id', '=', product.id),
@@ -141,7 +141,7 @@ class StockLandedCost(models.Model):
                 product = line.move_id.product_id
                 if product.cost_method == 'average':
                     original_price = product.standard_price
-                    new_price = product.standard_price - line.additional_landed_cost
+                    new_price = product.standard_price - (line.additional_landed_cost / line.quantity)
                     product.write({'standard_price': new_price})
                     stock_valuation_layer = self.env['stock.valuation.layer'] \
                         .search([('product_id', '=', product.id),
@@ -189,7 +189,7 @@ class StockLandedCost(models.Model):
                 product = line.move_id.product_id
                 if product.cost_method == 'average':
                     original_price = product.standard_price
-                    new_price = product.standard_price - line.additional_landed_cost
+                    new_price = product.standard_price - (line.additional_landed_cost / line.quantity)
                     product.write({'standard_price': new_price})
                     stock_valuation_layer = self.env['stock.valuation.layer'] \
                         .search([('product_id', '=', product.id),
