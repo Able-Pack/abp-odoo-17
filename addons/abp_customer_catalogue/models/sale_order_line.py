@@ -15,7 +15,12 @@ class SaleOrderLine(models.Model):
     customer_product_code = fields.Char(string='Customer Product Code')
     
     # @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_base_product')
-    @api.depends('order_id.partner_id', 'order_id.show_all_product', 'order_id.show_admin_product', 'order_id.show_base_product', 'order_id.show_customer_specific_product')
+    @api.depends('order_id.partner_id', 
+                 'order_id.show_all_product', 
+                 'order_id.show_admin_product', 
+                 'order_id.show_base_product', 
+                 'order_id.show_customer_specific_product',
+                 'order_id.show_pricelist_product')
     def _compute_product_template_domain(self):
         for rec in self:
             if rec.order_id.show_all_product:
@@ -42,8 +47,19 @@ class SaleOrderLine(models.Model):
                 
                 products = self.env['product.product'].search([]).filtered(lambda x: x.categ_id.display_name.__contains__('Customer Specific'))
                 rec.product_domain = json.dumps([('id', 'in', products.ids), ('sale_ok', '=', True)])
+            
+            # Show pricelist product
+            elif rec.order_id.show_pricelist_product:
+                pricelist_items = self.order_id.pricelist_id.item_ids
                 
-            elif not rec.order_id.show_all_product and not rec.order_id.show_base_product and not rec.order_id.show_customer_specific_product:
+                product_template_id_list = [ item.product_tmpl_id.id for item in pricelist_items ]
+                product_id_list = [ item.product_tmpl_id.product_variant_id.id for item in pricelist_items ]
+                
+                rec.product_template_domain = json.dumps([('id', 'in', product_template_id_list), ('sale_ok', '=', True)])
+                rec.product_domain = json.dumps([('id', 'in', product_id_list), ('sale_ok', '=', True)])
+                
+            elif not rec.order_id.show_all_product and not rec.order_id.show_base_product \
+                and not rec.order_id.show_customer_specific_product and not rec.order_id.show_pricelist_product:
                 product_templates = rec.env['product.template'].search([
                     ('customer_catalogue_ids.partner_id', '=', rec.order_id.partner_id.id),
                 ])

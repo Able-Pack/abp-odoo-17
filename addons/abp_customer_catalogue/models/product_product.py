@@ -14,9 +14,10 @@ class ProductProduct(models.Model):
         show_base_product = self._context.get('show_base_product')
         show_admin_product = self._context.get('show_admin_product')
         show_customer_specific_product = self._context.get('show_customer_specific_product')
+        show_pricelist_product = self._context.get('show_pricelist_product')
         
         if model in ('stock.move', 'account.move') and partner_id and \
-            (not show_all_product and not show_admin_product and not show_base_product and not show_customer_specific_product):
+            (not show_all_product and not show_admin_product and not show_base_product and not show_customer_specific_product and not show_pricelist_product):
             customer_catalogue_ids = self.env['customer.catalogue'].search([
                 '|', '|', '|', '|',
                 ('product_tmpl_id.default_code', operator, name),

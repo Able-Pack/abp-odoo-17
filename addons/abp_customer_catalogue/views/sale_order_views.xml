@@ -32,6 +32,9 @@
                         <group>
                             <field name="show_customer_specific_product" widget="boolean_toggle"/>
                         </group>
+                        <group>
+                            <field name="show_pricelist_product" widget="boolean_toggle"/>
+                        </group>
                     </group>
                 </xpath>
                 <xpath expr="//field[@name='product_id']" position="before">
@@ -43,7 +46,7 @@
                 <!-- Manually add existing context because haven't found way to extend context instead of overwrite it -->
                 <!-- Only add context 'show_* and model' -->
                 <xpath expr="//field[@name='product_template_id']" position="attributes">
-                    <attribute name="context">{
+                    <attribute name="context" operation="update">{
                         'partner_id': parent.partner_id,
                         'quantity': 1,
                         'pricelist': parent.pricelist_id,
@@ -55,6 +58,7 @@
                         'show_admin_product': parent.show_admin_product,
                         'show_base_product': parent.show_base_product,
                         'show_customer_specific_product': parent.show_customer_specific_product,
+                        'show_pricelist_product': parent.show_pricelist_product,
                         'model': 'sale.order'
                     }</attribute>
                     <attribute name="options">{
@@ -66,7 +70,7 @@
                     <attribute name="domain">product_template_domain</attribute>
                 </xpath>
                 <xpath expr="//field[@name='product_id']" position="attributes">
-                    <attribute name="context">{
+                    <attribute name="context" operation="update">{
                         'partner_id':parent.partner_id, 
                         'quantity':product_uom_qty, 
                         'pricelist':parent.pricelist_id, 
@@ -76,6 +80,7 @@
                         'show_admin_product': parent.show_admin_product,
                         'show_base_product': parent.show_base_product,
                         'show_customer_specific_product': parent.show_customer_specific_product,
+                        'show_pricelist_product': parent.show_pricelist_product,
                         'model': 'sale.order'
                     }</attribute>
                     <attribute name="options">{
