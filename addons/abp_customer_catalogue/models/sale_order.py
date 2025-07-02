@@ -33,6 +33,10 @@ class SaleOrder(models.Model):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_customer_specific_product']/.."])
             
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_pricelist_product']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//field[@name='show_pricelist_product']/.."])
+                
             # TODO: Delete due to deprecated
             # if self.show_base_product or self.show_customer_specific_product:
             #     # Set invisible = True
