@@ -30,6 +30,9 @@ install purchase_down_payment
 install web_chatter_position_cr
 install deltatech_stock_negative
 install vt_bom_kit_constraint
+install abp_autofill_landed_cost_lines_account # added may 30, 2025
+install sale_stock_restrict # added jul 2, 2025
+install base_view_inheritance_extension # added jul 2, 2025
 
 # ablepack modules
 # should be installed last to implement able pack's security (reset app menu groups)
@@ -50,6 +53,3 @@ install contacts
 # install hr
 install web_studio
 install partner_commission
-
-May 30, 2025:
-- install abp_autofill_landed_cost_lines_account
