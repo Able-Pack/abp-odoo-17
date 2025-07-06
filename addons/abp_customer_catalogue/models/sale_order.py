@@ -67,8 +67,10 @@ class SaleOrder(models.Model):
     
     @api.onchange('order_line')
     def _onchange_order_line(self):
+        self.show_admin_product = False
         self.show_base_product = False
         self.show_customer_specific_product = False
+        self.show_pricelist_product = False
     
     # def action_confirm(self):
         # Save new customer catalogue draft values to a field
