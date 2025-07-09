@@ -11,6 +11,7 @@ class SaleOrder(models.Model):
     show_admin_product = fields.Boolean(string='Show admin products?')
     show_base_product = fields.Boolean(string='Show base products?', default=False)
     show_customer_specific_product = fields.Boolean(string='Show customer-specific products?', default=False)
+    show_pricelist_product = fields.Boolean(string='Show pricelist products?', default=False)
     has_new_customer_catalogue = fields.Boolean(default=False)
     new_customer_catalogue_json = fields.Json()
     
@@ -32,6 +33,10 @@ class SaleOrder(models.Model):
                 # Set invisible = True
                 utils.set_invisible(doc, True, ["//field[@name='show_customer_specific_product']/.."])
             
+            if not utils.user_has_any_group(self, ['abp_customer_catalogue.group_show_pricelist_product']):
+                # Set invisible = True
+                utils.set_invisible(doc, True, ["//field[@name='show_pricelist_product']/.."])
+                
             # TODO: Delete due to deprecated
             # if self.show_base_product or self.show_customer_specific_product:
             #     # Set invisible = True
@@ -43,22 +48,29 @@ class SaleOrder(models.Model):
     def write(self, vals):
         if 'show_admin_product' in vals:
             if vals['show_admin_product'] == True:
-                vals['show_base_product'] = vals['show_customer_specific_product'] = False
+                vals['show_base_product'] = vals['show_customer_specific_product'] = vals['show_pricelist_product'] = False
                 
         if 'show_base_product' in vals:
             if vals['show_base_product'] == True:
-                vals['show_admin_product'] = vals['show_customer_specific_product'] = False
+                vals['show_admin_product'] = vals['show_customer_specific_product'] = vals['show_pricelist_product'] = False
                 
         if 'show_customer_specific_product' in vals:
             if vals['show_customer_specific_product'] == True:
-                vals['show_admin_product'] = vals['show_base_product'] = False
+                vals['show_admin_product'] = vals['show_base_product'] = vals['show_pricelist_product'] = False
+        
+        # Show pricelist product
+        if 'show_pricelist_product' in vals:
+            if vals['show_pricelist_product'] == True:
+                vals['show_admin_product'] = vals['show_base_product'] = vals['show_customer_specific_product'] = False
                 
         return super().write(vals)
     
     @api.onchange('order_line')
     def _onchange_order_line(self):
+        self.show_admin_product = False
         self.show_base_product = False
         self.show_customer_specific_product = False
+        self.show_pricelist_product = False
     
     # def action_confirm(self):
         # Save new customer catalogue draft values to a field
@@ -207,13 +219,14 @@ class SaleOrder(models.Model):
                 raise AccessError(_("Catalog feature is not available"))
             
         res = super().action_add_from_catalog()
-        self.show_base_product = self.show_customer_specific_product = False
+        self.show_base_product = self.show_customer_specific_product = self.show_pricelist_product = False
         return res
         
     def _get_product_catalog_additional_domain(self):
         order = self
         if not order.show_all_product:
             product_ids = False
+            additional_domain = []
             
             # Product in category Admin
             if order.show_admin_product:
@@ -230,13 +243,18 @@ class SaleOrder(models.Model):
                 products = self.env['product.product'].search([]).filtered(lambda x: x.product_tmpl_id.categ_id.display_name.__contains__('Customer Specific'))
                 product_ids = products.mapped('id')
             
-            if not order.show_admin_product and not order.show_base_product and not order.show_customer_specific_product:
+            # Product in related pricelist items
+            if order.show_pricelist_product:
+                pricelist_items = self.pricelist_id.item_ids
+                product_ids = [ item.product_tmpl_id.product_variant_id.id for item in pricelist_items ]
+            
+            if not order.show_admin_product and not order.show_base_product and not order.show_customer_specific_product and not  order.show_pricelist_product:
                 customer_catalogue = self.env['customer.catalogue'].search([
                     ('partner_id', '=', order.partner_id.id)
                 ])
                 product_ids = customer_catalogue.mapped('product_id').mapped('id')
                 
-            additional_domain = [('id', 'in', product_ids)]
+            additional_domain += [('id', 'in', product_ids)]
             return additional_domain
             
     # Override
