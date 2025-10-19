@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit invoice report template to add QR image -->
+        <template id="report_invoice_document_inherit_qr" inherit_id="account.report_invoice_document">
+            <!-- Add QR image to the invoice report -->
+            <xpath expr="//div[@name='comment']" position="before">
+                <div id="qrcode" class="d-flex mb-3 avoid-page-break-inside ml-3">
+                    <span>PAYNOW UEN: </span><span t-esc="o.company_id.l10n_sg_unique_entity_number"/>
+                    <div class="qrcode me-3 ms-2" id="qrcode_image">
+                        <img t-att-src="image_data_uri(o.company_id.invoice_qr_image)" alt="Company QR Code" style="max-width: 125px; max-height: 125px;" class="position-relative mb-0"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
