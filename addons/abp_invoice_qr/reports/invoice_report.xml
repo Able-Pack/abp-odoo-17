@@ -12,6 +12,10 @@
                     </div>
                 </div>
             </xpath>
+            <!-- Avoid page break inside the payment term section -->
+            <xpath expr="//div[@id='payment_term']" position="attributes">
+                <attribute name="class" add="avoid-page-break-inside" separator=" "/>
+            </xpath>
         </template>
     </data>
 </odoo>
