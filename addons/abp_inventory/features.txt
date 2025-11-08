@@ -1,1 +1,1 @@
-1. Add field is_non_consignment for indicator
+1. Add field is_non_consignment as indicator for non-consignment type
