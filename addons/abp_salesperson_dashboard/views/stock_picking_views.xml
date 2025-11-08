@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <record id="action_picking_tree_internal_salesperson" model="ir.actions.act_window">
+        <!-- <record id="action_picking_tree_internal_salesperson" model="ir.actions.act_window">
             <field name="name">Contacts</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">kanban,tree,form,activity</field>
             <field name="domain">[('team_id.member_ids','=',uid)]</field>
             <field name="context">{'create': False, 'edit': False}</field>
+        </record> -->
+
+        <record id="action_picking_tree_incoming_return_non_consignment" model="ir.actions.act_window">
+            <field name="name">Returns (Non-Consignment)</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_mode">tree,kanban,form,calendar,activity</field>
+            <field name="domain">[('picking_type_id.code', '=', 'incoming'), ('picking_type_id.is_non_consignment', '=', True)]</field>
+            <!-- Hardcode picking_type_id to '11' which is Returns (Non-Consignment) -->
+            <field name="context">{'contact_display': 'partner_address', 'default_company_id': allowed_company_ids[0], 'is_non_consignment_return': True, 'search_default_reception': 1}</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No receipt found. Let's create one!
+                </p><p>
+                    Receipts allow you to get products from a partner.
+                </p>
+            </field>
         </record>
     </data>
 </odoo>

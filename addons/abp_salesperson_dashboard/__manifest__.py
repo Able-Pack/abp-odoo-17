@@ -15,9 +15,12 @@
         'sale',
         'sales_team',
         'stock',
+        
+        'abp_inventory',
     ],
     'data': [
         'views/res_partner_views.xml',
+        'views/stock_picking_views.xml',
         'views/menu_items.xml',
     ],
     'assets': {
