@@ -30,5 +30,20 @@
                 </xpath>
             </field>
         </record>
+
+        <!-- Modify the stock picking type form view -->
+        <record id="view_picking_type_form_inherit_abp_inventory" model="ir.ui.view">
+            <field name="name">stock.picking.type.view.form.inherit.abp.inventory</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- Add is_non_consignment field after code field -->
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="is_non_consignment"/>
+                </xpath>
+                
+            </field>
+        </record>
     </data>
 </odoo>
