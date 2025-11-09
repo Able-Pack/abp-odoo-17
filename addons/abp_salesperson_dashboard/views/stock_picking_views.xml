@@ -15,7 +15,7 @@
             <field name="res_model">stock.picking</field>
             <field name="view_mode">tree,kanban,form,calendar,activity</field>
             <field name="domain">[('picking_type_id.code', '=', 'incoming'), ('picking_type_id.is_non_consignment', '=', True)]</field>
-            <!-- Hardcode picking_type_id to '11' which is Returns (Non-Consignment) -->
+            <!-- Set context to indicate non-consignment return -->
             <field name="context">{'contact_display': 'partner_address', 'default_company_id': allowed_company_ids[0], 'is_non_consignment_return': True, 'search_default_reception': 1}</field>
             <field name="search_view_id" ref="stock.view_picking_internal_search"/>
             <field name="help" type="html">
