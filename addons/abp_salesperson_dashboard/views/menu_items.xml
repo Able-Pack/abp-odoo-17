@@ -20,9 +20,9 @@
                 <!-- Salesperson Dashboard/Inventory/Delivery Order -->
                 <menuitem id="salesperson_dashboard_inventory_delivery_order_menu_sub" name="Delivery Order" action="stock.action_picking_tree_outgoing" sequence="10"/>
                 <!-- Salesperson Dashboard/Inventory/Internal Transfer -->
-                <menuitem id="salesperson_dashboard_inventory_internal_transfer_menu_sub" name="Internal Transfer" action="stock.action_picking_tree_internal" sequence="20"/>
-                <!-- Salesperson Dashboard/Inventory/Receipts -->
-                <menuitem id="salesperson_dashboard_inventory_receipts_menu_sub" name="Receipts" action="stock.action_picking_tree_incoming" sequence="30"/>
+                <menuitem id="salesperson_dashboard_inventory_internal_transfer_menu_sub" name="Internal Transfer / Consignment" action="stock.action_picking_tree_internal" sequence="20"/>
+                <!-- Salesperson Dashboard/Inventory/Returns (Non-Consignment) -->
+                <menuitem id="salesperson_dashboard_inventory_return_non_consignment_menu_sub" name="Returns (Non-Consignment)" action="abp_salesperson_dashboard.action_picking_tree_incoming_return_non_consignment" sequence="30"/>
             </menuitem>
 
             <!-- Salesperson Dashboard/Customers -->

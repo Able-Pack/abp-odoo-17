@@ -7,5 +7,7 @@ class StockMove(models.Model):
     
     @api.onchange('product_uom_qty')
     def _onchange_product_uom_qty(self):
-        if self.product_uom_qty > self.product_qty_available:
+        incoming = self.picking_id.picking_type_id.code == 'incoming'
+
+        if self.product_uom_qty > self.product_qty_available and not incoming:
             raise ValidationError(_('Demand cannot be greater than on-hand quantity.'))
