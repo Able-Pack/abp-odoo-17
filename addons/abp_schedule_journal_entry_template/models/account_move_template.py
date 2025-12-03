@@ -26,3 +26,4 @@ class AccountMoveTemplate(models.Model):
                 move = self.env['account.move'].browse(move_id)
                 if move:
                     move.remarks = move.ref = f'{template.ref} - {now_dt.strftime("%b-%Y")}'
+                    move.action_post()
