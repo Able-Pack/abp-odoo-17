@@ -18,7 +18,11 @@ class AccountMoveTemplate(models.Model):
         user_pytz = pytz.timezone(user_tz) if user_tz else pytz.utc
         now_dt = datetime.now().astimezone(user_pytz).replace(tzinfo=None)
         
-        for template in self.search([('post_schedule_date', '!=', False)]):
+        for template in self.search([('post_schedule_date', 'not in', (0, False))]):
             template_post_schedule_date = template.post_schedule_date
             if template_post_schedule_date == now_dt.day:
-                template.generate_journal_entry()
+                action = template.generate_journal_entry()
+                move_id = action.get('res_id')
+                move = self.env['account.move'].browse(move_id)
+                if move:
+                    move.remarks = move.ref = f'{template.ref} - {now_dt.strftime("%b-%Y")}'
