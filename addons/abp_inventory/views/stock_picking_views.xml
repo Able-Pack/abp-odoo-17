@@ -28,6 +28,11 @@
                         decoration-info="picking_type_code == 'incoming'"
                     />
                 </xpath>
+
+                <!-- Set default order to name desc in the tree view -->
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">name desc</attribute>
+                </xpath>
             </field>
         </record>
 
