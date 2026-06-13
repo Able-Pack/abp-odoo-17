@@ -6,7 +6,9 @@ from odoo import models, fields
 
 class AccountMoveTemplate(models.Model):
     _inherit = 'account.move.template'
+    _order = 'sequence, id'
 
+    sequence = fields.Integer(string='Sequence', default=10)
     post_schedule_date = fields.Integer(string='Post Schedule Date', help='The day of the month when the journal entry is scheduled to be posted.')
 
     def post_scheduled_entry_template(self):
