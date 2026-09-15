@@ -1,7 +1,7 @@
 from unittest.mock import patch
 from odoo.tests.common import TransactionCase, tagged
 from odoo.exceptions import AccessError
-from odoo.addons.hr_attendance_face_detection_log.controllers import main
+from odoo.addons.hr_attendance_face_detection.controllers import scan_log as main
 
 
 class FakeRequest:

@@ -1,6 +1,6 @@
 # Face Attendance Scan Logs
 
-Companion addon for hr_attendance_face_detection (Odoo 17).
+Integrated into hr_attendance_face_detection (Odoo 17). Upgrade this module to enable scan logs, Google Maps links and embedded maps. The standard Kiosk Mode menu is temporarily hidden.
 Attendance > Face Attendance Scan Logs provides read-only history and standard Odoo export.
 Administrators see logs in allowed companies; attendance officers see their own scans and managed employees.
 
