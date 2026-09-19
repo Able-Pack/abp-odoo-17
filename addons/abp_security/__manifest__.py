@@ -3,7 +3,7 @@
     'category': '',
     'sequence': 23,
     'summary': 'Able Pack Security',
-    'version': '17.0',
+    'version': '17.0.1.0.0',
     'description': """
     """,
     'depends': [
@@ -29,12 +29,15 @@
         'mrp_workorder',
         'sign',
         'hr',
+        'hr_attendance',
+        'hr_attendance_face_detection',
         'hr_work_entry_contract_enterprise',
         'hr_expense',
         'utm',
     ],
     'data': [
         'security/res_groups.xml',
+        'security/attendance_roles.xml',
         'security/ir_rule.xml',
         'security/ir.model.access.csv',
         

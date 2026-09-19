@@ -1,0 +1,19 @@
+<odoo>
+    <record id="group_administrator" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('hr_attendance.group_hr_attendance_manager'))]"/>
+    </record>
+    <record id="hr_attendance.menu_hr_attendance_settings" model="ir.ui.menu">
+        <field name="action" eval="False"/>
+    </record>
+    <record id="action_face_attendance_locations" model="ir.actions.act_window">
+        <field name="name">Face Attendance Locations</field>
+        <field name="res_model">multi.location</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_face_attendance_locations" name="Face Attendance Locations"
+        parent="hr_attendance.menu_hr_attendance_settings" action="action_face_attendance_locations"
+        groups="abp_security.group_administrator" sequence="10"/>
+    <menuitem id="menu_attendance_general_settings" name="Settings"
+        parent="hr_attendance.menu_hr_attendance_settings" action="hr_attendance.action_hr_attendance_settings"
+        groups="base.group_system" sequence="20"/>
+</odoo>
