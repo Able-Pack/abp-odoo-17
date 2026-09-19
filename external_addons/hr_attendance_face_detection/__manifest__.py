@@ -1,7 +1,7 @@
 # Part of Odoo. See COPYRIGHT & LICENSE files for full copyright and licensing details.
 {
     'name': 'Odoo Face Recognition Attendance | Liveness Detection, GPS & Multi-Geofencing',
-    'version': '17.0.0.3',
+    'version': '17.0.0.4',
     'category': 'Human Resources',
     'summary': """
                     Add face recognition attendance to Odoo HR with liveness detection, GPS location tracking, and multi-geofencing control. Employees can check in and check out using facial verification while the system validates a live user and the permitted attendance location, helping organizations manage contactless attendance for offices, factories, field teams, and multiple work locations.

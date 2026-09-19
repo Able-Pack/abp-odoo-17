@@ -11,3 +11,5 @@ Offline attempts that never reach the server cannot be guaranteed to be recorded
 Scan images and biometric encodings are not stored in logs. Browser failure messages are client-reported.
 Successful attendance links are captured from actual server-side create/write operations.
 Logs cannot be edited/deleted by attendance users. No automatic retention/deletion is configured.
+
+Location matching stores the nearest same-company location within its radius using Haversine distance in meters. Location, Location Status, and Distance (m) are available in list/form/export. Overlapping equal-distance locations use the lowest ID. No match is Outside configured locations; missing/invalid GPS is No GPS. Names and distances survive location edits/deletion. Version 17.0.0.4 backfills existing logs using current settings once; historical settings cannot be reconstructed.

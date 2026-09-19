@@ -78,3 +78,55 @@ class TestScanLog(TransactionCase):
         self.assertEqual(log.with_user(other).read(["state"])[0]["state"], "pending")
         with self.assertRaises(AccessError):
             log.with_user(other).write({"message": "tamper"})
+
+    def test_location_matching_and_history(self):
+        company = self.env["res.company"].create({"name": "Geofence test company"})
+        locations = self.env["multi.location"]
+        def location(name, lon, radius, company_id=company.id):
+            return locations.create({"name": name, "company_id": company_id,
+                "face_attendance_latitude": 0, "face_attendance_longitude": lon,
+                "face_attendance_radius": radius})
+        far = location("Far", 0.002, 500)
+        near = location("Near", 0.001, 500)
+        location("Closer but outside radius", 0.0001, 1)
+        location("Other company", 0, 500, self.env.company.id)
+        log = self.env["hr.attendance.face.scan.log"].create({
+            "user_id": self.env.user.id, "company_id": company.id, "source": "server",
+            "location_provided": True, "latitude": 0, "longitude": 0})
+        self.assertEqual(log.matched_location_name, "Near")
+        self.assertEqual(log.location_match_status, "matched")
+        self.assertAlmostEqual(log.location_distance, 111.195, places=2)
+        near.write({"name": "Renamed", "face_attendance_radius": 1})
+        near.unlink()
+        log.write({"state": "failed"})
+        self.assertEqual(log.matched_location_name, "Near")
+        log._backfill_location_snapshots()
+        self.assertEqual(log.matched_location_name, "Near")
+        # Simulate a legacy row for upgrade backfill and its idempotence.
+        log.write({"location_match_status": False})
+        log._backfill_location_snapshots()
+        self.assertEqual(log.matched_location_name, "Far")
+        far.unlink()
+        log._backfill_location_snapshots()
+        self.assertEqual(log.matched_location_name, "Far")
+        log.write({"latitude": 10})
+        self.assertEqual(log.location_match_status, "outside")
+        self.assertFalse(log.matched_location_name)
+        log.write({"location_provided": False})
+        self.assertEqual(log.location_match_status, "no_gps")
+        log.write({"location_provided": True, "latitude": 91})
+        self.assertEqual(log.location_match_status, "no_gps")
+
+    def test_location_radius_boundary_and_tie(self):
+        company = self.env["res.company"].create({"name": "Boundary test company"})
+        logs = self.env["hr.attendance.face.scan.log"]
+        radius = logs._distance_meters(0, 0, 0, 0.001)
+        values = {"company_id": company.id, "face_attendance_latitude": 0,
+                  "face_attendance_longitude": 0.001, "face_attendance_radius": radius}
+        self.env["multi.location"].create(dict(values, name="First"))
+        self.env["multi.location"].create(dict(values, name="Second"))
+        log = logs.create({"user_id": self.env.user.id, "company_id": company.id,
+                           "source": "server", "location_provided": True})
+        self.assertEqual(log.matched_location_name, "First")
+        log.write({"longitude": -0.00001})
+        self.assertEqual(log.location_match_status, "outside")

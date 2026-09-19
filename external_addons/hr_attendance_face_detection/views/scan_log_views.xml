@@ -10,7 +10,7 @@
             <tree create="0" edit="0" delete="0" decoration-success="state == 'success'" decoration-danger="state == 'failed'">
                 <field name="scan_time"/><field name="user_id"/><field name="employee_id"/>
                 <field name="state"/><field name="action"/><field name="message"/>
-                <field name="source" optional="show"/><field name="address" optional="show"/>
+                <field name="matched_location_name" optional="show"/><field name="location_match_status" optional="show"/><field name="location_distance" optional="show"/><field name="source" optional="show"/><field name="address" optional="show"/>
                 <field name="location_provided" optional="hide"/><field name="google_maps_url" widget="url" text="Open Google Maps" optional="show"/>
                 <field name="latitude" optional="show"/><field name="longitude" optional="show"/>
                 <field name="attendance_id" optional="hide"/>
@@ -28,7 +28,7 @@
                     <field name="state"/><field name="action"/><field name="attendance_id"/>
                 </group><group>
                     <field name="source"/><field name="company_id" groups="base.group_multi_company"/>
-                    <field name="location_provided"/><field name="latitude"/><field name="longitude"/><field name="address"/>
+                    <field name="matched_location_name"/><field name="location_match_status"/><field name="location_distance" invisible="location_match_status != &apos;matched&apos;"/><field name="location_provided"/><field name="latitude"/><field name="longitude"/><field name="address"/>
                 </group></group><field name="message"/><field name="location_map" widget="html" readonly="1" nolabel="1" invisible="not location_provided"/>
             </sheet></form>
         </field>
@@ -37,14 +37,14 @@
         <field name="name">hr.attendance.face.scan.log.search</field>
         <field name="model">hr.attendance.face.scan.log</field>
         <field name="arch" type="xml"><search>
-            <field name="employee_id"/><field name="user_id"/><field name="message"/>
+            <field name="employee_id"/><field name="user_id"/><field name="message"/><field name="matched_location_name"/><field name="location_match_status"/>
             <filter name="success" string="Success" domain="[('state','=','success')]"/>
             <filter name="failed" string="Failed" domain="[('state','=','failed')]"/>
             <filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
             <filter name="pending" string="No final result" domain="[('state','=','pending')]"/>
             <separator/><filter name="date" string="Scan Date" date="scan_time"/>
             <group expand="0" string="Group By">
-                <filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                <filter name="location" string="Location" context="{&apos;group_by&apos;:&apos;matched_location_name&apos;}"/><filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
                 <filter name="user" string="User" context="{'group_by':'user_id'}"/>
                 <filter name="state" string="Result" context="{'group_by':'state'}"/>
                 <filter name="day" string="Day" context="{'group_by':'scan_time:day'}"/>
