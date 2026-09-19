@@ -6,9 +6,9 @@
         <field name="arch" type="xml">
             <tree string="Multi Location" editable="bottom">
                 <field name="name"/>
-                <field name="google_maps_link" placeholder="https://maps.app.goo.gl/..."/><field name="face_attendance_latitude"/>
-                <field name="face_attendance_longitude"/>
-                <field name="face_attendance_radius"/>
+                <field name="google_maps_link" placeholder="https://maps.app.goo.gl/..."/><field name="face_attendance_latitude" string="Latitude"/>
+                <field name="face_attendance_longitude" string="Longitude"/>
+                <field name="face_attendance_radius" string="Radius (meters)"/><field name="map_picker" widget="attendance_location_picker"/>
             </tree>
         </field>
     </record>
@@ -23,9 +23,9 @@
                         <field name="name"/>
                     </group>
                     <group>
-                        <field name="google_maps_link" placeholder="https://maps.app.goo.gl/..."/><field name="face_attendance_latitude"/>
-                        <field name="face_attendance_longitude"/>
-                        <field name="face_attendance_radius"/>
+                        <field name="google_maps_link" placeholder="https://maps.app.goo.gl/..."/><field name="face_attendance_latitude" string="Latitude"/>
+                        <field name="face_attendance_longitude" string="Longitude"/>
+                        <field name="face_attendance_radius" string="Radius (meters)"/><field name="map_picker" widget="attendance_location_picker"/>
                         <field name="company_id" invisible="1"/>
                     </group>
                 </sheet>

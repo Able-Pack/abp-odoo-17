@@ -13,7 +13,7 @@
                             <field name="name" string="Location Name"/>
                             <field name="google_maps_link" placeholder="https://maps.app.goo.gl/..."/><field name="face_attendance_latitude" string="Latitude"/>
                             <field name="face_attendance_longitude" string="Longitude"/>
-                            <field name="face_attendance_radius" string="Radius (meters)"/>
+                            <field name="face_attendance_radius" string="Radius (meters)"/><field name="map_picker" widget="attendance_location_picker"/>
                         </tree>
                     </field>
                 </setting>

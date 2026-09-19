@@ -29,6 +29,8 @@ class MultiLocation(models.Model):
     company_id = fields.Many2one('res.company', string="Company", required=True,
                                  ondelete='cascade', default=lambda self: self.env.company)
 
+    map_picker = fields.Boolean(string="Map", store=False)
+
     google_maps_link = fields.Char(string="Google Maps Link", help="Paste a Google Maps link containing a pinned location or coordinates.")
 
     @api.model
