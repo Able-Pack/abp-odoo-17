@@ -1,0 +1,64 @@
+<odoo>
+    <!-- Temporarily hide the standard kiosk entry; Face Attendance remains available. -->
+    <record id="hr_attendance.menu_hr_attendance_kiosk_no_user_mode" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+    <record id="scan_log_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.face.scan.log.tree</field>
+        <field name="model">hr.attendance.face.scan.log</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0" decoration-success="state == 'success'" decoration-danger="state == 'failed'">
+                <field name="scan_time"/><field name="user_id"/><field name="employee_id"/>
+                <field name="state"/><field name="action"/><field name="message"/>
+                <field name="matched_location_name" optional="show"/><field name="location_match_status" optional="show"/><field name="location_distance" optional="show"/><field name="source" optional="show"/><field name="address" optional="show"/>
+                <field name="location_provided" optional="hide"/><field name="google_maps_url" widget="url" text="Open Google Maps" optional="show"/>
+                <field name="latitude" optional="show"/><field name="longitude" optional="show"/>
+                <field name="attendance_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    <record id="scan_log_form" model="ir.ui.view">
+        <field name="name">hr.attendance.face.scan.log.form</field>
+        <field name="model">hr.attendance.face.scan.log</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0"><sheet>
+                <group><group>
+                    <field name="scan_time"/><field name="user_id"/><field name="employee_id"/>
+                    <field name="state"/><field name="action"/><field name="attendance_id"/>
+                </group><group>
+                    <field name="source"/><field name="company_id" groups="base.group_multi_company"/>
+                    <field name="matched_location_name"/><field name="location_match_status"/><field name="location_distance" invisible="location_match_status != &apos;matched&apos;"/><field name="location_provided"/><field name="latitude"/><field name="longitude"/><field name="address"/>
+                </group></group><field name="message"/><field name="location_map" widget="html" readonly="1" nolabel="1" invisible="not location_provided"/>
+            </sheet></form>
+        </field>
+    </record>
+    <record id="scan_log_search" model="ir.ui.view">
+        <field name="name">hr.attendance.face.scan.log.search</field>
+        <field name="model">hr.attendance.face.scan.log</field>
+        <field name="arch" type="xml"><search>
+            <field name="employee_id"/><field name="user_id"/><field name="message"/><field name="matched_location_name"/><field name="location_match_status"/>
+            <filter name="success" string="Success" domain="[('state','=','success')]"/>
+            <filter name="failed" string="Failed" domain="[('state','=','failed')]"/>
+            <filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>
+            <filter name="pending" string="No final result" domain="[('state','=','pending')]"/>
+            <separator/><filter name="date" string="Scan Date" date="scan_time"/>
+            <group expand="0" string="Group By">
+                <filter name="location" string="Location" context="{&apos;group_by&apos;:&apos;matched_location_name&apos;}"/><filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>
+                <filter name="user" string="User" context="{'group_by':'user_id'}"/>
+                <filter name="state" string="Result" context="{'group_by':'state'}"/>
+                <filter name="day" string="Day" context="{'group_by':'scan_time:day'}"/>
+            </group>
+        </search></field>
+    </record>
+    <record id="action_scan_logs" model="ir.actions.act_window">
+        <field name="name">Face Attendance Scan Logs</field>
+        <field name="res_model">hr.attendance.face.scan.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="scan_log_search"/>
+    </record>
+    <menuitem id="menu_scan_logs" name="Face Attendance Scan Logs"
+        parent="hr_attendance.menu_hr_attendance_root" action="action_scan_logs"
+        groups="hr_attendance.group_hr_attendance_officer"
+        sequence="11"/>
+</odoo>
